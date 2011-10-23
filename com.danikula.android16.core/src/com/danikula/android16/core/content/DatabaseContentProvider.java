@@ -8,6 +8,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
@@ -23,6 +24,31 @@ import android.net.Uri;
  * <li>to be continued....</li>
  * </ul>
  * </p>
+ * Пример реализации своего контент - провайдера:
+ * 
+ * <pre>
+ * public class TasksContentProvider extends DatabaseContentProvider {
+ * 
+ *     private static final String CONTENT_AUTHORITY = &quot;com.ineed.taskprovider&quot;;
+ *     static final Uri BASE_CONTENT_URI = Uri.parse(&quot;content://&quot; + CONTENT_AUTHORITY);
+ * 
+ *     private static final int TASKS = 100;
+ *     private static final int TASK_ITEM = 101;
+ * 
+ *     public TasksContentProvider() {
+ *         addMathURI(CONTENT_AUTHORITY, TaskItem.PATH, TASKS);
+ *         addMathURI(CONTENT_AUTHORITY, TaskItem.PATH + &quot;/*&quot;, TASK_ITEM);
+ * 
+ *         registerMultipleItem(TASKS, Tables.TASK);
+ *         registerSingleItem(TASK_ITEM, Tables.TASK, TaskItem._ID);
+ *     }
+ * 
+ *     &#064;Override
+ *     protected DatabaseHelper getDatabaseHelper() {
+ *         return new TaskDatabaseHelper(getContext());
+ *     }
+ * }
+ * </pre>
  * 
  * @author danik
  * 
@@ -83,6 +109,19 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         Uri newUri = ContentUris.withAppendedId(uri, rowId);
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        int insertedCount = super.bulkInsert(uri, values);
+        if (insertedCount != values.length) {
+            throw new SQLException(String.format(
+                    "Error invokinkg bulk insert: expected to insert %s, but there were inserted %s", values.length,
+                    insertedCount));
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return insertedCount;
     }
 
     /** {@inheritDoc} */
