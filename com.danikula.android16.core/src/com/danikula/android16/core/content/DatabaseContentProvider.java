@@ -96,7 +96,10 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final SelectionBuilder builder = buildSelection(uri);
-        return builder.where(selection, selectionArgs).query(getReadableDb(), projection, sortOrder);
+        Cursor cursor = builder.where(selection, selectionArgs).query(getReadableDb(), projection, sortOrder);
+        // Register the contexts ContentResolver to be notified if the cursor result set changes.
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     /** {@inheritDoc} */
