@@ -8,7 +8,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
@@ -73,7 +72,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     /**
      * {@inheritDoc}
      * <p>
-     * В качестве значчения последней секции типа используется имя таблицы, где хранится сущность
+     * В качестве значения последней секции типа используется имя таблицы, где хранится сущность
      * </p>
      * */
     @Override
@@ -105,26 +104,26 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     /** {@inheritDoc} */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        String type = getType(uri);
         // some kind of name convention: type equals to table's name
-        String table = type.substring(type.lastIndexOf('.') + 1);
-        long rowId = getDb().insertOrThrow(table, null, values);
+        long rowId = insertInTable(uri, values);
         Uri newUri = ContentUris.withAppendedId(uri, rowId);
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }
 
+    private long insertInTable(Uri uri, ContentValues values) {
+        String table = getTable(uri);
+        return getDb().insertOrThrow(table, null, values);
+    }
+
     /** {@inheritDoc} */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        int insertedCount = super.bulkInsert(uri, values);
-        if (insertedCount != values.length) {
-            throw new SQLException(String.format(
-                    "Error invokinkg bulk insert: expected to insert %s, but there were inserted %s", values.length,
-                    insertedCount));
+        for (int i = 0; i < values.length; i++) {
+            insertInTable(uri, values[i]);
         }
         getContext().getContentResolver().notifyChange(uri, null);
-        return insertedCount;
+        return values.length;
     }
 
     /** {@inheritDoc} */
@@ -167,18 +166,12 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         checkDatabaseHelperExist();
         return dbHelper.getWritableDatabase();
     }
-
-    private void checkDatabaseHelperExist() {
-        if (dbHelper == null) {
-            throw new IllegalArgumentException("Database helper is not created. Be sure you are calling super.onCreate()");
-        }
-    }
-
+    
     protected SQLiteDatabase getReadableDb() {
         checkDatabaseHelperExist();
         return dbHelper.getReadableDatabase();
     }
-
+    
     /**
      * Регистрирует новую сущности.
      * 
@@ -205,6 +198,23 @@ public abstract class DatabaseContentProvider extends ContentProvider {
 
     protected void addMathURI(String authority, String path, int code) {
         uriMathcer.addURI(authority, path, code);
+    }
+    
+    /**
+     * Возвращает имя таблицы, исходя из типа сущности
+     * @param uri Uri uri, для которого необходимо определить таблицу, где хранится сущность
+     * @return String имя таблицы
+     * @see #getType(Uri)
+     */
+    private String getTable(Uri uri) {
+        String type = getType(uri);
+        return type.substring(type.lastIndexOf('.') + 1);
+    }
+
+    private void checkDatabaseHelperExist() {
+        if (dbHelper == null) {
+            throw new IllegalArgumentException("Database helper is not created. Be sure you are calling super.onCreate()");
+        }
     }
 
 }
