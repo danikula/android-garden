@@ -13,18 +13,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 /**
- * Базовый класс для реализации своего контент провайдера.
+ * Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё СЃРІРѕРµРіРѕ РєРѕРЅС‚РµРЅС‚ РїСЂРѕРІР°Р№РґРµСЂР°.
  * <p>
- * Список фич:
+ * РЎРїРёСЃРѕРє С„РёС‡:
  * <ul>
  * <li>
- * удобный способ регистрации типов сущеностей с помощью методов {@link #registerMultipleItem(int, String)}
- * {@link #registerSingleItem(int, String, String)} и как следствие реализованный метод {@link #getType(Uri)}</li>
- * <li>дефолтовая реализация методов CRUD!</li>
+ * СѓРґРѕР±РЅС‹Р№ СЃРїРѕСЃРѕР± СЂРµРіРёСЃС‚СЂР°С†РёРё С‚РёРїРѕРІ СЃСѓС‰РµРЅРѕСЃС‚РµР№ СЃ РїРѕРјРѕС‰СЊСЋ РјРµС‚РѕРґРѕРІ {@link #registerMultipleItem(int, String)}
+ * {@link #registerSingleItem(int, String, String)} Рё РєР°Рє СЃР»РµРґСЃС‚РІРёРµ СЂРµР°Р»РёР·РѕРІР°РЅРЅС‹Р№ РјРµС‚РѕРґ {@link #getType(Uri)}</li>
+ * <li>РґРµС„РѕР»С‚РѕРІР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ РјРµС‚РѕРґРѕРІ CRUD!</li>
  * <li>to be continued....</li>
  * </ul>
  * </p>
- * Пример реализации своего контент - провайдера:
+ * РџСЂРёРјРµСЂ СЂРµР°Р»РёР·Р°С†РёРё СЃРІРѕРµРіРѕ РєРѕРЅС‚РµРЅС‚ - РїСЂРѕРІР°Р№РґРµСЂР°:
  * 
  * <pre>
  * public class TasksContentProvider extends DatabaseContentProvider {
@@ -73,7 +73,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     /**
      * {@inheritDoc}
      * <p>
-     * В качестве значчения последней секции типа используется имя таблицы, где хранится сущность
+     * Р’ РєР°С‡РµСЃС‚РІРµ Р·РЅР°С‡С‡РµРЅРёСЏ РїРѕСЃР»РµРґРЅРµР№ СЃРµРєС†РёРё С‚РёРїР° РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РёРјСЏ С‚Р°Р±Р»РёС†С‹, РіРґРµ С…СЂР°РЅРёС‚СЃСЏ СЃСѓС‰РЅРѕСЃС‚СЊ
      * </p>
      * */
     @Override
@@ -180,20 +180,20 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     }
 
     /**
-     * Регистрирует новую сущности.
+     * Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ РЅРѕРІСѓСЋ СЃСѓС‰РЅРѕСЃС‚Рё.
      * 
-     * @param code int идентификтор сущности, возвращаемые для данной сущности методом {@link #match(Uri)}
-     * @param table String имя таблицы, в которой хранится сущность
+     * @param code int РёРґРµРЅС‚РёС„РёРєС‚РѕСЂ СЃСѓС‰РЅРѕСЃС‚Рё, РІРѕР·РІСЂР°С‰Р°РµРјС‹Рµ РґР»СЏ РґР°РЅРЅРѕР№ СЃСѓС‰РЅРѕСЃС‚Рё РјРµС‚РѕРґРѕРј {@link #match(Uri)}
+     * @param table String РёРјСЏ С‚Р°Р±Р»РёС†С‹, РІ РєРѕС‚РѕСЂРѕР№ С…СЂР°РЅРёС‚СЃСЏ СЃСѓС‰РЅРѕСЃС‚СЊ
      */
     protected void registerSingleItem(int code, String table, String propertyName) {
         contentTypeRegister.put(code, new Item(table, propertyName, true));
     }
 
     /**
-     * Регистрирует новую сущности.
+     * Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ РЅРѕРІСѓСЋ СЃСѓС‰РЅРѕСЃС‚Рё.
      * 
-     * @param code int идентификтор сущности, возвращаемые для данной сущности методом {@link #match(Uri)}
-     * @param table String имя таблицы, в которой хранится сущность
+     * @param code int РёРґРµРЅС‚РёС„РёРєС‚РѕСЂ СЃСѓС‰РЅРѕСЃС‚Рё, РІРѕР·РІСЂР°С‰Р°РµРјС‹Рµ РґР»СЏ РґР°РЅРЅРѕР№ СЃСѓС‰РЅРѕСЃС‚Рё РјРµС‚РѕРґРѕРј {@link #match(Uri)}
+     * @param table String РёРјСЏ С‚Р°Р±Р»РёС†С‹, РІ РєРѕС‚РѕСЂРѕР№ С…СЂР°РЅРёС‚СЃСЏ СЃСѓС‰РЅРѕСЃС‚СЊ
      */
     protected void registerMultipleItem(int code, String table) {
         contentTypeRegister.put(code, new Item(table, null, false));
