@@ -1,6 +1,6 @@
 package com.danikula.android16.core.transport;
 
-public class ResponseParsingException extends RuntimeException {
+/*package private*/ class ResponseParsingException extends Exception {
 
     private static final long serialVersionUID = -1L;
 

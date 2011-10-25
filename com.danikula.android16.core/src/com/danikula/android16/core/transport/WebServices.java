@@ -19,8 +19,6 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
-import android.util.Log;
-
 import com.danikula.android16.core.utils.IoUtils;
 
 public class WebServices {
