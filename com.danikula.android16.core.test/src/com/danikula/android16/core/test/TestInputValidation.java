@@ -1,4 +1,4 @@
-package com.danikula.android16.core.test.ui;
+package com.danikula.android16.core.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
