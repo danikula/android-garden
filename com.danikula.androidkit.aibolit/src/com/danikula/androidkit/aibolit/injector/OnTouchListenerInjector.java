@@ -10,12 +10,12 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 
 public class OnTouchListenerInjector extends AbstractMethodInjector<InjectOnTouchListener> {
 
-    private static final String INJECTED_METHOD_NAME = "onTouch";
+    private static final String TARGET_METHOD_NAME = "onTouch";
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnTouchListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { View.class, MotionEvent.class };
-        Method targetMethod = getMethod(OnTouchListener.class, INJECTED_METHOD_NAME, argsTypes);
+        Method targetMethod = getMethod(OnTouchListener.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
         

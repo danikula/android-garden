@@ -12,16 +12,28 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
 
+import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnKeyListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnTextChangedListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
+import com.danikula.androidkit.aibolit.injector.OnCheckedChangeInjector;
 import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnCreateContextMenuListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnFocusChangeListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnKeyListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnRadioGroupCheckedChangeInjector;
+import com.danikula.androidkit.aibolit.injector.OnTextChangedListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnTouchListenerInjector;
 import com.danikula.androidkit.aibolit.injector.ServiceInjector;
 import com.danikula.androidkit.aibolit.injector.SystemServiceInjector;
@@ -32,11 +44,11 @@ public class Aibolit {
     private static final Map<Class<? extends Annotation>, FieldInjector<?>> FIELD_INJECTORS_REGISTER;
 
     private static final Map<Class<? extends Annotation>, MethodInjector<?>> METHOD_INJECTORS_REGISTER;
-    
+
     private static final List<InjectionResolver> INJECTION_RESOLVERS;
 
     static {
-        INJECTION_RESOLVERS  = new LinkedList<InjectionResolver>();
+        INJECTION_RESOLVERS = new LinkedList<InjectionResolver>();
         FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, FieldInjector<?>>();
         METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, MethodInjector<?>>();
 
@@ -48,6 +60,12 @@ public class Aibolit {
         METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new OnItemClickListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new OnTouchListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnKeyListener.class, new OnKeyListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnFocusChangeListener.class, new OnFocusChangeListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnCreateContextMenuListener.class, new OnCreateContextMenuListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnTextChangedListener.class, new OnTextChangedListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnCheckedChangeListener.class, new OnCheckedChangeInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnRadioGroupCheckedChangeListener.class, new OnRadioGroupCheckedChangeInjector());
     }
 
     public static void doInjections(Object holder, View view) {
@@ -58,7 +76,7 @@ public class Aibolit {
         injectFields(holder, view, holderClass.getDeclaredFields());
         injectMethods(holder, view, holderClass.getDeclaredMethods());
     }
-    
+
     public static void doInjections(Activity activity) {
         doInjections(activity, activity.getWindow().getDecorView());
     }
@@ -74,7 +92,7 @@ public class Aibolit {
     public static void doInjections(Object holder, Activity activity) {
         doInjections(holder, activity.getWindow().getDecorView());
     }
-    
+
     public static void setContentView(Activity activity, int layoutId) {
         activity.setContentView(layoutId);
         doInjections(activity);
@@ -94,7 +112,7 @@ public class Aibolit {
         dialog.setContentView(contentView);
         doInjections(dialog);
     }
-    
+
     public static void addInjectionResolver(InjectionResolver injectionResolver) {
         Validate.notNull(injectionResolver, "InjectionResolver must be not null");
         INJECTION_RESOLVERS.add(injectionResolver);

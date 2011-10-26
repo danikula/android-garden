@@ -10,12 +10,12 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 
 public class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOnItemClickListener> {
 
-    private static final String INJECTED_METHOD_NAME = "onItemClick";
+    private static final String TARGET_METHOD_NAME = "onItemClick";
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnItemClickListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { AdapterView.class, View.class, int.class, long.class };
-        Method targetMethod = getMethod(OnItemClickListener.class, INJECTED_METHOD_NAME, argsTypes);
+        Method targetMethod = getMethod(OnItemClickListener.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         
         View view = getViewById(viewHolder, annotation.value());
