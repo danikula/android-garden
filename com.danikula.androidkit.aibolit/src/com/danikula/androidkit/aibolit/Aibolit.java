@@ -14,12 +14,14 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
+import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
-import com.danikula.androidkit.aibolit.injector.InjectorOnClickListener;
-import com.danikula.androidkit.aibolit.injector.InjectorOnItemClickListener;
-import com.danikula.androidkit.aibolit.injector.InjectorOnLongClickListener;
-import com.danikula.androidkit.aibolit.injector.InjectorOnTouchListener;
-import com.danikula.androidkit.aibolit.injector.InjectorVew;
+import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnTouchListenerInjector;
+import com.danikula.androidkit.aibolit.injector.ServiceInjector;
+import com.danikula.androidkit.aibolit.injector.ViewInjector;
 
 public class Aibolit {
 
@@ -31,12 +33,13 @@ public class Aibolit {
         FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, FieldInjector<?>>();
         METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, MethodInjector<?>>();
 
-        FIELD_INJECTORS_REGISTER.put(InjectView.class, new InjectorVew());
+        FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
+        FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector());
 
-        METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new InjectorOnClickListener());
-        METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new InjectorOnLongClickListener());
-        METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new InjectorOnItemClickListener());
-        METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new InjectorOnTouchListener());
+        METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new OnClickListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new OnItemClickListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new OnTouchListenerInjector());
     }
 
     public static void doInjections(Object holder, View view) {
@@ -62,6 +65,26 @@ public class Aibolit {
 
     public static void doInjections(Object holder, Activity activity) {
         doInjections(holder, activity.getWindow().getDecorView());
+    }
+    
+    public static void setContentView(Activity activity, int layoutId) {
+        activity.setContentView(layoutId);
+        doInjections(activity);
+    }
+
+    public static void setContentView(Activity activity, View contentView) {
+        activity.setContentView(contentView);
+        doInjections(activity);
+    }
+
+    public static void setContentView(Dialog dialog, int layoutId) {
+        dialog.setContentView(layoutId);
+        doInjections(dialog);
+    }
+
+    public static void setContentView(Dialog dialog, View contentView) {
+        dialog.setContentView(contentView);
+        doInjections(dialog);
     }
 
     private static void injectFields(Object holder, View view, Field[] fields) {

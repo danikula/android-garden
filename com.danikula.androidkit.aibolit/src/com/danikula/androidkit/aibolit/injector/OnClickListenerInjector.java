@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 
-public class InjectorOnClickListener extends AbstractMethodInjector<InjectOnClickListener> {
+public class OnClickListenerInjector extends AbstractMethodInjector<InjectOnClickListener> {
 
     private static final String INJECTED_METHOD_NAME = "onClick";
 

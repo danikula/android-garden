@@ -17,15 +17,31 @@ public abstract class AbstractFieldInjector<A extends Annotation> implements Fie
         }
         return view;
     }
-    
+
+    protected void checkIsAssignable(Field field, Class<?> fieldClass, Class<?> viewClass) {
+        if (!fieldClass.isAssignableFrom(viewClass)) {
+            String errorPatterm = "Can't cast object with type %s to variable '%s' with type %s";
+            throw new InjectingException(String.format(errorPatterm, viewClass, field.getName(), fieldClass.getName()));
+        }
+    }
+
     protected void setValue(Object object, Field field, Object value) {
         try {
             field.setAccessible(true);
             field.set(object, value);
         }
-        catch (IllegalAccessException e) {
-            throw new InjectingException(String.format("Error setting value '%s' to field '%s'", value, field, e));
+        catch (IllegalArgumentException e) {
+            processSettingValueError(field, value, e);
         }
+        catch (IllegalAccessException e) {
+            processSettingValueError(field, value, e);
+        }
+    }
+
+    private void processSettingValueError(Field field, Object value, Exception e) throws InjectingException {
+        String errorPattern = "Error setting value '%s' with type %s to field '%s' with type %s";
+        String error = String.format(errorPattern, value, value.getClass().getName(), field.getName(), field.getType().getName());
+        throw new InjectingException(error, e);
     }
 
 }

@@ -7,7 +7,7 @@ import android.view.View.OnLongClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 
-public class InjectorOnLongClickListener extends AbstractMethodInjector<InjectOnLongClickListener> {
+public class OnLongClickListenerInjector extends AbstractMethodInjector<InjectOnLongClickListener> {
 
     private static final String INJECTED_METHOD_NAME = "onLongClick";
 
@@ -17,9 +17,8 @@ public class InjectorOnLongClickListener extends AbstractMethodInjector<InjectOn
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
 
-        OnLongClickListener onLongClickListener = createInvokationProxy(OnLongClickListener.class, methodOwner, sourceMethod,
-                targetMethod);
-        view.setOnLongClickListener(onLongClickListener);
+        OnLongClickListener listener = createInvokationProxy(OnLongClickListener.class, methodOwner, sourceMethod, targetMethod);
+        view.setOnLongClickListener(listener);
     }
 
 }
