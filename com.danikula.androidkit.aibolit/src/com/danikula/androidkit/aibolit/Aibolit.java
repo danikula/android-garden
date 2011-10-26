@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.view.View;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
@@ -49,6 +50,10 @@ public class Aibolit {
     
     public static void doInjections(Activity activity) {
         doInjections(activity, activity.getWindow().getDecorView());
+    }
+
+    public static void doInjections(Dialog dialog) {
+        doInjections(dialog, dialog.getWindow().getDecorView());
     }
 
     public static void doInjections(View view) {
