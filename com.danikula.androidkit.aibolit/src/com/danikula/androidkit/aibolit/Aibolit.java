@@ -4,6 +4,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -15,12 +17,14 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
+import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnTouchListenerInjector;
 import com.danikula.androidkit.aibolit.injector.ServiceInjector;
+import com.danikula.androidkit.aibolit.injector.SystemServiceInjector;
 import com.danikula.androidkit.aibolit.injector.ViewInjector;
 
 public class Aibolit {
@@ -28,13 +32,17 @@ public class Aibolit {
     private static final Map<Class<? extends Annotation>, FieldInjector<?>> FIELD_INJECTORS_REGISTER;
 
     private static final Map<Class<? extends Annotation>, MethodInjector<?>> METHOD_INJECTORS_REGISTER;
+    
+    private static final List<InjectionResolver> INJECTION_RESOLVERS;
 
     static {
+        INJECTION_RESOLVERS  = new LinkedList<InjectionResolver>();
         FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, FieldInjector<?>>();
         METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, MethodInjector<?>>();
 
         FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
-        FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector());
+        FIELD_INJECTORS_REGISTER.put(InjectSystemService.class, new SystemServiceInjector());
+        FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(INJECTION_RESOLVERS));
 
         METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new OnClickListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
@@ -85,6 +93,11 @@ public class Aibolit {
     public static void setContentView(Dialog dialog, View contentView) {
         dialog.setContentView(contentView);
         doInjections(dialog);
+    }
+    
+    public static void addInjectionResolver(InjectionResolver injectionResolver) {
+        Validate.notNull(injectionResolver, "InjectionResolver must be not null");
+        INJECTION_RESOLVERS.add(injectionResolver);
     }
 
     private static void injectFields(Object holder, View view, Field[] fields) {

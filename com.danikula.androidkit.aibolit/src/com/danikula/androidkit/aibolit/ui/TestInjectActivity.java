@@ -7,22 +7,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.danikula.androidkit.aibolit.Aibolit;
+import com.danikula.androidkit.aibolit.InjectionResolver;
 import com.danikula.androidkit.aibolit.R;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
+import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 
 public class TestInjectActivity extends Activity {
+
+    private SimpleService simpleService = new SimpleService();
+
+    @InjectService
+    private SimpleService injectedService;
 
     @InjectView(R.id.textView)
     public TextView textView;
@@ -30,12 +36,14 @@ public class TestInjectActivity extends Activity {
     @InjectView(R.id.listView)
     public ListView listView;
 
-    @InjectService(Context.LAYOUT_INFLATER_SERVICE)
+    @InjectSystemService(Context.LAYOUT_INFLATER_SERVICE)
     private LayoutInflater layoutInflater;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Aibolit.addInjectionResolver(new CustomServiceResolver());
 
         Aibolit.setContentView(this, R.layout.main);
 
@@ -45,6 +53,8 @@ public class TestInjectActivity extends Activity {
 
         View inflatedView = layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
         Log.d("debug", "inflated view: " + inflatedView);
+
+        Log.d("debug", "injected service: " + injectedService);
     }
 
     @InjectOnClickListener(R.id.button)
@@ -67,5 +77,21 @@ public class TestInjectActivity extends Activity {
     private boolean onTextViewTouch(View v, MotionEvent event) {
         Log.d("debug", String.format("onTextViewTouch: %s, %s", v, event));
         return true;
+    }
+
+    private final class CustomServiceResolver implements InjectionResolver {
+
+        @Override
+        public Object resolve(Class<?> serviceClass) {
+            Object service = null;
+            if (SimpleService.class.isAssignableFrom(serviceClass)) {
+                service = simpleService;
+            }
+            return service;
+        }
+    }
+
+    private static class SimpleService {
+
     }
 }
