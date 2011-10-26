@@ -11,10 +11,14 @@ import android.view.View;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
-import com.danikula.androidkit.aibolit.annotation.InjectorOnClickListener;
-import com.danikula.androidkit.aibolit.annotation.InjectorOnItemClickListener;
-import com.danikula.androidkit.aibolit.annotation.InjectorVew;
+import com.danikula.androidkit.aibolit.injector.InjectorOnClickListener;
+import com.danikula.androidkit.aibolit.injector.InjectorOnItemClickListener;
+import com.danikula.androidkit.aibolit.injector.InjectorOnLongClickListener;
+import com.danikula.androidkit.aibolit.injector.InjectorOnTouchListener;
+import com.danikula.androidkit.aibolit.injector.InjectorVew;
 
 public class Aibolit {
 
@@ -29,7 +33,9 @@ public class Aibolit {
         FIELD_INJECTORS_REGISTER.put(InjectView.class, new InjectorVew());
 
         METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new InjectorOnClickListener());
+        METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new InjectorOnLongClickListener());
         METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new InjectorOnItemClickListener());
+        METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new InjectorOnTouchListener());
     }
 
     public static void doInjections(Object holder, View view) {

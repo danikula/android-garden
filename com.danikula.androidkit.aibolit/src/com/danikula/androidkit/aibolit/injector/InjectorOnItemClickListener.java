@@ -1,4 +1,4 @@
-package com.danikula.androidkit.aibolit.annotation;
+package com.danikula.androidkit.aibolit.injector;
 
 import java.lang.reflect.Method;
 
@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.danikula.androidkit.aibolit.AbstractMethodInjector;
+import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 
 public class InjectorOnItemClickListener extends AbstractMethodInjector<InjectOnItemClickListener> {
 
@@ -22,7 +23,7 @@ public class InjectorOnItemClickListener extends AbstractMethodInjector<InjectOn
         checkViewClass(AdapterView.class, view.getClass());
         AdapterView<?> adapterView = (AdapterView<?>) view; 
 
-        OnItemClickListener OnItemClickListener = createInvokationProxy(OnItemClickListener.class, methodOwner, sourceMethod, targetMethod);
-        adapterView.setOnItemClickListener(OnItemClickListener);
+        OnItemClickListener onItemClickListener = createInvokationProxy(OnItemClickListener.class, methodOwner, sourceMethod, targetMethod);
+        adapterView.setOnItemClickListener(onItemClickListener);
     }
 }

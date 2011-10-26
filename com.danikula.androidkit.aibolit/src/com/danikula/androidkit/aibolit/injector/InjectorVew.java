@@ -1,4 +1,4 @@
-package com.danikula.androidkit.aibolit.annotation;
+package com.danikula.androidkit.aibolit.injector;
 
 import java.lang.reflect.Field;
 
@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.danikula.androidkit.aibolit.AbstractFieldInjector;
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.annotation.InjectView;
 
 public class InjectorVew extends AbstractFieldInjector<InjectView> {
 
