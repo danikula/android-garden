@@ -1,9 +1,13 @@
-package com.danikula.androidkit.aibolit;
+package com.danikula.androidkit.aibolit.injector;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+
+import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.MethodInjector;
+import com.danikula.androidkit.aibolit.MethodInvocationHandler;
 
 import android.view.View;
 

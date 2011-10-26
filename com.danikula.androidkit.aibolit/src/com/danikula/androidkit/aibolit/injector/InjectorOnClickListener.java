@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.danikula.androidkit.aibolit.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 
 public class InjectorOnClickListener extends AbstractMethodInjector<InjectOnClickListener> {

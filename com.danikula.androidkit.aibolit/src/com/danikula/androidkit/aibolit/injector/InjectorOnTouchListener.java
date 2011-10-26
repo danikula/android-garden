@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.danikula.androidkit.aibolit.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 
 public class InjectorOnTouchListener extends AbstractMethodInjector<InjectOnTouchListener> {

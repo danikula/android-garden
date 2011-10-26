@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 
-import com.danikula.androidkit.aibolit.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 
 public class InjectorOnLongClickListener extends AbstractMethodInjector<InjectOnLongClickListener> {

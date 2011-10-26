@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 
 import android.view.View;
 
-import com.danikula.androidkit.aibolit.AbstractFieldInjector;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 

@@ -1,7 +1,10 @@
-package com.danikula.androidkit.aibolit;
+package com.danikula.androidkit.aibolit.injector;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+
+import com.danikula.androidkit.aibolit.FieldInjector;
+import com.danikula.androidkit.aibolit.InjectingException;
 
 import android.view.View;
 
