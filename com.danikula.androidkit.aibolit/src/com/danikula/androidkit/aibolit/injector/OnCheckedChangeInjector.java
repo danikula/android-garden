@@ -18,7 +18,7 @@ public class OnCheckedChangeInjector extends AbstractMethodInjector<InjectOnChec
         Method targetMethod = getMethod(OnCheckedChangeListener.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
-        checkViewClass(CompoundButton.class, view.getClass());
+        checkIsViewAssignable(CompoundButton.class, view.getClass());
 
         OnCheckedChangeListener onCheckedChangeListener = createInvokationProxy(OnCheckedChangeListener.class, methodOwner,
                 sourceMethod, targetMethod);

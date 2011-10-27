@@ -28,6 +28,8 @@ import com.danikula.androidkit.aibolit.annotation.InjectResource;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
+import com.danikula.androidkit.aibolit.injector.AbstractFieldInjector;
+import com.danikula.androidkit.aibolit.injector.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.injector.ArrayAdapterInjector;
 import com.danikula.androidkit.aibolit.injector.OnCheckedChangeInjector;
 import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
@@ -47,16 +49,16 @@ import com.danikula.androidkit.aibolit.injector.ViewInjector;
 
 public class Aibolit {
 
-    private static final Map<Class<? extends Annotation>, FieldInjector<?>> FIELD_INJECTORS_REGISTER;
+    private static final Map<Class<? extends Annotation>, AbstractFieldInjector<?>> FIELD_INJECTORS_REGISTER;
 
-    private static final Map<Class<? extends Annotation>, MethodInjector<?>> METHOD_INJECTORS_REGISTER;
+    private static final Map<Class<? extends Annotation>, AbstractMethodInjector<?>> METHOD_INJECTORS_REGISTER;
 
     private static final List<InjectionResolver> INJECTION_RESOLVERS;
 
     static {
         INJECTION_RESOLVERS = new LinkedList<InjectionResolver>();
-        FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, FieldInjector<?>>();
-        METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, MethodInjector<?>>();
+        FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, AbstractFieldInjector<?>>();
+        METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, AbstractMethodInjector<?>>();
 
         FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
         FIELD_INJECTORS_REGISTER.put(InjectResource.class, new ResourceInjector());
@@ -133,7 +135,7 @@ public class Aibolit {
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
                 if (FIELD_INJECTORS_REGISTER.containsKey(annotationClass)) {
-                    FieldInjector<Annotation> injector = getFieldInjector(annotationClass);
+                    AbstractFieldInjector<Annotation> injector = getFieldInjector(annotationClass);
                     injector.doInjection(holder, view, field, annotation);
                 }
             }
@@ -146,19 +148,19 @@ public class Aibolit {
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
                 if (METHOD_INJECTORS_REGISTER.containsKey(annotationClass)) {
-                    MethodInjector<Annotation> injector = getMethodInjector(annotationClass);
+                    AbstractMethodInjector<Annotation> injector = getMethodInjector(annotationClass);
                     injector.doInjection(holder, view, method, annotation);
                 }
             }
         }
     }
 
-    private static FieldInjector<Annotation> getFieldInjector(Class<? extends Annotation> annotationClass) {
-        return (FieldInjector<Annotation>) FIELD_INJECTORS_REGISTER.get(annotationClass);
+    private static AbstractFieldInjector<Annotation> getFieldInjector(Class<? extends Annotation> annotationClass) {
+        return (AbstractFieldInjector<Annotation>) FIELD_INJECTORS_REGISTER.get(annotationClass);
     }
 
-    private static MethodInjector<Annotation> getMethodInjector(Class<? extends Annotation> annotationClass) {
-        return (MethodInjector<Annotation>) METHOD_INJECTORS_REGISTER.get(annotationClass);
+    private static AbstractMethodInjector<Annotation> getMethodInjector(Class<? extends Annotation> annotationClass) {
+        return (AbstractMethodInjector<Annotation>) METHOD_INJECTORS_REGISTER.get(annotationClass);
     }
 
 }

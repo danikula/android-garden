@@ -3,23 +3,15 @@ package com.danikula.androidkit.aibolit.injector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-import com.danikula.androidkit.aibolit.FieldInjector;
-import com.danikula.androidkit.aibolit.InjectingException;
-
 import android.view.View;
 
-public abstract class AbstractFieldInjector<A extends Annotation> implements FieldInjector<A> {
+import com.danikula.androidkit.aibolit.InjectingException;
 
-    protected View getViewById(View viewHolder, int viewId) {
-        View view = viewHolder.findViewById(viewId);
-        if (view == null) {
-            String errorPattern = "There is no view with id 0x%s in view %s";
-            throw new InjectingException(String.format(errorPattern, Integer.toHexString(viewId), viewHolder));
-        }
-        return view;
-    }
-
-    protected void checkIsAssignable(Field field, Class<?> fieldClass, Class<?> viewClass) {
+public abstract class AbstractFieldInjector<A extends Annotation> extends AbstractInjector<A> {
+    
+    public abstract void doInjection(Object fieldOwner, View viewHolder, Field field, A annotation);
+    
+    protected void checkIsFieldAssignable(Field field, Class<?> fieldClass, Class<?> viewClass) {
         if (!fieldClass.isAssignableFrom(viewClass)) {
             String errorPatterm = "Can't cast object with type %s to field named '%s' with type %s";
             throw new InjectingException(String.format(errorPatterm, viewClass, field.getName(), fieldClass.getName()));

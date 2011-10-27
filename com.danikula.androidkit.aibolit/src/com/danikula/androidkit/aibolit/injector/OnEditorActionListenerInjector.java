@@ -19,7 +19,7 @@ public class OnEditorActionListenerInjector extends AbstractMethodInjector<Injec
         Method targetMethod = getMethod(OnEditorActionListener.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
-        checkViewClass(TextView.class, view.getClass());
+        checkIsViewAssignable(TextView.class, view.getClass());
 
         OnEditorActionListener onEditorActionListener = createInvokationProxy(OnEditorActionListener.class, methodOwner,
                 sourceMethod, targetMethod);

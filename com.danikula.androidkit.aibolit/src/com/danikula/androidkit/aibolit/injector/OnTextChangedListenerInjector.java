@@ -18,7 +18,7 @@ public class OnTextChangedListenerInjector extends AbstractMethodInjector<Inject
         Method targetMethod = getMethod(TextWatcher.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
-        checkViewClass(TextView.class, view.getClass());
+        checkIsViewAssignable(TextView.class, view.getClass());
 
         TextWatcher textWatcher = createInvokationProxy(TextWatcher.class, methodOwner, sourceMethod, targetMethod);
         ((TextView) view).addTextChangedListener(textWatcher);

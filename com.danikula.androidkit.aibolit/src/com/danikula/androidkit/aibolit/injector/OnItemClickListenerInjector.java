@@ -19,7 +19,7 @@ public class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOn
         checkMethodSignature(targetMethod, sourceMethod);
         
         View view = getViewById(viewHolder, annotation.value());
-        checkViewClass(AdapterView.class, view.getClass());
+        checkIsViewAssignable(AdapterView.class, view.getClass());
         AdapterView<?> adapterView = (AdapterView<?>) view; 
 
         OnItemClickListener onItemClickListener = createInvokationProxy(OnItemClickListener.class, methodOwner, sourceMethod, targetMethod);

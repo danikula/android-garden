@@ -19,7 +19,7 @@ public class OnRadioGroupCheckedChangeInjector extends AbstractMethodInjector<In
         Method targetMethod = getMethod(OnCheckedChangeListener.class, TARGET_METHOD_NAME, argsTypes);
         checkMethodSignature(targetMethod, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
-        checkViewClass(RadioGroup.class, view.getClass());
+        checkIsViewAssignable(RadioGroup.class, view.getClass());
 
         OnCheckedChangeListener onCheckedChangeListener = createInvokationProxy(OnCheckedChangeListener.class, methodOwner,
                 sourceMethod, targetMethod);

@@ -25,7 +25,7 @@ public class ArrayAdapterInjector extends AbstractFieldInjector<InjectArrayAdapt
                     Integer.toHexString(layoutId), field.getName(), field.getType()));
         }
 
-        checkIsAssignable(field, field.getType(), adapter.getClass());
+        checkIsFieldAssignable(field, field.getType(), adapter.getClass());
         setValue(fieldOwner, field, adapter);
     }
 }

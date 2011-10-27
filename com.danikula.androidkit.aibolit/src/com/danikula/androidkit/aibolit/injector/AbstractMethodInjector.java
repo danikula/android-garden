@@ -5,13 +5,21 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
-import com.danikula.androidkit.aibolit.InjectingException;
-import com.danikula.androidkit.aibolit.MethodInjector;
-import com.danikula.androidkit.aibolit.MethodInvocationHandler;
-
 import android.view.View;
 
-public abstract class AbstractMethodInjector<T extends Annotation> implements MethodInjector<T> {
+import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.MethodInvocationHandler;
+
+public abstract class AbstractMethodInjector<T extends Annotation> extends AbstractInjector<T> {
+
+    public abstract void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, T annotation);
+
+    protected void checkIsViewAssignable(Class<? extends View> expectedClass, Class<? extends View> actualClass) {
+        if (!expectedClass.isAssignableFrom(actualClass)) {
+            String errorPattern = "Injecting is allowable only for view with type %s, but not for %s";
+            throw new InjectingException(String.format(errorPattern, expectedClass.getName(), actualClass.getName()));
+        }
+    }
 
     protected void checkMethodSignature(Method sourceMethod, Method targetMethod) {
         Class<?>[] sourceMethodArgTypes = sourceMethod.getParameterTypes();
@@ -24,13 +32,6 @@ public abstract class AbstractMethodInjector<T extends Annotation> implements Me
         if (!sourceMethod.getReturnType().equals(targetMethod.getReturnType())) {
             throw new InjectingException(String.format("Method has incorrect return type: %s. Expected: %s",
                     targetMethod.getReturnType(), sourceMethod.getReturnType()));
-        }
-    }
-
-    protected void checkViewClass(Class<? extends View> expectedClass, Class<? extends View> viewClass) {
-        if (!expectedClass.isAssignableFrom(viewClass)) {
-            throw new InjectingException(String.format("%s can inject method only for %s, but not for %s", getClass().getName(),
-                    expectedClass.getName(), viewClass.getName()));
         }
     }
 
@@ -52,14 +53,4 @@ public abstract class AbstractMethodInjector<T extends Annotation> implements Me
         ClassLoader classLoader = proxyClass.getClassLoader();
         return (H) Proxy.newProxyInstance(classLoader, new Class[] { proxyClass }, methodInvocationHandler);
     }
-
-    protected View getViewById(View viewHolder, int viewId) {
-        View view = viewHolder.findViewById(viewId);
-        if (view == null) {
-            String errorPattern = "There is no view with id 0x%s in view %s";
-            throw new InjectingException(String.format(errorPattern, Integer.toHexString(viewId), viewHolder));
-        }
-        return view;
-    }
-
 }
