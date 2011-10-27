@@ -5,10 +5,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import android.content.Context;
+
+import com.danikula.androidkit.aibolit.Aibolit;
+
+/**
+ * Anotation is used for injecting system service into field. See docs for {@link Aibolit} for more information.
+ * 
+ * @see Aibolit
+ * 
+ * @author Alexey Danilov
+ * 
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InjectSystemService {
 
+    /**
+     * Returns system service's name, such as {@link Context#WINDOW_SERVICE}
+     * 
+     * @return String system's name
+     */
     String value();
 
 }

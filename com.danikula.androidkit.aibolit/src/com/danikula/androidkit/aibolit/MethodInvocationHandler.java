@@ -3,6 +3,12 @@ package com.danikula.androidkit.aibolit;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+/**
+ * Invocation handler for injected methods. 
+ * 
+ * @author Alexey Daninilov
+ * 
+ */
 public class MethodInvocationHandler implements InvocationHandler {
 
     private Object methodOwner;
@@ -10,7 +16,7 @@ public class MethodInvocationHandler implements InvocationHandler {
     private Method targetMethod;
 
     private Method sourceMethod;
-    
+
     public MethodInvocationHandler(Object methodOwner, Method sourceMethod, Method targetMethod) {
         this.methodOwner = methodOwner;
         this.targetMethod = targetMethod;

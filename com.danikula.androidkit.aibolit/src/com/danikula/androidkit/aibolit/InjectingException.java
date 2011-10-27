@@ -1,5 +1,11 @@
 package com.danikula.androidkit.aibolit;
 
+/**
+ * Notify about any injection problem
+ *  
+ * @author Alexey Danilov
+ *
+ */
 public class InjectingException extends RuntimeException {
 
     private static final long serialVersionUID = -1L;

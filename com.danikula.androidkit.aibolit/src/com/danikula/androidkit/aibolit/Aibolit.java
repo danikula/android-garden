@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.view.InflateException;
 import android.view.View;
 
 import com.danikula.androidkit.aibolit.annotation.AibolitSettings;
@@ -30,13 +31,12 @@ import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 import com.danikula.androidkit.aibolit.injector.AbstractFieldInjector;
-import com.danikula.androidkit.aibolit.injector.AbstractInjector;
 import com.danikula.androidkit.aibolit.injector.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.injector.InjectorRegister;
 
 /**
  * Does injections into object.
- * <p>
+ * <br/>
  * Class can inject:
  * <ul>
  * <li>Views annotated by {@link InjectView}</li>
@@ -62,7 +62,7 @@ import com.danikula.androidkit.aibolit.injector.InjectorRegister;
  * </ul>
  * </li>
  * </ul>
- * </p>
+ * 
  * Typical usage :
  * 
  * <pre>
@@ -116,66 +116,223 @@ import com.danikula.androidkit.aibolit.injector.InjectorRegister;
  * 
  * }
  * </pre>
+ * <p>
+ * Aibolit allows to add custom injecting resolver with help method {@link #addInjectionResolver(InjectionResolver)}. It helps to
+ * inject custom application services.
+ * </p>
+ * Typical usage:
  * 
- * If superclass also should be injected just annotate your class with {@link AibolitSettings} annotattion with parameter
- * {@link AibolitSettings#injectSuperclasses()} <code>true</code>
+ * <pre>
+ * public class AibolitApplication extends Application implements InjectionResolver{
+ *     
+ *     private HttpService httpService = new HttpService();   // custom application service
+ * 
+ *     &#064;Override
+ *     public void onCreate() {
+ *         super.onCreate();
+ *         
+ *         Aibolit.addInjectionResolver(this);
+ *     }
+ *     
+ *     // resolve aplication service
+ *     &#064;Override
+ *     public Object resolve(Class<?> serviceClass) {
+ *         Object service = null;
+ *         if (HttpManager.class.isAssignableFrom(serviceClass)) {
+ *             service = httpService;
+ *         }
+ *         // else if (...) {...} resolve all custom services
+ *         return service;
+ *     }
+ *     ...
+ * }
+ * 
+ * // then you can use HttpService anywhere you want:
+ * 
+ * public class AibolitChatActivity extends Activity {
+ * 
+ *     &#064;InjectService
+ *     private HttpService httpService;  // inject service
+ *     
+ *     &#064;Override
+ *     public void onCreate(Bundle savedInstanceState) {
+ *         super.onCreate(savedInstanceState);
+ * 
+ *         setContentView(R.layout.chat_activity);
+ *         Aibolit.doInjections(this);
+ *         
+ *         httpService.doRequest();   // use injected service
+ *     }
+ * }
+ * 
+ * </pre>
+ * 
+ * Note: If superclass also should be injected just annotate your class with {@link AibolitSettings} annotattion with parameter
+ * {@link AibolitSettings#injectSuperclasses()} setted to <code>true</code>
  * 
  * @author Alexey Danilov
  * 
  */
 public class Aibolit {
 
-    public static void doInjections(Object holder, View view) {
-        Validate.notNull(holder, "Can't inject in null object");
+    /**
+     * Inject all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param patient Object an object to be processed, can't be <code>null</code>
+     * @param view View a view to be used for resolving injections, can't be <code>null</code>
+     * @throws IllegalArgumentException if any argument is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(Object patient, View view) {
+        Validate.notNull(patient, "Can't inject in null object");
         Validate.notNull(view, "Can't process null view");
 
-        Class<?> holderClass = holder.getClass();
-        AibolitSettings aibolitSettings = holder.getClass().getAnnotation(AibolitSettings.class);
+        Class<?> holderClass = patient.getClass();
+        AibolitSettings aibolitSettings = patient.getClass().getAnnotation(AibolitSettings.class);
         boolean injectSuperclasses = aibolitSettings != null && aibolitSettings.injectSuperclasses();
 
         List<Field> fields = getFieldsList(holderClass, injectSuperclasses);
-        injectFields(holder, view, fields);
+        injectFields(patient, view, fields);
 
         List<Method> methods = getMethodsList(holderClass, injectSuperclasses);
-        injectMethods(holder, view, methods);
+        injectMethods(patient, view, methods);
     }
 
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @throws IllegalArgumentException <code>activity</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void doInjections(Activity activity) {
         doInjections(activity, activity.getWindow().getDecorView());
     }
 
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param dialog Dialog dialog to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @throws IllegalArgumentException if <code>dialog</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void doInjections(Dialog dialog) {
         doInjections(dialog, dialog.getWindow().getDecorView());
     }
 
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param view View view to be processed and that will be used for resolving injections, can't be <code>null</code>
+     * @throws IllegalArgumentException if <code>view</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void doInjections(View view) {
         doInjections(view, view);
     }
 
-    public static void doInjections(Object holder, Activity activity) {
-        doInjections(holder, activity.getWindow().getDecorView());
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param patient Object an object to be processed, can't be <code>null</code>
+     * @param activity Activity activity which content will be used for resolving injections, can't be <code>null</code>
+     * @throws IllegalArgumentException if any argument is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(Object patient, Activity activity) {
+        doInjections(patient, activity.getWindow().getDecorView());
     }
 
+    /**
+     * Sets content for specified activity and injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @param layoutId int layout id to be inflated
+     * @throws IllegalArgumentException if <code>activity</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void setInjectedContentView(Activity activity, int layoutId) {
         activity.setContentView(layoutId);
         doInjections(activity);
     }
 
+    /**
+     * Sets content for specified activity and injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @param contentView View view to be inflated
+     * @throws IllegalArgumentException if any argument is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void setInjectedContentView(Activity activity, View contentView) {
         activity.setContentView(contentView);
         doInjections(activity);
     }
 
+    /**
+     * Sets content for specified dialog and injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param dialog Dialog a dialog to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @param layoutId int layout id to be inflated
+     * @throws IllegalArgumentException if <code>dialog</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void setInjectedContentView(Dialog dialog, int layoutId) {
         dialog.setContentView(layoutId);
         doInjections(dialog);
     }
 
+    /**
+     * Sets content for specified dialog and injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotationons in docs for this class.
+     * </p>
+     * 
+     * @param dialog Dialog a dialog to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @param contentView View view to be inflated
+     * @throws IllegalArgumentException if <code>dialog</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
     public static void setInjectedContentView(Dialog dialog, View contentView) {
         dialog.setContentView(contentView);
         doInjections(dialog);
     }
 
+    /**
+     * Adds resolver for custom application services.
+     * 
+     * @param injectionResolver InjectionResolver resolver to be used for resolving concrete service by class
+     */
     public static void addInjectionResolver(InjectionResolver injectionResolver) {
         InjectorRegister.addInjectionResolver(injectionResolver);
     }
