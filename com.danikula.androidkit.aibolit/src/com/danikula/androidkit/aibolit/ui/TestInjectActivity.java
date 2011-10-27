@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.danikula.androidkit.aibolit.Aibolit;
 import com.danikula.androidkit.aibolit.R;
+import com.danikula.androidkit.aibolit.annotation.AibolitSettings;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
@@ -178,6 +179,7 @@ public class TestInjectActivity extends Activity {
         }
     }
     
+    @AibolitSettings(injectSuperclasses = true)
     private static class ConcreteSimpleDialog extends AbstractSimpleDialog {
         
         @InjectView(android.R.id.text2)

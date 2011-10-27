@@ -3,6 +3,8 @@ package com.danikula.androidkit.aibolit;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +14,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
 
+import com.danikula.androidkit.aibolit.annotation.AibolitSettings;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
@@ -87,8 +90,14 @@ public class Aibolit {
         Validate.notNull(view, "Can't process null view");
 
         Class<?> holderClass = holder.getClass();
-        injectFields(holder, view, holderClass.getDeclaredFields());
-        injectMethods(holder, view, holderClass.getDeclaredMethods());
+        AibolitSettings aibolitSettings = holder.getClass().getAnnotation(AibolitSettings.class);
+        boolean injectSuperclasses = aibolitSettings != null && aibolitSettings.injectSuperclasses();
+        
+        List<Field> fields = getFieldsList(holderClass, injectSuperclasses);
+        injectFields(holder, view, fields);
+
+        List<Method> methods = getMethodsList(holderClass, injectSuperclasses);
+        injectMethods(holder, view, methods);
     }
 
     public static void doInjections(Activity activity) {
@@ -131,8 +140,24 @@ public class Aibolit {
         Validate.notNull(injectionResolver, "InjectionResolver must be not null");
         INJECTION_RESOLVERS.add(injectionResolver);
     }
+    
+    private static ArrayList<Field> getFieldsList(Class<?> classToInspect, boolean includeSuperclassFields) {
+        ArrayList<Field> fieldsList = new ArrayList<Field>(Arrays.asList(classToInspect.getDeclaredFields()));
+        if(includeSuperclassFields && classToInspect.getSuperclass() != null){
+            fieldsList.addAll(getFieldsList(classToInspect.getSuperclass(), includeSuperclassFields));
+        }
+        return fieldsList;
+    }
+    
+    private static ArrayList<Method> getMethodsList(Class<?> classToInspect, boolean includeSuperclassFields) {
+        ArrayList<Method> methodsList = new ArrayList<Method>(Arrays.asList(classToInspect.getDeclaredMethods()));
+        if(includeSuperclassFields && classToInspect.getSuperclass() != null){
+            methodsList.addAll(getMethodsList(classToInspect.getSuperclass(), includeSuperclassFields));
+        }
+        return methodsList;
+    }
 
-    private static void injectFields(Object holder, View view, Field[] fields) {
+    private static void injectFields(Object holder, View view, List<Field> fields) {
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
@@ -145,7 +170,7 @@ public class Aibolit {
         }
     }
 
-    private static void injectMethods(Object holder, View view, Method[] methods) {
+    private static void injectMethods(Object holder, View view, List<Method> methods) {
         for (Method method : methods) {
             Annotation[] annotations = method.getAnnotations();
             for (Annotation annotation : annotations) {
