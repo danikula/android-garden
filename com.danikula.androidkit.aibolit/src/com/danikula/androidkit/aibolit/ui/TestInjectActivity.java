@@ -91,7 +91,7 @@ public class TestInjectActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Aibolit.setContentView(this, R.layout.test);
+        Aibolit.setInjectedContentView(this, R.layout.test);
         
         listView.setAdapter(adapter);
 
@@ -119,7 +119,7 @@ public class TestInjectActivity extends Activity {
     @InjectOnLongClickListener(R.id.button)
     private boolean onButtonLongClickListener(View view) {
         Log.d("debug", "onButtonLongClickListener! " + view);
-        new SimpleDialog(this).show();
+        new ConcreteSimpleDialog(this).show();
         return false;
     }
 
@@ -160,12 +160,12 @@ public class TestInjectActivity extends Activity {
         return false;
     }
     
-    private static class SimpleDialog extends Dialog {
+    private abstract static class AbstractSimpleDialog extends Dialog {
         
         @InjectView(android.R.id.text1)
         private TextView textView;
 
-        public SimpleDialog(Context context) {
+        public AbstractSimpleDialog(Context context) {
             super(context);
         }
         
@@ -173,8 +173,26 @@ public class TestInjectActivity extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             
-            Aibolit.setContentView(this, android.R.layout.simple_expandable_list_item_2);
-            Log.d("debug", "SimpleDialog.onCreate: textView " + textView);
+            Aibolit.setInjectedContentView(this, android.R.layout.simple_expandable_list_item_2);
+            Log.d("debug", "AbstractSimpleDialog.onCreate: textView " + textView);
+        }
+    }
+    
+    private static class ConcreteSimpleDialog extends AbstractSimpleDialog {
+        
+        @InjectView(android.R.id.text2)
+        private TextView textView2;
+
+        public ConcreteSimpleDialog(Context context) {
+            super(context);
+        }
+        
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            
+            Aibolit.setInjectedContentView(this, android.R.layout.simple_expandable_list_item_2);
+            Log.d("debug", "ConcreteSimpleDialog.onCreate: textView " + textView2);
         }
         
     }

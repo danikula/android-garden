@@ -107,22 +107,22 @@ public class Aibolit {
         doInjections(holder, activity.getWindow().getDecorView());
     }
 
-    public static void setContentView(Activity activity, int layoutId) {
+    public static void setInjectedContentView(Activity activity, int layoutId) {
         activity.setContentView(layoutId);
         doInjections(activity);
     }
 
-    public static void setContentView(Activity activity, View contentView) {
+    public static void setInjectedContentView(Activity activity, View contentView) {
         activity.setContentView(contentView);
         doInjections(activity);
     }
 
-    public static void setContentView(Dialog dialog, int layoutId) {
+    public static void setInjectedContentView(Dialog dialog, int layoutId) {
         dialog.setContentView(layoutId);
         doInjections(dialog);
     }
 
-    public static void setContentView(Dialog dialog, View contentView) {
+    public static void setInjectedContentView(Dialog dialog, View contentView) {
         dialog.setContentView(contentView);
         doInjections(dialog);
     }
