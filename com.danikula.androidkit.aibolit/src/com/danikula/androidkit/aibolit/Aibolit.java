@@ -22,6 +22,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTextChangedListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
+import com.danikula.androidkit.aibolit.annotation.InjectResource;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
@@ -35,6 +36,7 @@ import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnRadioGroupCheckedChangeInjector;
 import com.danikula.androidkit.aibolit.injector.OnTextChangedListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnTouchListenerInjector;
+import com.danikula.androidkit.aibolit.injector.ResourceInjector;
 import com.danikula.androidkit.aibolit.injector.ServiceInjector;
 import com.danikula.androidkit.aibolit.injector.SystemServiceInjector;
 import com.danikula.androidkit.aibolit.injector.ViewInjector;
@@ -53,6 +55,7 @@ public class Aibolit {
         METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, MethodInjector<?>>();
 
         FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
+        FIELD_INJECTORS_REGISTER.put(InjectResource.class, new ResourceInjector());
         FIELD_INJECTORS_REGISTER.put(InjectSystemService.class, new SystemServiceInjector());
         FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(INJECTION_RESOLVERS));
 

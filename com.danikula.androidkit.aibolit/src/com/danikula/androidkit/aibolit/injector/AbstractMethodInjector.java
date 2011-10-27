@@ -35,16 +35,15 @@ public abstract class AbstractMethodInjector<T extends Annotation> implements Me
     }
 
     protected Method getMethod(Class<?> methodOwner, String methodName, Class<?>[] argsTypes) {
+        String errorPattern = "Error getting method named '%s' from class %s";
         try {
             return methodOwner.getMethod(methodName, argsTypes);
         }
         catch (SecurityException e) {
-            throw new IllegalArgumentException(String.format("Error getting method '%s' from class '%s'", methodName,
-                    methodOwner.getName()), e);
+            throw new IllegalArgumentException(String.format(errorPattern, methodName, methodOwner.getName()), e);
         }
         catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException(String.format("Error getting method '%s' from class '%s'", methodName,
-                    methodOwner.getName()), e);
+            throw new IllegalArgumentException(String.format(errorPattern, methodName, methodOwner.getName()), e);
         }
     }
 
@@ -57,7 +56,8 @@ public abstract class AbstractMethodInjector<T extends Annotation> implements Me
     protected View getViewById(View viewHolder, int viewId) {
         View view = viewHolder.findViewById(viewId);
         if (view == null) {
-            throw new InjectingException(String.format("There is no view with id %s in view %s", viewId, viewHolder));
+            String errorPattern = "There is no view with id 0x%s in view %s";
+            throw new InjectingException(String.format(errorPattern, Integer.toHexString(viewId), viewHolder));
         }
         return view;
     }

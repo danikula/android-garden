@@ -1,4 +1,4 @@
-package com.danikula.android16.core.ui.support;
+package com.danikula.androidkit.aibolit.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.danikula.android16.core.utils.Validate;
+import com.danikula.androidkit.aibolit.Validate;
 
 public abstract class MutableListAdapter<T> extends BaseAdapter {
 
