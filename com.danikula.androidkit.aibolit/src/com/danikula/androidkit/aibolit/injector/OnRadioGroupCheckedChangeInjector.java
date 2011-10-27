@@ -10,19 +10,16 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChang
 
 public class OnRadioGroupCheckedChangeInjector extends AbstractMethodInjector<InjectOnRadioGroupCheckedChangeListener> {
 
-    private static final String TARGET_METHOD_NAME = "onCheckedChanged";
-
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod,
             InjectOnRadioGroupCheckedChangeListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { RadioGroup.class, int.class };
-        Method targetMethod = getMethod(OnCheckedChangeListener.class, TARGET_METHOD_NAME, argsTypes);
-        checkMethodSignature(targetMethod, sourceMethod);
-        View view = getViewById(viewHolder, annotation.value());
-        checkIsViewAssignable(RadioGroup.class, view.getClass());
-
+        Method targetMethod = getMethod(OnCheckedChangeListener.class, "onCheckedChanged", argsTypes, sourceMethod);
         OnCheckedChangeListener onCheckedChangeListener = createInvokationProxy(OnCheckedChangeListener.class, methodOwner,
                 sourceMethod, targetMethod);
+        
+        View view = getViewById(viewHolder, annotation.value());
+        checkIsViewAssignable(RadioGroup.class, view.getClass());
         ((RadioGroup) view).setOnCheckedChangeListener(onCheckedChangeListener);
     }
 }

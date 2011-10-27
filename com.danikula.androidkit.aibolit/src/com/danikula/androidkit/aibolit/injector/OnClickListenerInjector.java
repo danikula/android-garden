@@ -9,15 +9,12 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 
 public class OnClickListenerInjector extends AbstractMethodInjector<InjectOnClickListener> {
 
-    private static final String TARGET_METHOD_NAME = "onClick";
-
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnClickListener annotation) {
-        Method targetMethod = getMethod(OnClickListener.class, TARGET_METHOD_NAME, new Class<?>[] { View.class });
-        checkMethodSignature(targetMethod, sourceMethod);
-        View view = getViewById(viewHolder, annotation.value());
-        
+        Method targetMethod = getMethod(OnClickListener.class, "onClick", new Class<?>[] { View.class }, sourceMethod);
         OnClickListener onClickListener = createInvokationProxy(OnClickListener.class, methodOwner, sourceMethod, targetMethod);
+
+        View view = getViewById(viewHolder, annotation.value());
         view.setOnClickListener(onClickListener);
     }
 

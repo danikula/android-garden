@@ -10,13 +10,10 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 
 public class OnCheckedChangeInjector extends AbstractMethodInjector<InjectOnCheckedChangeListener> {
 
-    private static final String TARGET_METHOD_NAME = "onCheckedChanged";
-
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnCheckedChangeListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { CompoundButton.class, boolean.class };
-        Method targetMethod = getMethod(OnCheckedChangeListener.class, TARGET_METHOD_NAME, argsTypes);
-        checkMethodSignature(targetMethod, sourceMethod);
+        Method targetMethod = getMethod(OnCheckedChangeListener.class, "onCheckedChanged", argsTypes, sourceMethod);
         View view = getViewById(viewHolder, annotation.value());
         checkIsViewAssignable(CompoundButton.class, view.getClass());
 

@@ -9,15 +9,13 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 
 public class OnLongClickListenerInjector extends AbstractMethodInjector<InjectOnLongClickListener> {
 
-    private static final String TARGET_METHOD_NAME = "onLongClick";
-
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnLongClickListener annotation) {
-        Method targetMethod = getMethod(OnLongClickListener.class, TARGET_METHOD_NAME, new Class<?>[] { View.class });
+        Method targetMethod = getMethod(OnLongClickListener.class, "onLongClick", new Class<?>[] { View.class }, sourceMethod);
         checkMethodSignature(targetMethod, sourceMethod);
-        View view = getViewById(viewHolder, annotation.value());
-
         OnLongClickListener listener = createInvokationProxy(OnLongClickListener.class, methodOwner, sourceMethod, targetMethod);
+
+        View view = getViewById(viewHolder, annotation.value());
         view.setOnLongClickListener(listener);
     }
 

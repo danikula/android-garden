@@ -35,10 +35,12 @@ public abstract class AbstractMethodInjector<T extends Annotation> extends Abstr
         }
     }
 
-    protected Method getMethod(Class<?> methodOwner, String methodName, Class<?>[] argsTypes) {
+    protected Method getMethod(Class<?> methodOwner, String methodName, Class<?>[] argsTypes, Method sourceMethod) {
         String errorPattern = "Error getting method named '%s' from class %s";
         try {
-            return methodOwner.getMethod(methodName, argsTypes);
+            Method method = methodOwner.getMethod(methodName, argsTypes);
+            checkMethodSignature(method, sourceMethod);
+            return method;
         }
         catch (SecurityException e) {
             throw new IllegalArgumentException(String.format(errorPattern, methodName, methodOwner.getName()), e);

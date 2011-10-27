@@ -19,6 +19,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListe
 import com.danikula.androidkit.aibolit.annotation.InjectOnEditorActionListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnItemSelectedListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnKeyListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
@@ -37,6 +38,7 @@ import com.danikula.androidkit.aibolit.injector.OnCreateContextMenuListenerInjec
 import com.danikula.androidkit.aibolit.injector.OnEditorActionListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnFocusChangeListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnItemSelectedListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnKeyListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnRadioGroupCheckedChangeInjector;
@@ -69,6 +71,7 @@ public class Aibolit {
         METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new OnClickListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new OnItemClickListenerInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnItemSelectedListener.class, new OnItemSelectedListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new OnTouchListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnKeyListener.class, new OnKeyListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnFocusChangeListener.class, new OnFocusChangeListenerInjector());
