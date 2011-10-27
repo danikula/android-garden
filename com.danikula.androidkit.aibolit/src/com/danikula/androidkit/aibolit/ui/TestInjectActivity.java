@@ -1,6 +1,7 @@
 package com.danikula.androidkit.aibolit.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.danikula.androidkit.aibolit.Aibolit;
 import com.danikula.androidkit.aibolit.R;
+import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
@@ -82,15 +84,15 @@ public class TestInjectActivity extends Activity {
     @InjectResource(R.integer.max_speed)
     private int maxSpeed;
 
+    @InjectArrayAdapter(textArrayResourceId = R.array.numbers, layoutId = android.R.layout.simple_list_item_1)
+    private ArrayAdapter<CharSequence> adapter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Aibolit.setContentView(this, R.layout.test);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers,
-                android.R.layout.simple_list_item_1);
+        
         listView.setAdapter(adapter);
 
         Log.d("debug", "LayoutInflater: " + layoutInflater);
@@ -117,6 +119,7 @@ public class TestInjectActivity extends Activity {
     @InjectOnLongClickListener(R.id.button)
     private boolean onButtonLongClickListener(View view) {
         Log.d("debug", "onButtonLongClickListener! " + view);
+        new SimpleDialog(this).show();
         return false;
     }
 
@@ -155,5 +158,24 @@ public class TestInjectActivity extends Activity {
     private boolean onKey(View v, int keyCode, KeyEvent event) {
         Log.d("debug", String.format("onKey: %s, %s, %s", v, keyCode, event));
         return false;
+    }
+    
+    private static class SimpleDialog extends Dialog {
+        
+        @InjectView(android.R.id.text1)
+        private TextView textView;
+
+        public SimpleDialog(Context context) {
+            super(context);
+        }
+        
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            
+            Aibolit.setContentView(this, android.R.layout.simple_expandable_list_item_2);
+            Log.d("debug", "SimpleDialog.onCreate: textView " + textView);
+        }
+        
     }
 }

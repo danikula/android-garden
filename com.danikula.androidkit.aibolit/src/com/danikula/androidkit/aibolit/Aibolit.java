@@ -12,9 +12,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
 
+import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnEditorActionListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnKeyListener;
@@ -26,9 +28,11 @@ import com.danikula.androidkit.aibolit.annotation.InjectResource;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
+import com.danikula.androidkit.aibolit.injector.ArrayAdapterInjector;
 import com.danikula.androidkit.aibolit.injector.OnCheckedChangeInjector;
 import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnCreateContextMenuListenerInjector;
+import com.danikula.androidkit.aibolit.injector.OnEditorActionListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnFocusChangeListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
 import com.danikula.androidkit.aibolit.injector.OnKeyListenerInjector;
@@ -56,6 +60,7 @@ public class Aibolit {
 
         FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
         FIELD_INJECTORS_REGISTER.put(InjectResource.class, new ResourceInjector());
+        FIELD_INJECTORS_REGISTER.put(InjectArrayAdapter.class, new ArrayAdapterInjector());
         FIELD_INJECTORS_REGISTER.put(InjectSystemService.class, new SystemServiceInjector());
         FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(INJECTION_RESOLVERS));
 
@@ -69,6 +74,7 @@ public class Aibolit {
         METHOD_INJECTORS_REGISTER.put(InjectOnTextChangedListener.class, new OnTextChangedListenerInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnCheckedChangeListener.class, new OnCheckedChangeInjector());
         METHOD_INJECTORS_REGISTER.put(InjectOnRadioGroupCheckedChangeListener.class, new OnRadioGroupCheckedChangeInjector());
+        METHOD_INJECTORS_REGISTER.put(InjectOnEditorActionListener.class, new OnEditorActionListenerInjector());
     }
 
     public static void doInjections(Object holder, View view) {
