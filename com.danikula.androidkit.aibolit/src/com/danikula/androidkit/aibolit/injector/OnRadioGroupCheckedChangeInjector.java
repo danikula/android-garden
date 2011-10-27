@@ -8,7 +8,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
 
-public class OnRadioGroupCheckedChangeInjector extends AbstractMethodInjector<InjectOnRadioGroupCheckedChangeListener> {
+/*package private*/class OnRadioGroupCheckedChangeInjector extends AbstractMethodInjector<InjectOnRadioGroupCheckedChangeListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod,

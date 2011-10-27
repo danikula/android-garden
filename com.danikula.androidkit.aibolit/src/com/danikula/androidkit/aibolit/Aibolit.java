@@ -5,10 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -33,57 +30,100 @@ import com.danikula.androidkit.aibolit.annotation.InjectService;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 import com.danikula.androidkit.aibolit.injector.AbstractFieldInjector;
+import com.danikula.androidkit.aibolit.injector.AbstractInjector;
 import com.danikula.androidkit.aibolit.injector.AbstractMethodInjector;
-import com.danikula.androidkit.aibolit.injector.ArrayAdapterInjector;
-import com.danikula.androidkit.aibolit.injector.OnCheckedChangeInjector;
-import com.danikula.androidkit.aibolit.injector.OnClickListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnCreateContextMenuListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnEditorActionListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnFocusChangeListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnItemClickListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnItemSelectedListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnKeyListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnLongClickListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnRadioGroupCheckedChangeInjector;
-import com.danikula.androidkit.aibolit.injector.OnTextChangedListenerInjector;
-import com.danikula.androidkit.aibolit.injector.OnTouchListenerInjector;
-import com.danikula.androidkit.aibolit.injector.ResourceInjector;
-import com.danikula.androidkit.aibolit.injector.ServiceInjector;
-import com.danikula.androidkit.aibolit.injector.SystemServiceInjector;
-import com.danikula.androidkit.aibolit.injector.ViewInjector;
+import com.danikula.androidkit.aibolit.injector.InjectorRegister;
 
+/**
+ * Does injections into object.
+ * <p>
+ * Class can inject:
+ * <ul>
+ * <li>Views annotated by {@link InjectView}</li>
+ * <li>Application resources (drawable, string, anim, layout, bool, dimen, integer, array, color) annotated by
+ * {@link InjectResource}.</li>
+ * <li>ArrayAdapter annotated by {@link InjectArrayAdapter}</li>
+ * <li>System services annotated by {@link InjectSystemService}</li>
+ * <li>Custom application services annotated by {@link InjectService} and resolved with help {@link InjectionResolver}</li>
+ * <li>Events handlers annotated by:
+ * <ul>
+ * <li> {@link InjectOnCheckedChangeListener}</li>
+ * <li> {@link InjectOnClickListener}</li>
+ * <li> {@link InjectOnCreateContextMenuListener}</li>
+ * <li> {@link InjectOnEditorActionListener}</li>
+ * <li> {@link InjectOnFocusChangeListener}</li>
+ * <li> {@link InjectOnItemClickListener}</li>
+ * <li> {@link InjectOnItemSelectedListener}</li>
+ * <li> {@link InjectOnKeyListener}</li>
+ * <li> {@link InjectOnLongClickListener}</li>
+ * <li> {@link InjectOnRadioGroupCheckedChangeListener}</li>
+ * <li> {@link InjectOnTextChangedListener}</li>
+ * <li> {@link InjectOnTouchListener}</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * </p>
+ * Typical usage :
+ * 
+ * <pre>
+ * public class AibolitChatActivity extends Activity {
+ * 
+ *     // annotate injected fileds ...
+ *     
+ *     &#064;InjectView(R.id.messageEditText)
+ *     private EditText messageEditText;
+ * 
+ *     &#064;InjectView(R.id.historyListView)
+ *     private ListView historyListView;
+ * 
+ *     &#064;InjectResource(R.string.symbols_count)
+ *     private String symbolsCountPattern;
+ *     
+ *     ...
+ * 
+ *     &#064;Override
+ *     public void onCreate(Bundle savedInstanceState) {
+ *         super.onCreate(savedInstanceState);
+ * 
+ *         setContentView(R.layout.chat_activity);
+ *         // initialize annotated fields and methods
+ *         Aibolit.doInjections(this);
+ *         
+ *         // or just Aibolit.setInjectedContentView(this);
+ *         
+ *         ...
+ *     }
+ * 
+ *     // annotate event handlers... 
+ *     
+ *     &#064;InjectOnClickListener(R.id.sendButton)
+ *     private void onSendButtonClick(View v) {
+ *         String text = messageEditText.getText().toString();
+ *         // do work with text
+ *     }
+ * 
+ *     &#064;InjectOnClickListener(R.id.clearHistoryButton)
+ *     private void onClearHistoryButtonClick(View v) {
+ *         // handle button click
+ *     }
+ * 
+ *     &#064;InjectOnTextChangedListener(R.id.messageEditText)
+ *     public void onMessageTextChanged(CharSequence s, int start, int before, int count) {
+ *         // handle text changed event
+ *     }
+ *     
+ *     ...
+ * 
+ * }
+ * </pre>
+ * 
+ * If superclass also should be injected just annotate your class with {@link AibolitSettings} annotattion with parameter
+ * {@link AibolitSettings#injectSuperclasses()} <code>true</code>
+ * 
+ * @author Alexey Danilov
+ * 
+ */
 public class Aibolit {
-
-    private static final Map<Class<? extends Annotation>, AbstractFieldInjector<?>> FIELD_INJECTORS_REGISTER;
-
-    private static final Map<Class<? extends Annotation>, AbstractMethodInjector<?>> METHOD_INJECTORS_REGISTER;
-
-    private static final List<InjectionResolver> INJECTION_RESOLVERS;
-
-    static {
-        INJECTION_RESOLVERS = new LinkedList<InjectionResolver>();
-        FIELD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, AbstractFieldInjector<?>>();
-        METHOD_INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, AbstractMethodInjector<?>>();
-
-        FIELD_INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
-        FIELD_INJECTORS_REGISTER.put(InjectResource.class, new ResourceInjector());
-        FIELD_INJECTORS_REGISTER.put(InjectArrayAdapter.class, new ArrayAdapterInjector());
-        FIELD_INJECTORS_REGISTER.put(InjectSystemService.class, new SystemServiceInjector());
-        FIELD_INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(INJECTION_RESOLVERS));
-
-        METHOD_INJECTORS_REGISTER.put(InjectOnClickListener.class, new OnClickListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnItemClickListener.class, new OnItemClickListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnItemSelectedListener.class, new OnItemSelectedListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnTouchListener.class, new OnTouchListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnKeyListener.class, new OnKeyListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnFocusChangeListener.class, new OnFocusChangeListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnCreateContextMenuListener.class, new OnCreateContextMenuListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnTextChangedListener.class, new OnTextChangedListenerInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnCheckedChangeListener.class, new OnCheckedChangeInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnRadioGroupCheckedChangeListener.class, new OnRadioGroupCheckedChangeInjector());
-        METHOD_INJECTORS_REGISTER.put(InjectOnEditorActionListener.class, new OnEditorActionListenerInjector());
-    }
 
     public static void doInjections(Object holder, View view) {
         Validate.notNull(holder, "Can't inject in null object");
@@ -92,7 +132,7 @@ public class Aibolit {
         Class<?> holderClass = holder.getClass();
         AibolitSettings aibolitSettings = holder.getClass().getAnnotation(AibolitSettings.class);
         boolean injectSuperclasses = aibolitSettings != null && aibolitSettings.injectSuperclasses();
-        
+
         List<Field> fields = getFieldsList(holderClass, injectSuperclasses);
         injectFields(holder, view, fields);
 
@@ -137,21 +177,20 @@ public class Aibolit {
     }
 
     public static void addInjectionResolver(InjectionResolver injectionResolver) {
-        Validate.notNull(injectionResolver, "InjectionResolver must be not null");
-        INJECTION_RESOLVERS.add(injectionResolver);
+        InjectorRegister.addInjectionResolver(injectionResolver);
     }
-    
+
     private static ArrayList<Field> getFieldsList(Class<?> classToInspect, boolean includeSuperclassFields) {
         ArrayList<Field> fieldsList = new ArrayList<Field>(Arrays.asList(classToInspect.getDeclaredFields()));
-        if(includeSuperclassFields && classToInspect.getSuperclass() != null){
+        if (includeSuperclassFields && classToInspect.getSuperclass() != null) {
             fieldsList.addAll(getFieldsList(classToInspect.getSuperclass(), includeSuperclassFields));
         }
         return fieldsList;
     }
-    
+
     private static ArrayList<Method> getMethodsList(Class<?> classToInspect, boolean includeSuperclassFields) {
         ArrayList<Method> methodsList = new ArrayList<Method>(Arrays.asList(classToInspect.getDeclaredMethods()));
-        if(includeSuperclassFields && classToInspect.getSuperclass() != null){
+        if (includeSuperclassFields && classToInspect.getSuperclass() != null) {
             methodsList.addAll(getMethodsList(classToInspect.getSuperclass(), includeSuperclassFields));
         }
         return methodsList;
@@ -162,8 +201,8 @@ public class Aibolit {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
-                if (FIELD_INJECTORS_REGISTER.containsKey(annotationClass)) {
-                    AbstractFieldInjector<Annotation> injector = getFieldInjector(annotationClass);
+                if (InjectorRegister.contains(annotationClass)) {
+                    AbstractFieldInjector<Annotation> injector = InjectorRegister.getFieldInjector(annotationClass);
                     injector.doInjection(holder, view, field, annotation);
                 }
             }
@@ -175,20 +214,11 @@ public class Aibolit {
             Annotation[] annotations = method.getAnnotations();
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
-                if (METHOD_INJECTORS_REGISTER.containsKey(annotationClass)) {
-                    AbstractMethodInjector<Annotation> injector = getMethodInjector(annotationClass);
+                if (InjectorRegister.contains(annotationClass)) {
+                    AbstractMethodInjector<Annotation> injector = InjectorRegister.getMethodInjector(annotationClass);
                     injector.doInjection(holder, view, method, annotation);
                 }
             }
         }
     }
-
-    private static AbstractFieldInjector<Annotation> getFieldInjector(Class<? extends Annotation> annotationClass) {
-        return (AbstractFieldInjector<Annotation>) FIELD_INJECTORS_REGISTER.get(annotationClass);
-    }
-
-    private static AbstractMethodInjector<Annotation> getMethodInjector(Class<? extends Annotation> annotationClass) {
-        return (AbstractMethodInjector<Annotation>) METHOD_INJECTORS_REGISTER.get(annotationClass);
-    }
-
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 
-public class ViewInjector extends AbstractFieldInjector<InjectView> {
+/*package private*/class ViewInjector extends AbstractFieldInjector<InjectView> {
 
     @Override
     public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectView annotation) {

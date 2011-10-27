@@ -8,7 +8,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 
-public class OnCheckedChangeInjector extends AbstractMethodInjector<InjectOnCheckedChangeListener> {
+/*package private*/class OnCheckedChangeInjector extends AbstractMethodInjector<InjectOnCheckedChangeListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnCheckedChangeListener annotation) {

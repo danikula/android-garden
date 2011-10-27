@@ -8,7 +8,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 
-public class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOnItemClickListener> {
+/*package private*/class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOnItemClickListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnItemClickListener annotation) {

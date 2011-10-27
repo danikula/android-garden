@@ -7,7 +7,7 @@ import android.view.View.OnFocusChangeListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
 
-public class OnFocusChangeListenerInjector extends AbstractMethodInjector<InjectOnFocusChangeListener> {
+/*package private*/class OnFocusChangeListenerInjector extends AbstractMethodInjector<InjectOnFocusChangeListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnFocusChangeListener annotation) {

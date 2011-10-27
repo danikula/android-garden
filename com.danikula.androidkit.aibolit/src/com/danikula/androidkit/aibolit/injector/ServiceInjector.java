@@ -9,7 +9,7 @@ import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.InjectionResolver;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 
-public class ServiceInjector extends AbstractFieldInjector<InjectService> {
+/*package private*/class ServiceInjector extends AbstractFieldInjector<InjectService> {
     
     private List<InjectionResolver> resolvers;
     

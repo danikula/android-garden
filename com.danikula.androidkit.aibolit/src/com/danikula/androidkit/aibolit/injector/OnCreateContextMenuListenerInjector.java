@@ -9,7 +9,7 @@ import android.view.View.OnCreateContextMenuListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListener;
 
-public class OnCreateContextMenuListenerInjector extends AbstractMethodInjector<InjectOnCreateContextMenuListener> {
+/*package private*/class OnCreateContextMenuListenerInjector extends AbstractMethodInjector<InjectOnCreateContextMenuListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnCreateContextMenuListener annotation) {

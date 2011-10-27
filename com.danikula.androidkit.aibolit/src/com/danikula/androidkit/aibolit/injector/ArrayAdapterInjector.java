@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 
-public class ArrayAdapterInjector extends AbstractFieldInjector<InjectArrayAdapter> {
+/*package private*/class ArrayAdapterInjector extends AbstractFieldInjector<InjectArrayAdapter> {
 
     @Override
     public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectArrayAdapter annotation) {

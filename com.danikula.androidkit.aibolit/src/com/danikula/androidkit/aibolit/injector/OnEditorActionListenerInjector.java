@@ -9,7 +9,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnEditorActionListener;
 
-public class OnEditorActionListenerInjector extends AbstractMethodInjector<InjectOnEditorActionListener> {
+/*package private*/class OnEditorActionListenerInjector extends AbstractMethodInjector<InjectOnEditorActionListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnEditorActionListener annotation) {

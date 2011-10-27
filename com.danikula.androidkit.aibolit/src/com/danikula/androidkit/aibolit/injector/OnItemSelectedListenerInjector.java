@@ -8,7 +8,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemSelectedListener;
 
-public class OnItemSelectedListenerInjector extends AbstractMethodInjector<InjectOnItemSelectedListener> {
+/*package private*/class OnItemSelectedListenerInjector extends AbstractMethodInjector<InjectOnItemSelectedListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnItemSelectedListener annotation) {

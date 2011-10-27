@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 
-public class OnClickListenerInjector extends AbstractMethodInjector<InjectOnClickListener> {
+/*package private*/class OnClickListenerInjector extends AbstractMethodInjector<InjectOnClickListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnClickListener annotation) {
