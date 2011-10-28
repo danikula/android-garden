@@ -8,7 +8,13 @@ import android.widget.TextView;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnTextChangedListener;
 
-/*package private*/class OnTextChangedListenerInjector extends AbstractMethodInjector<InjectOnTextChangedListener> {
+/**
+ * Injects {@link TextWatcher#onTextChanged(CharSequence, int, int, int)} method
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class OnTextChangedListenerInjector extends AbstractMethodInjector<InjectOnTextChangedListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnTextChangedListener annotation) {

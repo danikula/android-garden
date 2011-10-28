@@ -7,7 +7,13 @@ import android.view.View.OnLongClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 
-/*package private*/class OnLongClickListenerInjector extends AbstractMethodInjector<InjectOnLongClickListener> {
+/**
+ * Injects {@link View.OnLongClickListener#onLongClick(View)} method
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class OnLongClickListenerInjector extends AbstractMethodInjector<InjectOnLongClickListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnLongClickListener annotation) {

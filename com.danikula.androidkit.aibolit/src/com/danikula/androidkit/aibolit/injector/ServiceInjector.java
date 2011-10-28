@@ -5,15 +5,23 @@ import java.util.List;
 
 import android.view.View;
 
+import com.danikula.androidkit.aibolit.Aibolit;
 import com.danikula.androidkit.aibolit.InjectingException;
-import com.danikula.androidkit.aibolit.InjectionResolver;
+import com.danikula.androidkit.aibolit.ServicesResolver;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 
-/*package private*/class ServiceInjector extends AbstractFieldInjector<InjectService> {
-    
-    private List<InjectionResolver> resolvers;
-    
-    public ServiceInjector(List<InjectionResolver> resolvers) {
+/**
+ * Injects application service. Client code have to add custom {@link ServicesResolver} with help method
+ * {@link Aibolit#addInjectionResolver(ServicesResolver)}
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class ServiceInjector extends AbstractFieldInjector<InjectService> {
+
+    private List<ServicesResolver> resolvers;
+
+    public ServiceInjector(List<ServicesResolver> resolvers) {
         this.resolvers = resolvers;
     }
 
@@ -21,7 +29,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectService;
     public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectService annotation) {
         Object service = null;
         Class<?> serviceClass = field.getType();
-        for (InjectionResolver injectionResolver : resolvers) {
+        for (ServicesResolver injectionResolver : resolvers) {
             service = injectionResolver.resolve(serviceClass);
             if (service != null) {
                 break;
@@ -31,7 +39,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectService;
             String errorPattern = "There is no registered service for field named '%s' with type %s";
             throw new InjectingException(String.format(errorPattern, field.getName(), serviceClass.getName()));
         }
-        
+
         setValue(fieldOwner, field, service);
     }
 }

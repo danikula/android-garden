@@ -6,7 +6,7 @@ package com.danikula.androidkit.aibolit;
  * @author Alexey Danilov
  * 
  */
-public interface InjectionResolver {
+public interface ServicesResolver {
 
     /**
      * Resolves application service by class

@@ -14,7 +14,13 @@ import android.view.animation.AnimationUtils;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectResource;
 
-/*package private*/class ResourceInjector extends AbstractFieldInjector<InjectResource> {
+/**
+ * Injects application resource(drawable, string, anim, layout, bool, dimen, integer, array, color)
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class ResourceInjector extends AbstractFieldInjector<InjectResource> {
 
     @Override
     public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectResource annotation) {

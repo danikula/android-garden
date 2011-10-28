@@ -3,9 +3,9 @@ package com.danikula.androidkit.aibolit.ui;
 import android.app.Application;
 
 import com.danikula.androidkit.aibolit.Aibolit;
-import com.danikula.androidkit.aibolit.InjectionResolver;
+import com.danikula.androidkit.aibolit.ServicesResolver;
 
-public class AibolitApplication extends Application implements InjectionResolver{
+public class AibolitApplication extends Application implements ServicesResolver{
     
     private HttpManager httpManager;
 

@@ -11,7 +11,13 @@ import android.view.View;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 
-/*package private*/class SystemServiceInjector extends AbstractFieldInjector<InjectSystemService> {
+/**
+ * Injects system service.
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class SystemServiceInjector extends AbstractFieldInjector<InjectSystemService> {
 
     // @formatter:off
     private static final Set<String> SUPPORTED_SERVICES = new HashSet<String>(Arrays.asList(

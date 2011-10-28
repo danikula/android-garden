@@ -6,6 +6,13 @@ import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
 
+/**
+ * Injects field or method using data from annotation
+ * 
+ * @author Alexey Danilov
+ * 
+ * @param <T> type of corresponding annotation
+ */
 public abstract class AbstractInjector<T extends Annotation> {
 
     protected View getViewById(View viewHolder, int viewId) {

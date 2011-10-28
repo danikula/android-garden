@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.danikula.androidkit.aibolit.InjectingException;
-import com.danikula.androidkit.aibolit.InjectionResolver;
+import com.danikula.androidkit.aibolit.ServicesResolver;
 import com.danikula.androidkit.aibolit.Validate;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
@@ -30,17 +30,17 @@ import com.danikula.androidkit.aibolit.annotation.InjectView;
 public class InjectorRegister {
     private static final Map<Class<? extends Annotation>, AbstractInjector<?>> INJECTORS_REGISTER;
 
-    private static final List<InjectionResolver> INJECTION_RESOLVERS;
+    private static final List<ServicesResolver> SERVICES_RESOLVERS;
 
     static {
-        INJECTION_RESOLVERS = new LinkedList<InjectionResolver>();
+        SERVICES_RESOLVERS = new LinkedList<ServicesResolver>();
         INJECTORS_REGISTER = new HashMap<Class<? extends Annotation>, AbstractInjector<?>>();
 
         INJECTORS_REGISTER.put(InjectView.class, new ViewInjector());
         INJECTORS_REGISTER.put(InjectResource.class, new ResourceInjector());
         INJECTORS_REGISTER.put(InjectArrayAdapter.class, new ArrayAdapterInjector());
         INJECTORS_REGISTER.put(InjectSystemService.class, new SystemServiceInjector());
-        INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(INJECTION_RESOLVERS));
+        INJECTORS_REGISTER.put(InjectService.class, new ServiceInjector(SERVICES_RESOLVERS));
 
         INJECTORS_REGISTER.put(InjectOnClickListener.class, new OnClickListenerInjector());
         INJECTORS_REGISTER.put(InjectOnLongClickListener.class, new OnLongClickListenerInjector());
@@ -76,8 +76,8 @@ public class InjectorRegister {
         return (AbstractMethodInjector<Annotation>) abstractInjector;
     }
     
-    public static void addInjectionResolver(InjectionResolver injectionResolver){
-        Validate.notNull(injectionResolver, "InjectionResolver must be not null");
-        INJECTION_RESOLVERS.add(injectionResolver);
+    public static void addServicesResolver(ServicesResolver serviceResolver){
+        Validate.notNull(serviceResolver, "InjectionResolver must be not null");
+        SERVICES_RESOLVERS.add(serviceResolver);
     }
 }

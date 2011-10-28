@@ -10,6 +10,22 @@ import com.danikula.androidkit.aibolit.Aibolit;
 /**
  * Anotation is used for injecting view into field. See docs for {@link Aibolit} for more information.
  * 
+ * <p>
+ * Usage:
+ * 
+ * <pre>
+ * &#064;InjectView(R.id.messageEditText)
+ * private EditText messageEditText;
+ * 
+ * &#064;InjectView(R.id.symbolsCountTextVew)
+ * private TextView symbolsCountTextVew;
+ * 
+ * &#064;InjectView(R.id.historyListView)
+ * private ListView historyListView;
+ * </pre>
+ * 
+ * </p>
+ * 
  * @see Aibolit
  * 
  * @author Alexey Danilov

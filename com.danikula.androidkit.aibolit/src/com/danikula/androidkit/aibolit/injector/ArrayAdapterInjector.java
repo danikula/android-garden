@@ -9,6 +9,12 @@ import android.widget.ArrayAdapter;
 import com.danikula.androidkit.aibolit.InjectingException;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 
+/**
+ * Injects {@link ArrayAdapter}
+ * 
+ * @author Alexey Danilov
+ *
+ */
 /*package private*/class ArrayAdapterInjector extends AbstractFieldInjector<InjectArrayAdapter> {
 
     @Override

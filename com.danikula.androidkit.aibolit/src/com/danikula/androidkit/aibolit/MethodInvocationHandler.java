@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * Invocation handler for injected methods. 
+ * Invocation handler for injected methods.
  * 
  * @author Alexey Daninilov
  * 
@@ -17,6 +17,13 @@ public class MethodInvocationHandler implements InvocationHandler {
 
     private Method sourceMethod;
 
+    /**
+     * Constructs invokation handler. 
+     * 
+     * @param methodOwner Object object that contains fields or methods that should be injected
+     * @param sourceMethod Method method to be called
+     * @param targetMethod Method method of listener
+     */
     public MethodInvocationHandler(Object methodOwner, Method sourceMethod, Method targetMethod) {
         this.methodOwner = methodOwner;
         this.targetMethod = targetMethod;

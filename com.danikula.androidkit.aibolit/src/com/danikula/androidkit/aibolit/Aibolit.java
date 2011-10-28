@@ -44,7 +44,7 @@ import com.danikula.androidkit.aibolit.injector.InjectorRegister;
  * {@link InjectResource}.</li>
  * <li>ArrayAdapter annotated by {@link InjectArrayAdapter}</li>
  * <li>System services annotated by {@link InjectSystemService}</li>
- * <li>Custom application services annotated by {@link InjectService} and resolved with help {@link InjectionResolver}</li>
+ * <li>Custom application services annotated by {@link InjectService} and resolved with help {@link ServicesResolver}</li>
  * <li>Events handlers annotated by:
  * <ul>
  * <li> {@link InjectOnCheckedChangeListener}</li>
@@ -117,7 +117,7 @@ import com.danikula.androidkit.aibolit.injector.InjectorRegister;
  * }
  * </pre>
  * <p>
- * Aibolit allows to add custom injecting resolver with help method {@link #addInjectionResolver(InjectionResolver)}. It helps to
+ * Aibolit allows to add custom injecting resolver with help method {@link #addInjectionResolver(ServicesResolver)}. It helps to
  * inject custom application services.
  * </p>
  * Typical usage:
@@ -333,8 +333,8 @@ public class Aibolit {
      * 
      * @param injectionResolver InjectionResolver resolver to be used for resolving concrete service by class
      */
-    public static void addInjectionResolver(InjectionResolver injectionResolver) {
-        InjectorRegister.addInjectionResolver(injectionResolver);
+    public static void addInjectionResolver(ServicesResolver injectionResolver) {
+        InjectorRegister.addServicesResolver(injectionResolver);
     }
 
     private static ArrayList<Field> getFieldsList(Class<?> classToInspect, boolean includeSuperclassFields) {

@@ -2,6 +2,7 @@ package com.danikula.androidkit.aibolit.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -27,6 +28,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnCheckedChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnFocusChangeListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
+import com.danikula.androidkit.aibolit.annotation.InjectOnItemSelectedListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnKeyListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnLongClickListener;
 import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
@@ -51,6 +53,9 @@ public class TestInjectActivity extends Activity {
 
     @InjectSystemService(Context.LAYOUT_INFLATER_SERVICE)
     private LayoutInflater layoutInflater;
+    
+    @InjectSystemService(Context.NOTIFICATION_SERVICE)
+    private NotificationManager notificationManager;
     
     @InjectResource(R.anim.my_anim)
     private Animation animation;
@@ -123,10 +128,20 @@ public class TestInjectActivity extends Activity {
         new ConcreteSimpleDialog(this).show();
         return false;
     }
+    
+    @InjectOnTouchListener(R.id.button)
+    private boolean onButtonTouch(View v, MotionEvent event) {
+        // handle touch event
+        return false;
+    }
 
     @InjectOnItemClickListener(R.id.listView)
     private void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("debug", String.format("onItemClick: %s, %s, %s, %s", parent, view, position, id));
+    }
+    
+    @InjectOnItemSelectedListener(R.id.listView)
+    private void onListViewItemSelected(AdapterView<?> parent, View view, int position, long id) {
     }
 
     @InjectOnTouchListener(R.id.textView)
@@ -141,7 +156,7 @@ public class TestInjectActivity extends Activity {
     }
 
     @InjectOnTextChangedListener(R.id.editText)
-    private void onTextChanged(CharSequence s, int start, int before, int count) {
+    private void onSearchTextChanged(CharSequence s, int start, int before, int count) {
         Log.d("debug", String.format("onTextChanged: %s, %s, %s, %s", s, start, before, count));
     }
 

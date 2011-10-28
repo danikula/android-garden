@@ -7,8 +7,22 @@ import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
 
+/**
+ * Injects field into object
+ * 
+ * @author Alexey Danilov
+ * 
+ * @param <A> type of corresponding annotation
+ */
 public abstract class AbstractFieldInjector<A extends Annotation> extends AbstractInjector<A> {
     
+    /**
+     * Injects filed into object
+     * @param fieldOwner Objects object that contain field
+     * @param viewHolder View view to be used for resolving injection
+     * @param field Filed injected to be initialized
+     * @param annotation T annotation fir providing data for injection
+     */
     public abstract void doInjection(Object fieldOwner, View viewHolder, Field field, A annotation);
     
     protected void checkIsFieldAssignable(Field field, Class<?> fieldClass, Class<?> viewClass) {

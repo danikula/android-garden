@@ -8,7 +8,13 @@ import android.view.View.OnTouchListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 
-/*package private*/class OnTouchListenerInjector extends AbstractMethodInjector<InjectOnTouchListener> {
+/**
+ * Injects {@link View.OnTouchListener#onTouch(View, MotionEvent)} method
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class OnTouchListenerInjector extends AbstractMethodInjector<InjectOnTouchListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnTouchListener annotation) {

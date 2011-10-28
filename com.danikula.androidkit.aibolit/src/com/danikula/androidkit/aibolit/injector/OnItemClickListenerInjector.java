@@ -8,13 +8,20 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnItemClickListener;
 
-/*package private*/class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOnItemClickListener> {
+/**
+ * Injects {@link AdapterView.OnItemClickListener#onItemClick(AdapterView, View, int, long) } method
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class OnItemClickListenerInjector extends AbstractMethodInjector<InjectOnItemClickListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnItemClickListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { AdapterView.class, View.class, int.class, long.class };
         Method targetMethod = getMethod(OnItemClickListener.class, "onItemClick", argsTypes, sourceMethod);
-        OnItemClickListener onItemClickListener = createInvokationProxy(OnItemClickListener.class, methodOwner, sourceMethod, targetMethod);
+        OnItemClickListener onItemClickListener = createInvokationProxy(OnItemClickListener.class, methodOwner, sourceMethod,
+                targetMethod);
 
         View view = getViewById(viewHolder, annotation.value());
         checkIsViewAssignable(AdapterView.class, view.getClass());

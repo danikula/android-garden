@@ -6,11 +6,24 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.danikula.androidkit.aibolit.Aibolit;
+import com.danikula.androidkit.aibolit.ServicesResolver;
 
 /**
  * Anotation is used for injecting application service into field. See docs for {@link Aibolit} for more information.
  * 
+ * <p>
+ * Usage:
+ * 
+ * <pre>
+ * &#064;InjectService
+ * private HttpService httpService; // inject application service
+ * </pre>
+ * 
+ * </p>
+ * 
  * @see Aibolit
+ * @see ServicesResolver
+ * 
  * @author Alexey Danilov
  * 
  */

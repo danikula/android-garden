@@ -12,6 +12,16 @@ import com.danikula.androidkit.aibolit.Aibolit;
 /**
  * Anotation is used for injecting system service into field. See docs for {@link Aibolit} for more information.
  * 
+ * <p>
+ * Usage:
+ * 
+ * <pre>
+ * &#064;InjectSystemService(Context.NOTIFICATION_SERVICE)
+ * private NotificationManager notificationManager;
+ * </pre>
+ * 
+ * </p>
+ * 
  * @see Aibolit
  * 
  * @author Alexey Danilov

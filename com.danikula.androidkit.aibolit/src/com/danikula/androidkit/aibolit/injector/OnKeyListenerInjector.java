@@ -8,7 +8,13 @@ import android.view.View.OnKeyListener;
 
 import com.danikula.androidkit.aibolit.annotation.InjectOnKeyListener;
 
-/*package private*/class OnKeyListenerInjector extends AbstractMethodInjector<InjectOnKeyListener> {
+/**
+ * Injects {@link View.OnKeyListener#onKey(View, int, KeyEvent)} method
+ * 
+ * @author Alexey Danilov
+ * 
+ */
+/* package private */class OnKeyListenerInjector extends AbstractMethodInjector<InjectOnKeyListener> {
 
     @Override
     public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnKeyListener annotation) {
