@@ -3,10 +3,10 @@ package com.danikula.androidkit.aibolit.injector;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import android.view.View;
 
 import com.danikula.androidkit.aibolit.Aibolit;
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.ServicesResolver;
 import com.danikula.androidkit.aibolit.annotation.InjectService;
 
@@ -26,7 +26,7 @@ import com.danikula.androidkit.aibolit.annotation.InjectService;
     }
 
     @Override
-    public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectService annotation) {
+    public void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, InjectService annotation) {
         Object service = null;
         Class<?> serviceClass = field.getType();
         for (ServicesResolver injectionResolver : resolvers) {

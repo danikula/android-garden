@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectOnEditorActionListener;
 
 /**
@@ -18,13 +19,13 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnEditorActionListener;
 /* package private */class OnEditorActionListenerInjector extends AbstractMethodInjector<InjectOnEditorActionListener> {
 
     @Override
-    public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnEditorActionListener annotation) {
+    public void doInjection(Object methodOwner, InjectionContext injectionContext, Method sourceMethod, InjectOnEditorActionListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { TextView.class, int.class, KeyEvent.class };
         Method targetMethod = getMethod(OnEditorActionListener.class, "onEditorAction", argsTypes, sourceMethod);
         OnEditorActionListener onEditorActionListener = createInvokationProxy(OnEditorActionListener.class, methodOwner,
                 sourceMethod, targetMethod);
 
-        View view = getViewById(viewHolder, annotation.value());
+        View view = getViewById(injectionContext.getRootView(), annotation.value());
         checkIsViewAssignable(TextView.class, view.getClass());
         ((TextView) view).setOnEditorActionListener(onEditorActionListener);
     }

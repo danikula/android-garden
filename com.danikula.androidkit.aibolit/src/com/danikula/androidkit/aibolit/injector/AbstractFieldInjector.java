@@ -3,9 +3,9 @@ package com.danikula.androidkit.aibolit.injector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 
 /**
  * Injects field into object
@@ -19,12 +19,12 @@ public abstract class AbstractFieldInjector<A extends Annotation> extends Abstra
     /**
      * Injects filed into object
      * @param fieldOwner Objects object that contain field
-     * @param viewHolder View view to be used for resolving injection
+     * @param injectionContext InjectionContext object to be used for retrieving information about injection context
      * @param field Filed injected to be initialized
      * @param annotation T annotation fir providing data for injection
      */
-    public abstract void doInjection(Object fieldOwner, View viewHolder, Field field, A annotation);
-    
+    public abstract void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, A annotation);
+
     protected void checkIsFieldAssignable(Field field, Class<?> fieldClass, Class<?> viewClass) {
         if (!fieldClass.isAssignableFrom(viewClass)) {
             String errorPatterm = "Can't cast object with type %s to field named '%s' with type %s";

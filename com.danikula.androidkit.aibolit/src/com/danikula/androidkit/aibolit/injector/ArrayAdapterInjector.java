@@ -3,10 +3,10 @@ package com.danikula.androidkit.aibolit.injector;
 import java.lang.reflect.Field;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 
 /**
@@ -18,8 +18,8 @@ import com.danikula.androidkit.aibolit.annotation.InjectArrayAdapter;
 /*package private*/class ArrayAdapterInjector extends AbstractFieldInjector<InjectArrayAdapter> {
 
     @Override
-    public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectArrayAdapter annotation) {
-        Context context = viewHolder.getContext();
+    public void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, InjectArrayAdapter annotation) {
+        Context context = injectionContext.getAndroidContext();
         int layoutId = annotation.layoutId();
         int textArrayResourceId = annotation.textArrayResourceId();
 

@@ -8,10 +8,10 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectResource;
 
 /**
@@ -23,8 +23,8 @@ import com.danikula.androidkit.aibolit.annotation.InjectResource;
 /* package private */class ResourceInjector extends AbstractFieldInjector<InjectResource> {
 
     @Override
-    public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectResource annotation) {
-        Context context = viewHolder.getContext();
+    public void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, InjectResource annotation) {
+        Context context = injectionContext.getAndroidContext();
         Resources resources = context.getResources();
         Class<?> fieldType = field.getType();
         int resourceId = annotation.value();

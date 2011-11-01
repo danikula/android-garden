@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectView;
 
 /**
@@ -16,9 +17,9 @@ import com.danikula.androidkit.aibolit.annotation.InjectView;
 /* package private */class ViewInjector extends AbstractFieldInjector<InjectView> {
 
     @Override
-    public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectView annotation) {
+    public void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, InjectView annotation) {
         int viewId = annotation.value();
-        View view = getViewById(viewHolder, viewId);
+        View view = getViewById(injectionContext.getRootView(), viewId);
         if (view == null) {
             String errorPattern = "View with id 0x%s for field named '%s' with type %s not found";
             throw new InjectingException(String.format(errorPattern, Integer.toHexString(viewId), field.getName(),

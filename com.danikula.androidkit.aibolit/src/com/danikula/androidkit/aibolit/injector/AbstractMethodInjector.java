@@ -8,6 +8,7 @@ import java.util.Arrays;
 import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.MethodInvocationHandler;
 
 /**
@@ -22,11 +23,11 @@ public abstract class AbstractMethodInjector<A extends Annotation> extends Abstr
     /**
      * Injects event handler
      * @param methodOwner Objects object that contain method
-     * @param viewHolder View view to be used for setting listener
+     * @param injectionContext InjectionContext object to be used for retrieving information about injection context
      * @param sourceMethod method to be invoked as event handler
      * @param annotation T annotation fir providing data for injection
      */
-    public abstract void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, A annotation);
+    public abstract void doInjection(Object methodOwner, InjectionContext injectionContext, Method sourceMethod, A annotation);
 
     protected void checkIsViewAssignable(Class<? extends View> expectedClass, Class<? extends View> actualClass) {
         if (!expectedClass.isAssignableFrom(actualClass)) {

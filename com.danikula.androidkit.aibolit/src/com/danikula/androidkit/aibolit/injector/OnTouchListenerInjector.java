@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 
 /**
@@ -17,12 +18,12 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnTouchListener;
 /* package private */class OnTouchListenerInjector extends AbstractMethodInjector<InjectOnTouchListener> {
 
     @Override
-    public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnTouchListener annotation) {
+    public void doInjection(Object methodOwner, InjectionContext injectionContext, Method sourceMethod, InjectOnTouchListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { View.class, MotionEvent.class };
         Method targetMethod = getMethod(OnTouchListener.class, "onTouch", argsTypes, sourceMethod);
         OnTouchListener onTouchListener = createInvokationProxy(OnTouchListener.class, methodOwner, sourceMethod, targetMethod);
 
-        View view = getViewById(viewHolder, annotation.value());
+        View view = getViewById(injectionContext.getRootView(), annotation.value());
         view.setOnTouchListener(onTouchListener);
     }
 }

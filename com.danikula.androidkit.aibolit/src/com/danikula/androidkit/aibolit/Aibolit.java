@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.view.InflateException;
 import android.view.View;
 
@@ -35,8 +36,7 @@ import com.danikula.androidkit.aibolit.injector.AbstractMethodInjector;
 import com.danikula.androidkit.aibolit.injector.InjectorRegister;
 
 /**
- * Does injections into object.
- * <br/>
+ * Does injections into object. <br/>
  * Class can inject:
  * <ul>
  * <li>Views annotated by {@link InjectView}</li>
@@ -176,9 +176,56 @@ import com.danikula.androidkit.aibolit.injector.InjectorRegister;
 public class Aibolit {
 
     /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotations in docs for this class.
+     * </p>
+     * 
+     * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @throws IllegalArgumentException <code>activity</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(Activity activity) {
+        Validate.notNull(activity, "Can't process null activity");
+        doInjections(activity, new VisibleInjectionContext(activity));
+    }
+
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotations in docs for this class.
+     * </p>
+     * 
+     * @param dialog Dialog dialog to be processed and which content will be used for resolving injections, can't be
+     *            <code>null</code>
+     * @throws IllegalArgumentException if <code>dialog</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(Dialog dialog) {
+        Validate.notNull(dialog, "Can't process null dialog");
+        doInjections(dialog, new VisibleInjectionContext(dialog));
+    }
+
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotations in docs for this class.
+     * </p>
+     * 
+     * @param view View view to be processed and that will be used for resolving injections, can't be <code>null</code>
+     * @throws IllegalArgumentException if <code>view</code> is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(View view) {
+        Validate.notNull(view, "Can't process null view");
+        doInjections(view, view);
+    }
+
+    /**
      * Inject all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param patient Object an object to be processed, can't be <code>null</code>
@@ -190,65 +237,13 @@ public class Aibolit {
         Validate.notNull(patient, "Can't inject in null object");
         Validate.notNull(view, "Can't process null view");
 
-        Class<?> holderClass = patient.getClass();
-        AibolitSettings aibolitSettings = patient.getClass().getAnnotation(AibolitSettings.class);
-        boolean injectSuperclasses = aibolitSettings != null && aibolitSettings.injectSuperclasses();
-
-        List<Field> fields = getFieldsList(holderClass, injectSuperclasses);
-        injectFields(patient, view, fields);
-
-        List<Method> methods = getMethodsList(holderClass, injectSuperclasses);
-        injectMethods(patient, view, methods);
+        doInjections(patient, new VisibleInjectionContext(view));
     }
 
     /**
      * Injects all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
-     * </p>
-     * 
-     * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
-     *            <code>null</code>
-     * @throws IllegalArgumentException <code>activity</code> is <code>null</code>
-     * @throws InflateException if any injection error has occured
-     */
-    public static void doInjections(Activity activity) {
-        doInjections(activity, activity.getWindow().getDecorView());
-    }
-
-    /**
-     * Injects all fields and methods marked by injection anotations in object.
-     * <p>
-     * See full list of injection anotationons in docs for this class.
-     * </p>
-     * 
-     * @param dialog Dialog dialog to be processed and which content will be used for resolving injections, can't be
-     *            <code>null</code>
-     * @throws IllegalArgumentException if <code>dialog</code> is <code>null</code>
-     * @throws InflateException if any injection error has occured
-     */
-    public static void doInjections(Dialog dialog) {
-        doInjections(dialog, dialog.getWindow().getDecorView());
-    }
-
-    /**
-     * Injects all fields and methods marked by injection anotations in object.
-     * <p>
-     * See full list of injection anotationons in docs for this class.
-     * </p>
-     * 
-     * @param view View view to be processed and that will be used for resolving injections, can't be <code>null</code>
-     * @throws IllegalArgumentException if <code>view</code> is <code>null</code>
-     * @throws InflateException if any injection error has occured
-     */
-    public static void doInjections(View view) {
-        doInjections(view, view);
-    }
-
-    /**
-     * Injects all fields and methods marked by injection anotations in object.
-     * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param patient Object an object to be processed, can't be <code>null</code>
@@ -257,13 +252,32 @@ public class Aibolit {
      * @throws InflateException if any injection error has occured
      */
     public static void doInjections(Object patient, Activity activity) {
-        doInjections(patient, activity.getWindow().getDecorView());
+        doInjections(patient, new VisibleInjectionContext(activity));
+    }
+
+    /**
+     * Injects all fields and methods marked by injection anotations in object.
+     * <p>
+     * See full list of injection anotations in docs for this class.
+     * </p>
+     * 
+     * Note: this method is applicable only for injection fields in object without any visible presentation (Service,
+     * BroadcastReceiver, etc...), so you can use it only for injecting fields annotated with {@link InjectService},
+     * {@link InjectSystemService}, {@link InjectResource}, InjectArrayAdapter
+     * 
+     * @param patient Object an object to be processed, can't be <code>null</code>
+     * @param context Context android context, can't be <code>null</code>
+     * @throws IllegalArgumentException if any argument is <code>null</code>
+     * @throws InflateException if any injection error has occured
+     */
+    public static void doInjections(Object patient, Context context) {
+        doInjections(patient, new InvisibleInjectionContext(context));
     }
 
     /**
      * Sets content for specified activity and injects all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
@@ -280,7 +294,7 @@ public class Aibolit {
     /**
      * Sets content for specified activity and injects all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param activity Activity an activity to be processed and which content will be used for resolving injections, can't be
@@ -297,7 +311,7 @@ public class Aibolit {
     /**
      * Sets content for specified dialog and injects all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param dialog Dialog a dialog to be processed and which content will be used for resolving injections, can't be
@@ -314,7 +328,7 @@ public class Aibolit {
     /**
      * Sets content for specified dialog and injects all fields and methods marked by injection anotations in object.
      * <p>
-     * See full list of injection anotationons in docs for this class.
+     * See full list of injection anotations in docs for this class.
      * </p>
      * 
      * @param dialog Dialog a dialog to be processed and which content will be used for resolving injections, can't be
@@ -337,6 +351,21 @@ public class Aibolit {
         InjectorRegister.addServicesResolver(injectionResolver);
     }
 
+    public static void doInjections(Object patient, InjectionContext injectionContext) {
+        Validate.notNull(patient, "Can't inject in null object");
+        Validate.notNull(injectionContext, "Can't process null injection context");
+
+        Class<?> holderClass = patient.getClass();
+        AibolitSettings aibolitSettings = patient.getClass().getAnnotation(AibolitSettings.class);
+        boolean injectSuperclasses = aibolitSettings != null && aibolitSettings.injectSuperclasses();
+
+        List<Field> fields = getFieldsList(holderClass, injectSuperclasses);
+        injectFields(patient, injectionContext, fields);
+
+        List<Method> methods = getMethodsList(holderClass, injectSuperclasses);
+        injectMethods(patient, injectionContext, methods);
+    }
+
     private static ArrayList<Field> getFieldsList(Class<?> classToInspect, boolean includeSuperclassFields) {
         ArrayList<Field> fieldsList = new ArrayList<Field>(Arrays.asList(classToInspect.getDeclaredFields()));
         if (includeSuperclassFields && classToInspect.getSuperclass() != null) {
@@ -353,29 +382,30 @@ public class Aibolit {
         return methodsList;
     }
 
-    private static void injectFields(Object holder, View view, List<Field> fields) {
+    private static void injectFields(Object holder, InjectionContext injectionContext, List<Field> fields) {
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
                 if (InjectorRegister.contains(annotationClass)) {
                     AbstractFieldInjector<Annotation> injector = InjectorRegister.getFieldInjector(annotationClass);
-                    injector.doInjection(holder, view, field, annotation);
+                    injector.doInjection(holder, injectionContext, field, annotation);
                 }
             }
         }
     }
 
-    private static void injectMethods(Object holder, View view, List<Method> methods) {
+    private static void injectMethods(Object holder, InjectionContext injectionContext, List<Method> methods) {
         for (Method method : methods) {
             Annotation[] annotations = method.getAnnotations();
             for (Annotation annotation : annotations) {
                 Class<? extends Annotation> annotationClass = annotation.annotationType();
                 if (InjectorRegister.contains(annotationClass)) {
                     AbstractMethodInjector<Annotation> injector = InjectorRegister.getMethodInjector(annotationClass);
-                    injector.doInjection(holder, view, method, annotation);
+                    injector.doInjection(holder, injectionContext, method, annotation);
                 }
             }
         }
     }
+
 }

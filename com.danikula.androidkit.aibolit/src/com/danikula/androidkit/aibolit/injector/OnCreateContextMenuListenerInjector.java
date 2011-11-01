@@ -7,6 +7,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListener;
 
 /**
@@ -18,13 +19,13 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnCreateContextMenuListe
 /* package private */class OnCreateContextMenuListenerInjector extends AbstractMethodInjector<InjectOnCreateContextMenuListener> {
 
     @Override
-    public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod, InjectOnCreateContextMenuListener annotation) {
+    public void doInjection(Object methodOwner, InjectionContext injectionContext, Method sourceMethod, InjectOnCreateContextMenuListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { ContextMenu.class, View.class, int.class, ContextMenuInfo.class };
         Method targetMethod = getMethod(OnCreateContextMenuListener.class, "onCreateContextMenu", argsTypes, sourceMethod);
         OnCreateContextMenuListener onCreateContextMenuListener = createInvokationProxy(OnCreateContextMenuListener.class,
                 methodOwner, sourceMethod, targetMethod);
 
-        View view = getViewById(viewHolder, annotation.value());
+        View view = getViewById(injectionContext.getRootView(), annotation.value());
         view.setOnCreateContextMenuListener(onCreateContextMenuListener);
     }
 }

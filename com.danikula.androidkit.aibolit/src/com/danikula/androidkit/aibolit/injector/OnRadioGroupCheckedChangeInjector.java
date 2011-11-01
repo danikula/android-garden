@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChangeListener;
 
 /**
@@ -18,14 +19,14 @@ import com.danikula.androidkit.aibolit.annotation.InjectOnRadioGroupCheckedChang
         AbstractMethodInjector<InjectOnRadioGroupCheckedChangeListener> {
 
     @Override
-    public void doInjection(Object methodOwner, View viewHolder, Method sourceMethod,
+    public void doInjection(Object methodOwner, InjectionContext injectionContext, Method sourceMethod,
             InjectOnRadioGroupCheckedChangeListener annotation) {
         Class<?>[] argsTypes = new Class<?>[] { RadioGroup.class, int.class };
         Method targetMethod = getMethod(OnCheckedChangeListener.class, "onCheckedChanged", argsTypes, sourceMethod);
         OnCheckedChangeListener onCheckedChangeListener = createInvokationProxy(OnCheckedChangeListener.class, methodOwner,
                 sourceMethod, targetMethod);
 
-        View view = getViewById(viewHolder, annotation.value());
+        View view = getViewById(injectionContext.getRootView(), annotation.value());
         checkIsViewAssignable(RadioGroup.class, view.getClass());
         ((RadioGroup) view).setOnCheckedChangeListener(onCheckedChangeListener);
     }

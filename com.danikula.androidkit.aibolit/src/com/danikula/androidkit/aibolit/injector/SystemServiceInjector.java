@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.content.Context;
-import android.view.View;
 
 import com.danikula.androidkit.aibolit.InjectingException;
+import com.danikula.androidkit.aibolit.InjectionContext;
 import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
 
 /**
@@ -38,8 +38,8 @@ import com.danikula.androidkit.aibolit.annotation.InjectSystemService;
     // @formatter:on
 
     @Override
-    public void doInjection(Object fieldOwner, View viewHolder, Field field, InjectSystemService annotation) {
-        Context context = viewHolder.getContext();
+    public void doInjection(Object fieldOwner, InjectionContext injectionContext, Field field, InjectSystemService annotation) {
+        Context context = injectionContext.getAndroidContext();
         String serviceName = annotation.value();
         if (SUPPORTED_SERVICES.contains(serviceName)) {
             Object service = context.getSystemService(serviceName);
