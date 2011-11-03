@@ -23,7 +23,7 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     private List<T> objects = new ArrayList<T>();
 
     public MutableListAdapter(Context context, int layoutId) {
-        Validate.notNull(context, "Context shoulb not null");
+        Validate.notNull(context, "Context should be not null");
         this.context = context;
         this.layoutId = layoutId;
     }
