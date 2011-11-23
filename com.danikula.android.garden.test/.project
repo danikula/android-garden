@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.danikula.android16.core</name>
+	<name>com.danikula.android.garden.test</name>
 	<comment></comment>
 	<projects>
+		<project>com.danikula.android16.core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
