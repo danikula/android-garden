@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">com.danikula.android16.core</string>
-    <string name="profile_edit_empty_name">Please, enter correct name</string>
-    <string name="profile_edit_empty_phone">Please, enter correct phone</string>    
-</resources>
