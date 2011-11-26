@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Application" parent="@android:style/Theme">
+<!--         <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item>
+ -->    </style>
+
+<!--     <style name="Widget.CustomRemoteImageView" parent="@android:style/Widget">
+        <item name="loadingImage">@drawable/ic_launcher</item>
+    </style> -->
+
+</resources>

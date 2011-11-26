@@ -6,7 +6,7 @@ import java.io.InputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.danikula.android.garden.utils.IoUtils;
+import com.danikula.android.garden.io.IoUtils;
 
 public abstract class JsonAbstractResponseParser<T> extends AbstractResponseParser<T> {
 

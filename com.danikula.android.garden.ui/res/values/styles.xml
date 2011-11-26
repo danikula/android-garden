@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RemoteImageViewDefaults" parent="@android:style/Theme">
+        <item name="remoteImageViewStyle">@style/Widget.RemoteImageView</item>
+    </style>
+
+    <style name="Widget.RemoteImageView" parent="@android:style/Widget">
+        <item name="loadingImage">@drawable/remote_image_loading</item>
+        <item name="errorImage">@drawable/remote_image_error</item>
+    </style>
+</resources>

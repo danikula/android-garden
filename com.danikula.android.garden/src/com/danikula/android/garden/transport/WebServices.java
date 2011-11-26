@@ -19,7 +19,7 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
-import com.danikula.android.garden.utils.IoUtils;
+import com.danikula.android.garden.io.IoUtils;
 
 public class WebServices {
 

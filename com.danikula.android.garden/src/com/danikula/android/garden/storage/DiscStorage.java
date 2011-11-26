@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 import android.util.Log;
 
-import com.danikula.android.garden.utils.IoUtils;
+import com.danikula.android.garden.io.IoUtils;
 
 public class DiscStorage<T extends Serializable> extends FileBasedStorage<T> {
     

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RemoteImageView">
+        <attr name="remoteImageViewStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="RemoteImageView">
+        <attr name="loadingImage" format="reference" />
+        <attr name="errorImage" format="reference" />
+    </declare-styleable>
+
+</resources>
