@@ -1,5 +1,6 @@
 package com.danikula.android.garden.transport;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,13 +12,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.danikula.android.garden.io.IoUtils;
+
 public abstract class XmlAbstractResponseParser<T> extends AbstractResponseParser<T> {
 
-    public T parseResponse(InputStream serverResponse) throws ResponseParsingException {
+    public T parseResponse(String serverResponse) throws ResponseParsingException {
+        InputStream stringInputStream = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(serverResponse);
+            stringInputStream = new ByteArrayInputStream(serverResponse.getBytes());
+            Document document = builder.parse(stringInputStream);
             return parseXml(document);
         }
         catch (IOException e) {
@@ -28,6 +33,9 @@ public abstract class XmlAbstractResponseParser<T> extends AbstractResponseParse
         }
         catch (ParserConfigurationException e) {
             throw new ResponseParsingException("Error parsing xml based server response", e);
+        }
+        finally {
+            IoUtils.closeSilently(stringInputStream);
         }
     }
 

@@ -36,7 +36,9 @@ public class WebServices {
         InputStream serverResponse = null;
         try {
             serverResponse = getInputStream(request);
-            T response = request.parseServerResponse(serverResponse);
+            String content = IoUtils.streamToString(serverResponse);
+            onServerResponseReceived(request, content);
+            T response = request.parseServerResponse(content);
             onAfterInvoke(request, response);
             return response;
         }
@@ -52,6 +54,10 @@ public class WebServices {
     }
 
     protected <T> void onBeforeInvoke(AbstractRequest<T> request) {
+        // do noting by default
+    }
+
+    protected <T> void onServerResponseReceived(AbstractRequest<T> request, String response) {
         // do noting by default
     }
 
@@ -85,18 +91,4 @@ public class WebServices {
         }
         return response.getEntity().getContent();
     }
-
-    // TODO: сделать дополнительные методы для того, чтобы можно было продампить или закешить респонз
-//    private void dumpResponse(InputStream inputStream) {
-//        try {
-//            String response = IoUtils.streamToString(inputStream);
-//            Log.e(LOG.TAG, "Response:" + response);
-//        }
-//        catch (IOException e) {
-//            Log.e(LOG.TAG, "Error dumping response", e);
-//        }
-//        finally {
-//            IoUtils.closeSilently(inputStream);
-//        }
-//    }
 }

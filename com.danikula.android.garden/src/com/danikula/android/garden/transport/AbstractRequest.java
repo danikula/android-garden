@@ -34,7 +34,7 @@ public abstract class AbstractRequest<T> {
     
     protected abstract AbstractResponseParser<T> getResponseParser();
 
-    public T parseServerResponse(InputStream serverResponse) throws ResponseParsingException {
+    public T parseServerResponse(String serverResponse) throws ResponseParsingException {
         return getResponseParser().parseResponse(serverResponse);
     }
 
