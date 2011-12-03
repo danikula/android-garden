@@ -23,8 +23,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int remoteImageViewStyle=0x7f010000;
     }
     public static final class drawable {
-        public static int loading=0x7f020000;
-        public static int remote_image_error=0x7f020001;
+        public static int remote_image_error=0x7f020000;
+        public static int remote_image_loading=0x7f020001;
     }
     public static final class style {
         public static int Theme_RemoteImageViewDefaults=0x7f030000;
