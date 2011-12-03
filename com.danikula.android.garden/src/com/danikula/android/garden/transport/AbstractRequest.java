@@ -18,7 +18,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import com.danikula.android.garden.utils.TextUtils;
+import com.danikula.android.garden.utils.StringUtils;
 
 public abstract class AbstractRequest<T> {
 
@@ -68,7 +68,7 @@ public abstract class AbstractRequest<T> {
     }
     
     public String getId(){
-        return TextUtils.computeMD5(httpMethod + getUrlWithParams());
+        return StringUtils.computeMD5(httpMethod + getUrlWithParams());
     }
 
     protected void setBaseUrl(String baseUrl) {
@@ -88,7 +88,7 @@ public abstract class AbstractRequest<T> {
     }
 
     private String getUrl() {
-        return baseUrl + (!TextUtils.isEmpty(urlContext) ? "/" + urlContext : "");
+        return baseUrl + (!StringUtils.isEmpty(urlContext) ? "/" + urlContext : "");
     }
 
     private String getUrlWithParams() {

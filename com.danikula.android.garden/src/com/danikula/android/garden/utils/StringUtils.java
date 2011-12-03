@@ -3,7 +3,7 @@ package com.danikula.android.garden.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class TextUtils {
+public class StringUtils {
     
     private static final int BYTES_IN_MEGABYTE = 1024 * 1024;
     
