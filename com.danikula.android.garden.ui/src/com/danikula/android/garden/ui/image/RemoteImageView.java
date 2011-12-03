@@ -37,11 +37,14 @@ public class RemoteImageView extends ImageView {
     }
 
     public void loadImage(String url, ImageLoader imageLoader) {
-        Validate.notNull(url, "Url can not be null!");
         Validate.notNull(imageLoader, "ImageLoader can not be null!");
 
-        setImageDrawable(loadingImage);
-        imageLoader.loadImageAsynk(url, new LoadRemoteImageCallback());
+        if (url == null) {
+            setImageDrawable(errorImage);
+        } else {
+            setImageDrawable(loadingImage);
+            imageLoader.loadImageAsynk(url, new LoadRemoteImageCallback());
+        }
     }
 
     private final class LoadRemoteImageCallback implements LoadImageCallback {
