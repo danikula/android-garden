@@ -19,24 +19,45 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
+import android.util.Log;
+
 import com.danikula.android.garden.io.IoUtils;
 
 public class WebServices {
+    
+    private static final String LOG_TAG = WebServices.class.getSimpleName();
 
     private static final int TIMEOUT_MS = 10000;
 
     private HttpClient httpClient;
+    
+    private boolean trace;
 
     public WebServices() {
-        httpClient = createHttpClient();
+        this(false);
+    }
+    
+    public WebServices(boolean trace) {
+        this.trace = trace;
+        this.httpClient = createHttpClient();
     }
 
     public <T> T invoke(AbstractRequest<T> request) throws TransportException {
         onBeforeInvoke(request);
+        
+        if (trace) {
+            Log.d(LOG_TAG, String.format("Invoke %s", request));
+        }
+        
         InputStream serverResponse = null;
         try {
             serverResponse = getInputStream(request);
             String content = IoUtils.streamToString(serverResponse);
+            
+            if(trace) {
+                Log.d(LOG_TAG, String.format("Response: '%s'", content));
+            }
+            
             onServerResponseReceived(request, content);
             T response = request.parseServerResponse(content);
             onAfterInvoke(request, response);
