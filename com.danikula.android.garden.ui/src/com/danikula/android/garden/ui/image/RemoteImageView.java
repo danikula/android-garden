@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -39,7 +40,7 @@ public class RemoteImageView extends ImageView {
     public void loadImage(String url, ImageLoader imageLoader) {
         Validate.notNull(imageLoader, "ImageLoader can not be null!");
 
-        if (url == null) {
+        if (TextUtils.isEmpty(url)) {
             setImageDrawable(errorImage);
         } else {
             setImageDrawable(loadingImage);

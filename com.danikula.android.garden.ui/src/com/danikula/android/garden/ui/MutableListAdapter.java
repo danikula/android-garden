@@ -59,6 +59,10 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
         this.objects = new ArrayList<T>(objects == null ? Collections.<T>emptyList() : objects);
         super.notifyDataSetChanged();
     }
+    
+    public void resetData() {
+        setObjects(new ArrayList<T>());
+    }
 
     public void addAll(List<T> newItems) {
         objects.addAll(newItems);
