@@ -10,9 +10,13 @@ public class TwoLevelBitmapStorage extends BitmapFileBasedStorage {
     public TwoLevelBitmapStorage(String storagePath) {
         super(storagePath);
     }
+    
+    public TwoLevelBitmapStorage(String storagePath, boolean scannable) {
+        super(storagePath, scannable);
+    }
 
-    public TwoLevelBitmapStorage(String storagePath, CompressFormat compressFormat, int quality) {
-        super(storagePath, compressFormat, quality);
+    public TwoLevelBitmapStorage(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
+        super(storagePath, scannable, compressFormat, quality);
     }
 
     @Override
