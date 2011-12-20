@@ -34,22 +34,23 @@ public class BitmapFileBasedStorage extends FileBasedStorage<Bitmap> {
         }
     }
 
-    private void createNoMediaMarkerFile(String storagePath){
-        try {
-            // see details here http://stackoverflow.com/questions/2556065/stop-mediascanner-scanning-of-certain-directory
-            new File(storagePath, NO_MEDIA_FILE_NAME).createNewFile();
-        }
-        catch (IOException e) {
-            // can't create no media marker, ignore it
-        }
-    }
-
     public BitmapFileBasedStorage(String storagePath, boolean scannable) {
         this(storagePath, scannable, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
     }
 
     public BitmapFileBasedStorage(String storagePath) {
         this(storagePath, false, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
+    }
+    
+    private void createNoMediaMarkerFile(String storagePath){
+        try {
+            // see details here http://stackoverflow.com/questions/2556065/stop-mediascanner-scanning-of-certain-directory
+            new File(storagePath).mkdirs();
+            new File(storagePath, NO_MEDIA_FILE_NAME).createNewFile();
+        }
+        catch (IOException e) {
+            // can't create no media marker, ignore it
+        }
     }
 
     @Override
