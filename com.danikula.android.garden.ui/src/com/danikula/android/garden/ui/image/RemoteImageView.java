@@ -16,6 +16,8 @@ public class RemoteImageView extends ImageView {
     private Drawable loadingImage;
 
     private Drawable errorImage;
+    
+    private String currentlyLoadedUrl;
 
     public RemoteImageView(Context context) {
         this(context, null);
@@ -44,15 +46,18 @@ public class RemoteImageView extends ImageView {
             setImageDrawable(errorImage);
         } else {
             setImageDrawable(loadingImage);
+            currentlyLoadedUrl = url;
             imageLoader.loadImageAsynk(url, new LoadRemoteImageCallback());
         }
     }
 
     private final class LoadRemoteImageCallback implements LoadImageCallback {
-
+        
         @Override
-        public void onLoaded(Bitmap bitmap) {
-            setImageBitmap(bitmap);
+        public void onLoaded(String url, Bitmap bitmap) {
+            if(url.equals(currentlyLoadedUrl)) {
+                setImageBitmap(bitmap);    
+            }
         }
 
         @Override

@@ -28,4 +28,9 @@ public class TwoLevelBitmapStorage extends BitmapFileBasedStorage {
         super.put(key, value);
         inMemoryStorage.put(key, value);
     }
+    
+    @Override
+    public boolean contains(String key) {
+        return inMemoryStorage.contains(key) || super.contains(key);
+    }
 }

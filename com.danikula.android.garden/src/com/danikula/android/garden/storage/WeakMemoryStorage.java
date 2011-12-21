@@ -19,8 +19,7 @@ public class WeakMemoryStorage<K, T> implements Storage<K, T> {
 
     @Override
     public synchronized T get(K key) {
-        SoftReference<T> reference = storage.get(key);
-        return reference != null ? reference.get() : null;
+        return contains(key) ? storage.get(key).get() : null;
     }
 
     @Override
@@ -30,7 +29,7 @@ public class WeakMemoryStorage<K, T> implements Storage<K, T> {
 
     @Override
     public boolean contains(K key) {
-        return storage.containsKey(key);
+        return storage.containsKey(key) && storage.get(key).get() != null;
     }
 
 }

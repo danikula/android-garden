@@ -1,6 +1,7 @@
 package com.danikula.android.garden.ui.image;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -36,14 +37,14 @@ public class ImageLoaderImpl implements ImageLoader {
         Validate.notNull(callback, "LoadImageCallback can not be null!");
         
         if(cacheStorage.contains(url)) {
-            callback.onLoaded(cacheStorage.get(url));
+            callback.onLoaded(url, cacheStorage.get(url));
         } else {
-            new DownloadImageTask(callback).execute(url);
+            new DownloadImageTask(url, callback).execute();
         }
     }
 
     private Bitmap load(URL url) throws IOException {
-        FlushedInputStream inputStream = null;
+        InputStream inputStream = null;
         try {
             URLConnection urlConnection = url.openConnection();
             inputStream = new FlushedInputStream(urlConnection.getInputStream());
@@ -66,17 +67,19 @@ public class ImageLoaderImpl implements ImageLoader {
         cacheStorage.put(url, bitmap);
     }
     
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadImageTask extends AsyncTask<Void, Void, Bitmap> {
+        
+        private String url;
 
         private LoadImageCallback loadImageCallback;
 
-        private DownloadImageTask(LoadImageCallback loadImageCallback) {
+        private DownloadImageTask(String url, LoadImageCallback loadImageCallback) {
             this.loadImageCallback = loadImageCallback;
+            this.url = url;
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
-            String url = params[0];
+        protected Bitmap doInBackground(Void... params) {
             try {
                 Bitmap bitmap = load(new URL(url));
                 cache(url, bitmap);
@@ -93,7 +96,7 @@ public class ImageLoaderImpl implements ImageLoader {
             if (bitmap == null) {
                 loadImageCallback.onError();
             } else {
-                loadImageCallback.onLoaded(bitmap);
+                loadImageCallback.onLoaded(url, bitmap);
             }
         }
     }

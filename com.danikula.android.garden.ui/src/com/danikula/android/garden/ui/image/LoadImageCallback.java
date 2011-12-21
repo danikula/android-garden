@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 
 public interface LoadImageCallback {
 
-    void onLoaded(Bitmap bitmap);
-    
     void onError();
+
+    void onLoaded(String url, Bitmap bitmap);
     
 }
