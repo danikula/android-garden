@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import com.danikula.android.garden.utils.ReflectUtils;
+
 import android.util.Log;
 
 /**
@@ -89,7 +91,8 @@ public class IoUtils {
      * @since Commons IO 1.1
      */
     public static long copy(InputStream input, OutputStream output) throws IOException {
-        return copy(input, output, null);
+        ProgressListener emptyListener = ReflectUtils.newInstance(ProgressListener.class);
+        return copy(input, output, emptyListener);
     }
 
     public static long copy(InputStream input, OutputStream output, ProgressListener listener) throws IOException {

@@ -63,7 +63,7 @@ public class StringUtils {
         return String.format(format, (float) size / BYTES_IN_MEGABYTE);
     }
     
-    public static boolean isEmpty(String str) {
+    public static boolean isEmpty(CharSequence str) {
         return str == null || str.length() == 0;
     }
     
