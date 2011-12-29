@@ -1,14 +1,15 @@
 package com.danikula.android.garden.io;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import com.danikula.android.garden.utils.ReflectUtils;
-
 import android.util.Log;
+
+import com.danikula.android.garden.utils.ReflectUtils;
 
 /**
  * Содержит ряд полезных методов для работы с потоками.
@@ -48,31 +49,22 @@ public class IoUtils {
     }
 
     /**
-     * Закрывает входящий поток, скрывает исключение, если оно возникает в процессе закрытия.
+     * Closes stream and releases any system resources associated with it.
+     * <p>
+     * Hide {@link IOException} if it occurs during closing resource
+     * </p>
      * 
-     * @param inputStream InputStream входящий поток для закрытия, может быть <code>null</code>
+     * @param closeableSource Closeable source to be needed to close
      */
-    public static void closeSilently(InputStream inputStream) {
+    public static void closeSilently(Closeable closeableSource) {
         try {
-            if (inputStream != null) {
-                inputStream.close();
+            if (closeableSource != null) {
+                closeableSource.close();
             }
         }
         catch (IOException e) {
-            // скрываем исключение, закрываем поток "тихо"
-            Log.e(LOG_TAG, "Error closing input stream", e);
-        }
-    }
-
-    public static void closeSilently(OutputStream outputStream) {
-        try {
-            if (outputStream != null) {
-                outputStream.close();
-            }
-        }
-        catch (IOException e) {
-            // скрываем исключение, закрываем поток "тихо"
-            Log.e(LOG_TAG, "Error closing outputStream stream", e);
+            // hide exception, close source "silently"
+            Log.e(LOG_TAG, "Error closing closeable source", e);
         }
     }
 
