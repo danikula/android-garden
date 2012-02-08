@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="libs/httpmime-4.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/java/projects/com.danikula.androidcore/trunk/com.danikula.android.garden/libs/android4.jar"/>
+	<classpathentry kind="lib" path="libs/android4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
