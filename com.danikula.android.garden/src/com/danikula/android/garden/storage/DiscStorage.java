@@ -16,16 +16,20 @@ import android.util.Log;
 
 import com.danikula.android.garden.io.IoUtils;
 
-public class DiscStorage<T extends Serializable> extends FileBasedStorage<T> {
+public class DiscStorage extends FileBasedStorage <Serializable> {
     
     private static final String LOG_TAG = DiscStorage.class.getSimpleName();
 
     public DiscStorage(String storagePath) {
         super(storagePath);
     }
+    
+    public DiscStorage(String storagePath, String fileExtension) {
+        super(storagePath, fileExtension);
+    }
 
     @Override
-    protected void write(File file, T value) throws IOException {
+    protected void write(File file, Serializable value) throws IOException {
         ObjectOutputStream outputStream = null;
         try {
             OutputStream fileOutputStream = new FileOutputStream(file);
@@ -40,14 +44,14 @@ public class DiscStorage<T extends Serializable> extends FileBasedStorage<T> {
     }
 
     @Override
-    protected T read(File file) throws IOException{
-        T result = null;
+    protected Serializable read(File file) throws IOException{
+        Serializable result = null;
         ObjectInputStream inputStream = null;
         try {
             InputStream fileInputStream = new FileInputStream(file);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
             inputStream = new ObjectInputStream(bufferedInputStream);
-            result = (T) inputStream.readObject();
+            result = (Serializable) inputStream.readObject();
         }
         catch (ClassNotFoundException e) {
             Log.e(LOG_TAG, "Error reading object from file storage", e);

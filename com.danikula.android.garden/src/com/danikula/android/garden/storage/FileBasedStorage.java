@@ -30,7 +30,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     @Override
-    public synchronized void put(String key, T value) {
+    public void put(String key, T value) {
         Validate.notNull(key, "key");
         Validate.notNull(value, "value");
 
@@ -52,7 +52,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     @Override
-    public synchronized T get(String key) {
+    public T get(String key) {
         if (!contains(key)) {
             return null;
         }

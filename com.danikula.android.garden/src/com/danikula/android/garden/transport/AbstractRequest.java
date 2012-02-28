@@ -1,6 +1,5 @@
 package com.danikula.android.garden.transport;
 
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,7 +30,7 @@ public abstract class AbstractRequest<T> {
     private List<NameValuePair> params = new LinkedList<NameValuePair>();
 
     private List<ByteArrayBody> attaches = new LinkedList<ByteArrayBody>();
-    
+
     protected abstract AbstractResponseParser<T> getResponseParser();
 
     public T parseServerResponse(String serverResponse) throws ResponseParsingException {
@@ -66,8 +65,8 @@ public abstract class AbstractRequest<T> {
         }
         return request;
     }
-    
-    public String getId(){
+
+    public String getId() {
         return StringUtils.computeMD5(httpMethod + getUrlWithParams());
     }
 
@@ -138,6 +137,7 @@ public abstract class AbstractRequest<T> {
         }
     }
 
+    // TODO: вынести зависимость на мультипарт в отдельный класс, чтобы не таскать либу в 99% ненужную
     private UrlEncodedFormEntity newUrlEncodedFormEntity(List<NameValuePair> params) {
         try {
             return new UrlEncodedFormEntity(params, HTTP.UTF_8);
@@ -158,7 +158,7 @@ public abstract class AbstractRequest<T> {
         }
         request.setEntity(multipartEntity);
     }
-    
+
     @Override
     public String toString() {
         return String.format("%s: %s %s", getClass().getSimpleName(), httpMethod, getUrlWithParams());
