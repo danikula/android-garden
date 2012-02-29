@@ -9,7 +9,7 @@ package com.danikula.android.garden.content;
 public class TableCreatorBuilder {
 
     public enum Type {
-        TEXT, INT, DOUBLE
+        TEXT, INT, LONG, DOUBLE
     }
 
     private static final String START = "create table '%s' (_id integer primary key autoincrement";
