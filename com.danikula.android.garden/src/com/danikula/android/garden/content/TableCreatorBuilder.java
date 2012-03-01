@@ -1,7 +1,7 @@
 package com.danikula.android.garden.content;
 
 /**
- * Класс для конструирования sql скрипта создания базы
+ * Класс для конструирования sql скрипта создания таблицы
  * 
  * @author danik
  * 

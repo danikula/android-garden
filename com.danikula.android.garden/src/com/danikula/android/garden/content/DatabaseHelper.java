@@ -19,7 +19,11 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(getCreateTablesSql());
+        String createTablesSql = getCreateTablesSql();
+        String[] statements = createTablesSql.split(";");
+        for (String statement : statements) {
+            database.execSQL(statement);    
+        }
     }
 
     @Override

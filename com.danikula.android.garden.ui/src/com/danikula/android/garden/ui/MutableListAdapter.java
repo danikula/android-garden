@@ -82,6 +82,10 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     public T getObject(int position) {
         return objects.get(position);
     }
+    
+    public List<T> getObjects() {
+        return objects;
+    }
 
     public void clear() {
         setObjects(new ArrayList<T>());
