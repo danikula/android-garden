@@ -22,13 +22,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 /**
- * A base activity that defers common functionality across app activities to an {@link
- * ActionBarHelper}.
- *
+ * A base activity that defers common functionality across app activities to an {@link ActionBarHelper}.
+ * 
  * NOTE: dynamically marking menu items as invisible/visible is not currently supported.
- *
- * NOTE: this may used with the Android Compatibility Package by extending
- * android.support.v4.app.FragmentActivity instead of {@link Activity}.
+ * 
+ * NOTE: this may used with the Android Compatibility Package by extending android.support.v4.app.FragmentActivity instead of
+ * {@link Activity}.
  */
 public abstract class ActionBarActivity extends Activity {
     final ActionBarHelper mActionBarHelper = ActionBarHelper.createInstance(this);
@@ -40,20 +39,20 @@ public abstract class ActionBarActivity extends Activity {
         return mActionBarHelper;
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public MenuInflater getMenuInflater() {
         return mActionBarHelper.getMenuInflater(super.getMenuInflater());
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActionBarHelper.onCreate(savedInstanceState);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -61,9 +60,8 @@ public abstract class ActionBarActivity extends Activity {
     }
 
     /**
-     * Base action bar-aware implementation for
-     * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
-     *
+     * Base action bar-aware implementation for {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
+     * 
      * Note: marking menu items as invisible/visible is not currently supported.
      */
     @Override
@@ -74,7 +72,7 @@ public abstract class ActionBarActivity extends Activity {
         return retValue;
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     protected void onTitleChanged(CharSequence title, int color) {
         mActionBarHelper.onTitleChanged(title, color);

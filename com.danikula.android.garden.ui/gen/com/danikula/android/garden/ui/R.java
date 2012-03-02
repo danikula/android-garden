@@ -88,7 +88,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int toggle_title=0x7f070002;
     }
     public static final class style {
-        public static int ActionBar=0x7f080009;
+        public static int ActionBar=0x7f080008;
         public static int ActionBarCompat=0x7f080001;
         public static int ActionBarCompatHomeItem=0x7f080007;
         public static int ActionBarCompatItem=0x7f080006;
@@ -96,11 +96,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int ActionBarCompatProgressIndicator=0x7f080003;
         public static int ActionBarCompatTitle=0x7f080005;
         public static int ActionBarCompatTitleBase=0x7f080004;
-        public static int ActionBarTitle=0x7f08000a;
-        public static int AppTheme=0x7f080008;
+        public static int ActionBarTitle=0x7f080009;
         public static int Theme_Light_ActionBar=0x7f080000;
-        public static int Theme_RemoteImageViewDefaults=0x7f08000b;
-        public static int Widget_RemoteImageView=0x7f08000c;
+        public static int Theme_RemoteImageViewDefaults=0x7f08000a;
+        public static int Widget_RemoteImageView=0x7f08000b;
     }
     public static final class styleable {
         /** Attributes that can be used with a AppTheme.

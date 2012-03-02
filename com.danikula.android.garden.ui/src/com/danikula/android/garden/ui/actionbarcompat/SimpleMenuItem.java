@@ -25,9 +25,8 @@ import android.view.SubMenu;
 import android.view.View;
 
 /**
- * A <em>really</em> dumb implementation of the {@link android.view.MenuItem} interface, that's only
- * useful for our actionbar-compat purposes. See
- * <code>com.android.internal.view.menu.MenuItemImpl</code> in AOSP for a more complete
+ * A <em>really</em> dumb implementation of the {@link android.view.MenuItem} interface, that's only useful for our
+ * actionbar-compat purposes. See <code>com.android.internal.view.menu.MenuItemImpl</code> in AOSP for a more complete
  * implementation.
  */
 public class SimpleMenuItem implements MenuItem {

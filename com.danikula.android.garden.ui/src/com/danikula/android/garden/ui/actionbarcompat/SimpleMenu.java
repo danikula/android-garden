@@ -28,10 +28,8 @@ import android.view.SubMenu;
 import java.util.ArrayList;
 
 /**
- * A <em>really</em> dumb implementation of the {@link android.view.Menu} interface, that's only
- * useful for our actionbar-compat purposes. See
- * <code>com.android.internal.view.menu.MenuBuilder</code> in AOSP for a more complete
- * implementation.
+ * A <em>really</em> dumb implementation of the {@link android.view.Menu} interface, that's only useful for our actionbar-compat
+ * purposes. See <code>com.android.internal.view.menu.MenuBuilder</code> in AOSP for a more complete implementation.
  */
 public class SimpleMenu implements Menu {
 
@@ -71,7 +69,7 @@ public class SimpleMenu implements Menu {
     }
 
     /**
-     * Adds an item to the menu.  The other add methods funnel to this.
+     * Adds an item to the menu. The other add methods funnel to this.
      */
     private MenuItem addInternal(int itemId, int order, CharSequence title) {
         final SimpleMenuItem item = new SimpleMenuItem(this, itemId, order, title);
@@ -156,8 +154,8 @@ public class SimpleMenu implements Menu {
         throw new UnsupportedOperationException("This operation is not supported for SimpleMenu");
     }
 
-    public int addIntentOptions(int i, int i1, int i2, ComponentName componentName,
-            Intent[] intents, Intent intent, int i3, MenuItem[] menuItems) {
+    public int addIntentOptions(int i, int i1, int i2, ComponentName componentName, Intent[] intents, Intent intent, int i3,
+            MenuItem[] menuItems) {
         throw new UnsupportedOperationException("This operation is not supported for SimpleMenu");
     }
 

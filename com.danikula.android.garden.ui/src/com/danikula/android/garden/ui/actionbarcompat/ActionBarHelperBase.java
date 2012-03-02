@@ -56,17 +56,16 @@ public class ActionBarHelperBase extends ActionBarHelper {
         super(activity);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mActivity.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
-        mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-                R.layout.actionbar_compat_layout);
+        mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.actionbar_compat_layout);
         setupActionBar();
 
         SimpleMenu menu = new SimpleMenu(mActivity);
@@ -89,14 +88,12 @@ public class ActionBarHelperBase extends ActionBarHelper {
             return;
         }
 
-        LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(
-                0, ViewGroup.LayoutParams.FILL_PARENT);
+        LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.FILL_PARENT);
         springLayoutParams.weight = 1;
 
         // Add Home button
         SimpleMenu tempMenu = new SimpleMenu(mActivity);
-        SimpleMenuItem homeItem = new SimpleMenuItem(
-                tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
+        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
         homeItem.setIcon(R.drawable.actionbar_compat_ic_home);
         addActionItemCompatFromMenuItem(homeItem);
 
@@ -107,12 +104,11 @@ public class ActionBarHelperBase extends ActionBarHelper {
         actionBarCompat.addView(titleText);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public void setRefreshActionItemState(boolean refreshing) {
         View refreshButton = mActivity.findViewById(R.id.actionbar_compat_item_refresh);
-        View refreshIndicator = mActivity.findViewById(
-                R.id.actionbar_compat_item_refresh_progress);
+        View refreshIndicator = mActivity.findViewById(R.id.actionbar_compat_item_refresh_progress);
 
         if (refreshButton != null) {
             refreshButton.setVisibility(refreshing ? View.GONE : View.VISIBLE);
@@ -124,7 +120,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
     /**
      * Action bar helper code to be run in {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
-     *
+     * 
      * NOTE: This code will mark on-screen menu items as invisible.
      */
     @Override
@@ -136,7 +132,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
         return true;
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     protected void onTitleChanged(CharSequence title, int color) {
         TextView titleView = (TextView) mActivity.findViewById(R.id.actionbar_compat_title);
@@ -146,25 +142,23 @@ public class ActionBarHelperBase extends ActionBarHelper {
     }
 
     /**
-     * Returns a {@link android.view.MenuInflater} that can read action bar metadata on
-     * pre-Honeycomb devices.
+     * Returns a {@link android.view.MenuInflater} that can read action bar metadata on pre-Honeycomb devices.
      */
     public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
         return new WrappedMenuInflater(mActivity, superMenuInflater);
     }
 
     /**
-     * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action
-     * bar). Can return null, and will return null on Honeycomb.
+     * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and
+     * will return null on Honeycomb.
      */
     private ViewGroup getActionBarCompat() {
         return (ViewGroup) mActivity.findViewById(R.id.actionbar_compat);
     }
 
     /**
-     * Adds an action button to the compatibility action bar, using menu information from a {@link
-     * android.view.MenuItem}. If the menu item ID is <code>menu_refresh</code>, the menu item's
-     * state can be changed to show a loading spinner using
+     * Adds an action button to the compatibility action bar, using menu information from a {@link android.view.MenuItem}. If the
+     * menu item ID is <code>menu_refresh</code>, the menu item's state can be changed to show a loading spinner using
      * {@link com.example.android.actionbarcompat.ActionBarHelperBase#setRefreshActionItemState(boolean)}.
      */
     private View addActionItemCompatFromMenuItem(final MenuItem item) {
@@ -177,15 +171,11 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
         // Create the button
         ImageButton actionButton = new ImageButton(mActivity, null,
-                itemId == android.R.id.home
-                        ? R.attr.actionbarCompatItemHomeStyle
-                        : R.attr.actionbarCompatItemStyle);
+                itemId == android.R.id.home ? R.attr.actionbarCompatItemHomeStyle : R.attr.actionbarCompatItemStyle);
         actionButton.setLayoutParams(new ViewGroup.LayoutParams(
                 (int) mActivity.getResources().getDimension(
-                        itemId == android.R.id.home
-                                ? R.dimen.actionbar_compat_button_home_width
-                                : R.dimen.actionbar_compat_button_width),
-                ViewGroup.LayoutParams.FILL_PARENT));
+                        itemId == android.R.id.home ? R.dimen.actionbar_compat_button_home_width
+                                : R.dimen.actionbar_compat_button_width), ViewGroup.LayoutParams.FILL_PARENT));
         if (itemId == R.id.menu_refresh) {
             actionButton.setId(R.id.actionbar_compat_item_refresh);
         }
@@ -203,22 +193,16 @@ public class ActionBarHelperBase extends ActionBarHelper {
         if (item.getItemId() == R.id.menu_refresh) {
             // Refresh buttons should be stateful, and allow for indeterminate progress indicators,
             // so add those.
-            ProgressBar indicator = new ProgressBar(mActivity, null,
-                    R.attr.actionbarCompatProgressIndicatorStyle);
+            ProgressBar indicator = new ProgressBar(mActivity, null, R.attr.actionbarCompatProgressIndicatorStyle);
 
-            final int buttonWidth = mActivity.getResources().getDimensionPixelSize(
-                    R.dimen.actionbar_compat_button_width);
-            final int buttonHeight = mActivity.getResources().getDimensionPixelSize(
-                    R.dimen.actionbar_compat_height);
+            final int buttonWidth = mActivity.getResources().getDimensionPixelSize(R.dimen.actionbar_compat_button_width);
+            final int buttonHeight = mActivity.getResources().getDimensionPixelSize(R.dimen.actionbar_compat_height);
             final int progressIndicatorWidth = buttonWidth / 2;
 
-            LinearLayout.LayoutParams indicatorLayoutParams = new LinearLayout.LayoutParams(
-                    progressIndicatorWidth, progressIndicatorWidth);
-            indicatorLayoutParams.setMargins(
-                    (buttonWidth - progressIndicatorWidth) / 2,
-                    (buttonHeight - progressIndicatorWidth) / 2,
-                    (buttonWidth - progressIndicatorWidth) / 2,
-                    0);
+            LinearLayout.LayoutParams indicatorLayoutParams = new LinearLayout.LayoutParams(progressIndicatorWidth,
+                    progressIndicatorWidth);
+            indicatorLayoutParams.setMargins((buttonWidth - progressIndicatorWidth) / 2,
+                    (buttonHeight - progressIndicatorWidth) / 2, (buttonWidth - progressIndicatorWidth) / 2, 0);
             indicator.setLayoutParams(indicatorLayoutParams);
             indicator.setVisibility(View.GONE);
             indicator.setId(R.id.actionbar_compat_item_refresh_progress);
@@ -246,8 +230,9 @@ public class ActionBarHelperBase extends ActionBarHelper {
         }
 
         /**
-         * Loads action bar metadata from a menu resource, storing a list of menu item IDs that
-         * should be shown on-screen (i.e. those with showAsAction set to always or ifRoom).
+         * Loads action bar metadata from a menu resource, storing a list of menu item IDs that should be shown on-screen (i.e.
+         * those with showAsAction set to always or ifRoom).
+         * 
          * @param menuResId
          */
         private void loadActionBarMetadata(int menuResId) {
@@ -267,16 +252,13 @@ public class ActionBarHelperBase extends ActionBarHelper {
                                 break;
                             }
 
-                            itemId = parser.getAttributeResourceValue(MENU_RES_NAMESPACE,
-                                    MENU_ATTR_ID, 0);
+                            itemId = parser.getAttributeResourceValue(MENU_RES_NAMESPACE, MENU_ATTR_ID, 0);
                             if (itemId == 0) {
                                 break;
                             }
 
-                            showAsAction = parser.getAttributeIntValue(MENU_RES_NAMESPACE,
-                                    MENU_ATTR_SHOW_AS_ACTION, -1);
-                            if (showAsAction == MenuItem.SHOW_AS_ACTION_ALWAYS ||
-                                    showAsAction == MenuItem.SHOW_AS_ACTION_IF_ROOM) {
+                            showAsAction = parser.getAttributeIntValue(MENU_RES_NAMESPACE, MENU_ATTR_SHOW_AS_ACTION, -1);
+                            if (showAsAction == MenuItem.SHOW_AS_ACTION_ALWAYS || showAsAction == MenuItem.SHOW_AS_ACTION_IF_ROOM) {
                                 mActionItemIds.add(itemId);
                             }
                             break;
@@ -288,11 +270,14 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
                     eventType = parser.next();
                 }
-            } catch (XmlPullParserException e) {
+            }
+            catch (XmlPullParserException e) {
                 throw new InflateException("Error inflating menu XML", e);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new InflateException("Error inflating menu XML", e);
-            } finally {
+            }
+            finally {
                 if (parser != null) {
                     parser.close();
                 }

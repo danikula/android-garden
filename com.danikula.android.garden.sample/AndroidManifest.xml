@@ -11,8 +11,7 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.Application">
+        android:label="@string/app_name" >
         
         <activity android:name="MainActivity"  android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden" android:noHistory="false"
                   android:label="@string/app_name">
@@ -21,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RemoteImageSampleActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".RemoteImageSampleActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Black.CustomRemoteImageView"/>
         <activity android:name=".ActionBarCompatSampleActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Light.ActionBar.Custom"/>
         
     </application>
