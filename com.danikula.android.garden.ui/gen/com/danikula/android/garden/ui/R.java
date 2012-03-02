@@ -55,16 +55,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_compat_height=0x7f050000;
     }
     public static final class drawable {
-        public static int actionbar_compat_item=0x7f020000;
-        public static int actionbar_compat_item_focused=0x7f020001;
-        public static int actionbar_compat_item_pressed=0x7f020002;
-        public static int actionbar_shadow=0x7f020003;
-        public static int ic_action_refresh=0x7f020004;
-        public static int ic_action_search=0x7f020005;
-        public static int ic_action_share=0x7f020006;
-        public static int ic_home=0x7f020007;
-        public static int ic_launcher=0x7f020008;
-        public static int ic_menu_share=0x7f020009;
+        public static int actionbar_compat_actionbar_shadow=0x7f020000;
+        public static int actionbar_compat_ic_action_refresh=0x7f020001;
+        public static int actionbar_compat_ic_action_search=0x7f020002;
+        public static int actionbar_compat_ic_action_share=0x7f020003;
+        public static int actionbar_compat_ic_home=0x7f020004;
+        public static int actionbar_compat_ic_launcher=0x7f020005;
+        public static int actionbar_compat_ic_menu_share=0x7f020006;
+        public static int actionbar_compat_item=0x7f020007;
+        public static int actionbar_compat_item_focused=0x7f020008;
+        public static int actionbar_compat_item_pressed=0x7f020009;
         public static int remote_image_error=0x7f02000a;
         public static int remote_image_loading=0x7f02000b;
     }
@@ -74,38 +74,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_compat_item_refresh_progress=0x7f060002;
         public static int actionbar_compat_title=0x7f060001;
         public static int menu_refresh=0x7f060004;
-        public static int menu_search=0x7f060005;
-        public static int menu_share=0x7f060006;
     }
     public static final class layout {
-        public static int actionbar_compat=0x7f030000;
+        public static int actionbar_compat_layout=0x7f030000;
         public static int actionbar_indeterminate_progress=0x7f030001;
     }
-    public static final class menu {
-        public static int main=0x7f090000;
-    }
     public static final class string {
-        public static int alternate_title=0x7f080001;
-        public static int app_name=0x7f080000;
-        public static int menu_refresh=0x7f080003;
-        public static int menu_search=0x7f080004;
-        public static int menu_share=0x7f080005;
-        public static int toggle_title=0x7f080002;
+        public static int alternate_title=0x7f070001;
+        public static int app_name=0x7f070000;
+        public static int menu_refresh=0x7f070003;
+        public static int menu_search=0x7f070004;
+        public static int menu_share=0x7f070005;
+        public static int toggle_title=0x7f070002;
     }
     public static final class style {
-        public static int ActionBar=0x7f07000b;
-        public static int ActionBarCompat=0x7f070003;
-        public static int ActionBarCompatHomeItem=0x7f070009;
-        public static int ActionBarCompatItem=0x7f070008;
-        public static int ActionBarCompatItemBase=0x7f070004;
-        public static int ActionBarCompatProgressIndicator=0x7f070005;
-        public static int ActionBarCompatTitle=0x7f070007;
-        public static int ActionBarCompatTitleBase=0x7f070006;
-        public static int ActionBarTitle=0x7f07000c;
-        public static int AppTheme=0x7f07000a;
-        public static int Theme_Light_ActionBar=0x7f070002;
-        public static int Theme_RemoteImageViewDefaults=0x7f070000;
-        public static int Widget_RemoteImageView=0x7f070001;
+        public static int ActionBar=0x7f080009;
+        public static int ActionBarCompat=0x7f080001;
+        public static int ActionBarCompatHomeItem=0x7f080007;
+        public static int ActionBarCompatItem=0x7f080006;
+        public static int ActionBarCompatItemBase=0x7f080002;
+        public static int ActionBarCompatProgressIndicator=0x7f080003;
+        public static int ActionBarCompatTitle=0x7f080005;
+        public static int ActionBarCompatTitleBase=0x7f080004;
+        public static int ActionBarTitle=0x7f08000a;
+        public static int AppTheme=0x7f080008;
+        public static int Theme_Light_ActionBar=0x7f080000;
+        public static int Theme_RemoteImageViewDefaults=0x7f08000b;
+        public static int Widget_RemoteImageView=0x7f08000c;
     }
     public static final class styleable {
         /** Attributes that can be used with a AppTheme.

@@ -66,7 +66,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-                R.layout.actionbar_compat);
+                R.layout.actionbar_compat_layout);
         setupActionBar();
 
         SimpleMenu menu = new SimpleMenu(mActivity);
@@ -97,7 +97,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
         SimpleMenu tempMenu = new SimpleMenu(mActivity);
         SimpleMenuItem homeItem = new SimpleMenuItem(
                 tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
-        homeItem.setIcon(R.drawable.ic_home);
+        homeItem.setIcon(R.drawable.actionbar_compat_ic_home);
         addActionItemCompatFromMenuItem(homeItem);
 
         // Add title text
