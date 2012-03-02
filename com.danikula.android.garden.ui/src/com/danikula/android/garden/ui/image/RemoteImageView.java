@@ -12,11 +12,11 @@ import com.danikula.android.garden.ui.R;
 import com.danikula.android.garden.utils.Validate;
 
 public class RemoteImageView extends ImageView {
-    
+
     private Drawable loadingImage;
 
     private Drawable errorImage;
-    
+
     private String currentlyLoadedUrl;
 
     public RemoteImageView(Context context) {
@@ -30,9 +30,9 @@ public class RemoteImageView extends ImageView {
     public RemoteImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray attributes = context.obtainStyledAttributes(
-            attrs, R.styleable.RemoteImageView, defStyle, R.style.Widget_RemoteImageView);
-        
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.RemoteImageView, defStyle,
+                R.style.Widget_RemoteImageView);
+
         loadingImage = attributes.getDrawable(R.styleable.RemoteImageView_riLoadingImage);
         errorImage = attributes.getDrawable(R.styleable.RemoteImageView_riErrorImage);
 
@@ -44,7 +44,8 @@ public class RemoteImageView extends ImageView {
 
         if (TextUtils.isEmpty(url)) {
             setImageDrawable(errorImage);
-        } else {
+        }
+        else {
             setImageDrawable(loadingImage);
             currentlyLoadedUrl = url;
             imageLoader.loadImageAsynk(url, new LoadRemoteImageCallback());
@@ -52,11 +53,11 @@ public class RemoteImageView extends ImageView {
     }
 
     private final class LoadRemoteImageCallback implements LoadImageCallback {
-        
+
         @Override
         public void onLoaded(String url, Bitmap bitmap) {
-            if(url.equals(currentlyLoadedUrl)) {
-                setImageBitmap(bitmap);    
+            if (url.equals(currentlyLoadedUrl)) {
+                setImageBitmap(bitmap);
             }
         }
 

@@ -7,5 +7,5 @@ public interface LoadImageCallback {
     void onError();
 
     void onLoaded(String url, Bitmap bitmap);
-    
+
 }

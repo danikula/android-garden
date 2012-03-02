@@ -16,10 +16,12 @@
 
 package com.danikula.android.garden.ui.actionbarcompat;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
-import com.danikula.android.garden.ui.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,9 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import com.danikula.android.garden.ui.R;
 
 /**
  * A class that implements the action bar pattern for pre-Honeycomb devices.
@@ -49,7 +49,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
     private static final String MENU_ATTR_ID = "id";
     private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
-    
+
     protected Set<Integer> mActionItemIds = new HashSet<Integer>();
 
     protected ActionBarHelperBase(Activity activity) {
@@ -93,8 +93,8 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
         // Add Home button
         SimpleMenu tempMenu = new SimpleMenu(mActivity);
-//        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
-        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, "");
+        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, null);
+        // homeItem.setIcon(R.drawable.ic_home);
         addActionItemCompatFromMenuItem(homeItem);
 
         // Add title text
@@ -147,7 +147,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
         return new WrappedMenuInflater(mActivity, superMenuInflater);
     }
-    
+
     /**
      * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and
      * will return null on Honeycomb.
@@ -179,9 +179,8 @@ public class ActionBarHelperBase extends ActionBarHelper {
         if (itemId == R.id.menu_refresh) {
             actionButton.setId(R.id.actionbar_compat_item_refresh);
         }
-        if(itemId != android.R.id.home) {
-            // specify in style
-            actionButton.setImageDrawable(item.getIcon());  
+        if (itemId != android.R.id.home) {
+            actionButton.setImageDrawable(item.getIcon());
         }
         actionButton.setScaleType(ImageView.ScaleType.CENTER);
         actionButton.setContentDescription(item.getTitle());

@@ -56,10 +56,10 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     }
 
     public void setObjects(List<T> objects) {
-        this.objects = new ArrayList<T>(objects == null ? Collections.<T>emptyList() : objects);
+        this.objects = new ArrayList<T>(objects == null ? Collections.<T> emptyList() : objects);
         super.notifyDataSetChanged();
     }
-    
+
     public void resetData() {
         setObjects(new ArrayList<T>());
     }
@@ -82,7 +82,7 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     public T getObject(int position) {
         return objects.get(position);
     }
-    
+
     public List<T> getObjects() {
         return objects;
     }
@@ -91,7 +91,7 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
         setObjects(new ArrayList<T>());
         super.notifyDataSetChanged();
     }
-    
+
     protected Context getContext() {
         return context;
     }

@@ -61,7 +61,7 @@
     </style>
 
     <style name="ActionBarCompatHomeItem" parent="style/ActionBarCompatItemBase">
-        <item name="android:src">@drawable/remote_image_error</item>
+        <item name="android:src">@drawable/actionbar_compat_home</item>
     </style>
 
 </resources>

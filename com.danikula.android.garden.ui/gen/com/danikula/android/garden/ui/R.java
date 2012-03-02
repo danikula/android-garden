@@ -55,16 +55,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_compat_height=0x7f050000;
     }
     public static final class drawable {
-        public static int actionbar_compat_action_refresh=0x7f020000;
-        public static int actionbar_compat_action_search=0x7f020001;
-        public static int actionbar_compat_action_share=0x7f020002;
-        public static int actionbar_compat_actionbar_shadow=0x7f020003;
-        public static int actionbar_compat_item=0x7f020004;
-        public static int actionbar_compat_item_focused=0x7f020005;
-        public static int actionbar_compat_item_pressed=0x7f020006;
-        public static int actionbar_compat_menu_share=0x7f020007;
-        public static int remote_image_error=0x7f020008;
-        public static int remote_image_loading=0x7f020009;
+        public static int actionbar_compat_actionbar_shadow=0x7f020000;
+        public static int actionbar_compat_home=0x7f020001;
+        public static int actionbar_compat_item=0x7f020002;
+        public static int actionbar_compat_item_focused=0x7f020003;
+        public static int actionbar_compat_item_pressed=0x7f020004;
+        public static int remote_image_error=0x7f020005;
+        public static int remote_image_loading=0x7f020006;
     }
     public static final class id {
         public static int actionbar_compat=0x7f060000;
@@ -78,10 +75,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_indeterminate_progress=0x7f030001;
     }
     public static final class style {
-        /**  
-        <item name="android:icon">@drawable/actionbar_compat_ic_home</item>
-         
-         */
         public static int ActionBar=0x7f070008;
         public static int ActionBarCompat=0x7f070001;
         public static int ActionBarCompatHomeItem=0x7f070007;

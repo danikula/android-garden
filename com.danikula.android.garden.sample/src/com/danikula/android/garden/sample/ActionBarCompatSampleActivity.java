@@ -16,9 +16,6 @@
 
 package com.danikula.android.garden.sample;
 
-import com.danikula.android.garden.ui.R;
-import com.danikula.android.garden.ui.actionbarcompat.ActionBarActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,13 +23,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.danikula.android.garden.ui.R;
+import com.danikula.android.garden.ui.actionbarcompat.ActionBarActivity;
+
 public class ActionBarCompatSampleActivity extends ActionBarActivity {
     private boolean mAlternateTitle = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actionbar_compat_sample);
-
+        
         findViewById(R.id.toggle_title).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class ActionBarCompatSampleActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main, menu);
+        menuInflater.inflate(R.menu.actionbar_compat_main, menu);
 
         // Calling super after populating the menu is necessary here to ensure that the
         // action bar helpers have a chance to handle this event.

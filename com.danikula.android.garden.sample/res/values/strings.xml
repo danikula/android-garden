@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World!</string>
-    <string name="app_name">com.danikula.android.garden.sample</string>
-
+    <string name="app_name">Android Garden UI Samples</string>
 </resources>

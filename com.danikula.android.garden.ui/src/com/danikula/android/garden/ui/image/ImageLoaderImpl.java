@@ -17,11 +17,11 @@ import com.danikula.android.garden.storage.Storage;
 import com.danikula.android.garden.utils.Validate;
 
 public class ImageLoaderImpl implements ImageLoader {
-    
+
     private static final String LOG_TAG = ImageLoaderImpl.class.getName();
-    
+
     private Storage<String, Bitmap> cacheStorage;
-    
+
     public ImageLoaderImpl() {
         this(new EmptyStorage<String, Bitmap>());
     }
@@ -30,15 +30,16 @@ public class ImageLoaderImpl implements ImageLoader {
         Validate.notNull(cacheStorage, "Cache storage can not be null!");
         this.cacheStorage = cacheStorage;
     }
-    
+
     @Override
     public void loadImageAsynk(String url, LoadImageCallback callback) {
         Validate.notNull(url, "URL can not be null!");
         Validate.notNull(callback, "LoadImageCallback can not be null!");
-        
-        if(cacheStorage.contains(url)) {
+
+        if (cacheStorage.contains(url)) {
             callback.onLoaded(url, cacheStorage.get(url));
-        } else {
+        }
+        else {
             new DownloadImageTask(url, callback).execute();
         }
     }
@@ -62,13 +63,13 @@ public class ImageLoaderImpl implements ImageLoader {
             IoUtils.closeSilently(inputStream);
         }
     }
-    
+
     private synchronized void cache(String url, Bitmap bitmap) {
         cacheStorage.put(url, bitmap);
     }
-    
+
     private class DownloadImageTask extends AsyncTask<Void, Void, Bitmap> {
-        
+
         private String url;
 
         private LoadImageCallback loadImageCallback;
@@ -95,7 +96,8 @@ public class ImageLoaderImpl implements ImageLoader {
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap == null) {
                 loadImageCallback.onError();
-            } else {
+            }
+            else {
                 loadImageCallback.onLoaded(url, bitmap);
             }
         }
