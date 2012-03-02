@@ -24,7 +24,8 @@ public class MainActivity extends ListActivity {
         Aibolit.setInjectedContentView(this, R.layout.main);
 
         List<ActivityItem> items = new LinkedList<MainActivity.ActivityItem>();
-        items.add(new ActivityItem(RemoteImageSample.class, "RemoteImageSample"));
+        items.add(new ActivityItem(RemoteImageSampleActivity.class, "RemoteImageView"));
+        items.add(new ActivityItem(ActionBarCompatSampleActivity.class, "ActionBar Compat"));
 
         ActivitiesAdapter adapter = new ActivitiesAdapter(this, android.R.layout.simple_list_item_1);
         adapter.setObjects(items);

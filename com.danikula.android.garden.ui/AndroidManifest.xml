@@ -6,6 +6,7 @@
 
     <uses-sdk android:minSdkVersion="4" />
 
+    <!-- Set of ui usefull components. Compatible with api level 4 -->
     <application android:label="android-garden-ui" >
     </application>
 
