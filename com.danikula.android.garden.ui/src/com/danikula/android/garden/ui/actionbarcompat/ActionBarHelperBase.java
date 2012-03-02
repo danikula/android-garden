@@ -49,7 +49,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
     private static final String MENU_ATTR_ID = "id";
     private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
-
+    
     protected Set<Integer> mActionItemIds = new HashSet<Integer>();
 
     protected ActionBarHelperBase(Activity activity) {
@@ -93,8 +93,8 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
         // Add Home button
         SimpleMenu tempMenu = new SimpleMenu(mActivity);
-        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
-        homeItem.setIcon(R.drawable.actionbar_compat_ic_home);
+//        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, mActivity.getString(R.string.app_name));
+        SimpleMenuItem homeItem = new SimpleMenuItem(tempMenu, android.R.id.home, 0, "");
         addActionItemCompatFromMenuItem(homeItem);
 
         // Add title text
@@ -147,7 +147,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
         return new WrappedMenuInflater(mActivity, superMenuInflater);
     }
-
+    
     /**
      * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and
      * will return null on Honeycomb.
@@ -179,7 +179,10 @@ public class ActionBarHelperBase extends ActionBarHelper {
         if (itemId == R.id.menu_refresh) {
             actionButton.setId(R.id.actionbar_compat_item_refresh);
         }
-        actionButton.setImageDrawable(item.getIcon());
+        if(itemId != android.R.id.home) {
+            // specify in style
+            actionButton.setImageDrawable(item.getIcon());  
+        }
         actionButton.setScaleType(ImageView.ScaleType.CENTER);
         actionButton.setContentDescription(item.getTitle());
         actionButton.setOnClickListener(new View.OnClickListener() {

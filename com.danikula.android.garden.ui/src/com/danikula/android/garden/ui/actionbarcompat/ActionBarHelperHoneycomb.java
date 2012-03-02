@@ -16,16 +16,14 @@
 
 package com.danikula.android.garden.ui.actionbarcompat;
 
-import com.danikula.android.garden.ui.R;
-
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.danikula.android.garden.ui.R;
 
 /**
  * An extension of {@link ActionBarHelper} that provides Android 3.0-specific functionality for Honeycomb tablets. It thus
