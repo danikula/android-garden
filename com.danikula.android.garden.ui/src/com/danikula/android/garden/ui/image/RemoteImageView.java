@@ -33,8 +33,8 @@ public class RemoteImageView extends ImageView {
         TypedArray attributes = context.obtainStyledAttributes(
             attrs, R.styleable.RemoteImageView, defStyle, R.style.Widget_RemoteImageView);
         
-        loadingImage = attributes.getDrawable(R.styleable.RemoteImageView_loadingImage);
-        errorImage = attributes.getDrawable(R.styleable.RemoteImageView_errorImage);
+        loadingImage = attributes.getDrawable(R.styleable.RemoteImageView_riLoadingImage);
+        errorImage = attributes.getDrawable(R.styleable.RemoteImageView_riErrorImage);
 
         attributes.recycle();
     }

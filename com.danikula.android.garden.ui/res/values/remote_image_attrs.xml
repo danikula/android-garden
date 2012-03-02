@@ -5,8 +5,8 @@
     </declare-styleable>
 
     <declare-styleable name="RemoteImageView">
-        <attr name="loadingImage" format="reference" />
-        <attr name="errorImage" format="reference" />
+        <attr name="riLoadingImage" format="reference" />
+        <attr name="riErrorImage" format="reference" />
     </declare-styleable>
 
 </resources>

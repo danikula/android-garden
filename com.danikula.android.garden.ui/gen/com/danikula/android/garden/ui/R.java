@@ -12,15 +12,15 @@ public final class R {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static int errorImage=0x7f010002;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static int loadingImage=0x7f010001;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
         public static int remoteImageViewStyle=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static int riErrorImage=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static int riLoadingImage=0x7f010001;
     }
     public static final class drawable {
         public static int remote_image_error=0x7f020000;
@@ -37,37 +37,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #RemoteImageView_errorImage com.danikula.android.garden.ui:errorImage}</code></td><td></td></tr>
-           <tr><td><code>{@link #RemoteImageView_loadingImage com.danikula.android.garden.ui:loadingImage}</code></td><td></td></tr>
            <tr><td><code>{@link #RemoteImageView_remoteImageViewStyle com.danikula.android.garden.ui:remoteImageViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_riErrorImage com.danikula.android.garden.ui:riErrorImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_riLoadingImage com.danikula.android.garden.ui:riLoadingImage}</code></td><td></td></tr>
            </table>
-           @see #RemoteImageView_errorImage
-           @see #RemoteImageView_loadingImage
            @see #RemoteImageView_remoteImageViewStyle
+           @see #RemoteImageView_riErrorImage
+           @see #RemoteImageView_riLoadingImage
          */
         public static final int[] RemoteImageView = {
             0x7f010000, 0x7f010001, 0x7f010002
         };
-        /**
-          <p>This symbol is the offset where the {@link com.danikula.android.garden.ui.R.attr#errorImage}
-          attribute's value can be found in the {@link #RemoteImageView} array.
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:errorImage
-        */
-        public static final int RemoteImageView_errorImage = 2;
-        /**
-          <p>This symbol is the offset where the {@link com.danikula.android.garden.ui.R.attr#loadingImage}
-          attribute's value can be found in the {@link #RemoteImageView} array.
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:loadingImage
-        */
-        public static final int RemoteImageView_loadingImage = 1;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.ui.R.attr#remoteImageViewStyle}
           attribute's value can be found in the {@link #RemoteImageView} array.
@@ -78,5 +58,25 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name android:remoteImageViewStyle
         */
         public static final int RemoteImageView_remoteImageViewStyle = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.ui.R.attr#riErrorImage}
+          attribute's value can be found in the {@link #RemoteImageView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:riErrorImage
+        */
+        public static final int RemoteImageView_riErrorImage = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.ui.R.attr#riLoadingImage}
+          attribute's value can be found in the {@link #RemoteImageView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:riLoadingImage
+        */
+        public static final int RemoteImageView_riLoadingImage = 1;
     };
 }

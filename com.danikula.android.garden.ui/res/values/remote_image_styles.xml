@@ -5,7 +5,7 @@
     </style>
 
     <style name="Widget.RemoteImageView" parent="@android:style/Widget">
-        <item name="loadingImage">@drawable/remote_image_loading</item>
-        <item name="errorImage">@drawable/remote_image_error</item>
+        <item name="riLoadingImage">@drawable/remote_image_loading</item>
+        <item name="riErrorImage">@drawable/remote_image_error</item>
     </style>
 </resources>
