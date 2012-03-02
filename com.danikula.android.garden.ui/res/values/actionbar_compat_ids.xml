@@ -19,5 +19,6 @@
     <item type="id" name="actionbar_compat_title" />
     <item type="id" name="actionbar_compat_item_refresh_progress" />
     <item type="id" name="actionbar_compat_item_refresh" />
+    <item type="id" name="actionbar_compat_progress" />
     <item type="id" name="menu_refresh" />
 </resources>

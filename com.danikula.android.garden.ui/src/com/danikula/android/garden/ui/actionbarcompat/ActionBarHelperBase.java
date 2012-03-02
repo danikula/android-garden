@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.danikula.android.garden.ui.R;
+import com.danikula.android.garden.utils.UiUtils;
 
 /**
  * A class that implements the action bar pattern for pre-Honeycomb devices.
@@ -102,6 +104,11 @@ public class ActionBarHelperBase extends ActionBarHelper {
         titleText.setLayoutParams(springLayoutParams);
         titleText.setText(mActivity.getTitle());
         actionBarCompat.addView(titleText);
+
+        LinearLayout.LayoutParams progressLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.FILL_PARENT);
+        View progress = LayoutInflater.from(mActivity).inflate(R.layout.actionbar_compat_progress, null);
+        actionBarCompat.addView(progress, progressLayoutParams);
     }
 
     /** {@inheritDoc} */
@@ -146,6 +153,12 @@ public class ActionBarHelperBase extends ActionBarHelper {
      */
     public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
         return new WrappedMenuInflater(mActivity, superMenuInflater);
+    }
+
+    @Override
+    public void setProgressBarIndeterminateVisibility(boolean visibility) {
+        View progress = mActivity.findViewById(R.id.actionbar_compat_progress);
+        UiUtils.setVisibility(visibility, progress);
     }
 
     /**

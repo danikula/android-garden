@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.danikula.android.garden.ui.R;
@@ -30,6 +31,7 @@ public class ActionBarCompatSampleActivity extends ActionBarActivity {
     private boolean mAlternateTitle = false;
 
     public void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actionbar_compat_sample);
         
@@ -38,8 +40,10 @@ public class ActionBarCompatSampleActivity extends ActionBarActivity {
             public void onClick(View view) {
                 if (mAlternateTitle) {
                     setTitle(R.string.app_name);
+                    getActionBarHelper().setProgressBarIndeterminateVisibility(true);
                 } else {
                     setTitle(R.string.alternate_title);
+                    getActionBarHelper().setProgressBarIndeterminateVisibility(false);
                 }
                 mAlternateTitle = !mAlternateTitle;
             }

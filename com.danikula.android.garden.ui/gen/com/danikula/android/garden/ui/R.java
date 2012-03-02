@@ -67,12 +67,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_compat=0x7f060000;
         public static int actionbar_compat_item_refresh=0x7f060003;
         public static int actionbar_compat_item_refresh_progress=0x7f060002;
+        public static int actionbar_compat_progress=0x7f060004;
         public static int actionbar_compat_title=0x7f060001;
-        public static int menu_refresh=0x7f060004;
+        public static int menu_refresh=0x7f060005;
     }
     public static final class layout {
-        public static int actionbar_compat_layout=0x7f030000;
-        public static int actionbar_indeterminate_progress=0x7f030001;
+        public static int actionbar_compat_indeterminate_progress=0x7f030000;
+        public static int actionbar_compat_layout=0x7f030001;
+        public static int actionbar_compat_progress=0x7f030002;
     }
     public static final class style {
         public static int ActionBar=0x7f070008;

@@ -57,7 +57,7 @@ public class ActionBarHelperHoneycomb extends ActionBarHelper {
                 if (mRefreshIndeterminateProgressView == null) {
                     LayoutInflater inflater = (LayoutInflater) getActionBarThemedContext().getSystemService(
                             Context.LAYOUT_INFLATER_SERVICE);
-                    mRefreshIndeterminateProgressView = inflater.inflate(R.layout.actionbar_indeterminate_progress, null);
+                    mRefreshIndeterminateProgressView = inflater.inflate(R.layout.actionbar_compat_indeterminate_progress, null);
                 }
 
                 refreshItem.setActionView(mRefreshIndeterminateProgressView);
@@ -66,6 +66,11 @@ public class ActionBarHelperHoneycomb extends ActionBarHelper {
                 refreshItem.setActionView(null);
             }
         }
+    }
+    
+    @Override
+    public void setProgressBarIndeterminateVisibility(boolean visibility) {
+        mActivity.setProgressBarIndeterminateVisibility(visibility);
     }
 
     /**

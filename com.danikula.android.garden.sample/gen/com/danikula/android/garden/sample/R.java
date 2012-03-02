@@ -72,20 +72,22 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int actionbar_compat=0x7f060000;
         public static final int actionbar_compat_item_refresh=0x7f060003;
         public static final int actionbar_compat_item_refresh_progress=0x7f060002;
+        public static final int actionbar_compat_progress=0x7f060004;
         public static final int actionbar_compat_title=0x7f060001;
-        public static final int loadButton=0x7f060007;
-        public static final int menu_refresh=0x7f060004;
-        public static final int menu_search=0x7f060008;
-        public static final int menu_share=0x7f060009;
-        public static final int remoteImageView=0x7f060006;
-        public static final int toggle_title=0x7f060005;
+        public static final int loadButton=0x7f060008;
+        public static final int menu_refresh=0x7f060005;
+        public static final int menu_search=0x7f060009;
+        public static final int menu_share=0x7f06000a;
+        public static final int remoteImageView=0x7f060007;
+        public static final int toggle_title=0x7f060006;
     }
     public static final class layout {
-        public static final int actionbar_compat_layout=0x7f030000;
-        public static final int actionbar_compat_sample=0x7f030001;
-        public static final int actionbar_indeterminate_progress=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int remote_image_sample=0x7f030004;
+        public static final int actionbar_compat_indeterminate_progress=0x7f030000;
+        public static final int actionbar_compat_layout=0x7f030001;
+        public static final int actionbar_compat_progress=0x7f030002;
+        public static final int actionbar_compat_sample=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int remote_image_sample=0x7f030005;
     }
     public static final class menu {
         public static final int actionbar_compat_main=0x7f090000;

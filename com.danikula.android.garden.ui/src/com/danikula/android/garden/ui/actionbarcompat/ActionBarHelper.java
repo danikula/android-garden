@@ -92,4 +92,7 @@ public abstract class ActionBarHelper {
     public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
         return superMenuInflater;
     }
+    
+    public abstract void setProgressBarIndeterminateVisibility(boolean visibility);
+        
 }
