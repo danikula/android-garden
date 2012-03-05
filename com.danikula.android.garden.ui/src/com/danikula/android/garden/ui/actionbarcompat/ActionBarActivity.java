@@ -38,6 +38,8 @@ public abstract class ActionBarActivity extends Activity {
     protected ActionBarHelper getActionBarHelper() {
         return mActionBarHelper;
     }
+    
+    
 
     /** {@inheritDoc} */
     @Override

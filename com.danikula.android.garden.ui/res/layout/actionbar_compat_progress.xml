@@ -2,11 +2,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center" >
-    
-<ProgressBar 
-    android:id="@id/actionbar_compat_progress"
-    style="?android:attr/indeterminateProgressStyle"
-    android:layout_width="22dp"
-    android:layout_height="22dp"
-    android:layout_gravity="center" />
+
+    <ProgressBar
+        android:id="@id/actionbar_compat_progress"
+        style="?android:attr/indeterminateProgressStyle"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 </FrameLayout>

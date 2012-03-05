@@ -72,6 +72,11 @@ public class ActionBarHelperHoneycomb extends ActionBarHelper {
     public void setProgressBarIndeterminateVisibility(boolean visibility) {
         mActivity.setProgressBarIndeterminateVisibility(visibility);
     }
+    
+    @Override
+    public boolean requestWindowFeature(int featureId) {
+        return mActivity.requestWindowFeature(featureId);
+    }
 
     /**
      * Returns a {@link Context} suitable for inflating layouts for the action bar. The implementation for this method in

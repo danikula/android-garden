@@ -160,6 +160,12 @@ public class ActionBarHelperBase extends ActionBarHelper {
         View progress = mActivity.findViewById(R.id.actionbar_compat_progress);
         UiUtils.setVisibility(visibility, progress);
     }
+    
+    @Override
+    public boolean requestWindowFeature(int featureId) {
+        // do not combine windows feature with custom title view
+        return true;
+    }
 
     /**
      * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and

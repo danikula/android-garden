@@ -31,7 +31,7 @@ public class ActionBarCompatSampleActivity extends ActionBarActivity {
     private boolean mAlternateTitle = false;
 
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        getActionBarHelper().requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actionbar_compat_sample);
         
