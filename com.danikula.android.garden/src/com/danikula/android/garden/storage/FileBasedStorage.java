@@ -51,7 +51,8 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     @Override
     public T get(String key) throws StorageException {
         if (!contains(key)) {
-            throw new StorageException("Error reading cache item. Use method contains(String) to check exisiting cache item");
+            String errorMessageFormat = "Error reading cache item '%s'. Use method contains(String) to check exisiting cache item";
+            throw new StorageException(String.format(errorMessageFormat, key));
         }
 
         File storageFile = getStorageFile(key);
@@ -60,7 +61,8 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             result = read(storageFile);
         }
         catch (Exception e) {
-            throw new StorageException("Error reading item from cache storage");
+            String errorMessageFormat = "Error reading cache item with key '%s' and path '%s' from cache storage";
+            throw new StorageException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
         }
         return result;
     }
@@ -78,8 +80,8 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         for (File storageFile : storageDirecory.listFiles()) {
             boolean isDeleted = storageFile.delete();
             if (!isDeleted) {
-                throw new StorageException(String.format("Error deleting item %s from cache storage",
-                        storageFile.getAbsolutePath()));
+                String errorMessageFormat = "Error deleting cache item '%s' from cache storage";
+                throw new StorageException(String.format(errorMessageFormat, storageFile.getAbsolutePath()));
             }
         }
         storageDirecory.delete();
@@ -90,7 +92,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         File storageFile = getStorageFile(key);
         boolean isDeleted = storageFile.delete();
         if (!isDeleted) {
-            String errorMessageFormat = "Error deleting cache item with key %s and path %s from cache storage";
+            String errorMessageFormat = "Error deleting cache item with key '%s' and path '%s' from cache storage";
             throw new StorageException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
         }
     }
