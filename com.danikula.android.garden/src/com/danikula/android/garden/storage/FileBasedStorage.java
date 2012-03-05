@@ -3,8 +3,6 @@ package com.danikula.android.garden.storage;
 import java.io.File;
 import java.io.IOException;
 
-import android.util.Log;
-
 import com.danikula.android.garden.utils.StringUtils;
 import com.danikula.android.garden.utils.Validate;
 
@@ -30,14 +28,14 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     @Override
-    public void put(String key, T value) {
+    public void put(String key, T value) throws StorageException {
         Validate.notNull(key, "key");
         Validate.notNull(value, "value");
 
         if (!storageDirecory.canWrite()) {
             boolean created = storageDirecory.mkdirs();
             if (!created) {
-                return;
+                throw new StorageException("Error creating cache directory");
             }
         }
 
@@ -46,15 +44,14 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             write(storageFile, value);
         }
         catch (IOException e) {
-            Log.e(LOG_TAG, "Error saving object in file storage", e);
-            // do not throw any exception, just log
+            throw new StorageException("Error saving item to cache storage");
         }
     }
 
     @Override
-    public T get(String key) {
+    public T get(String key) throws StorageException {
         if (!contains(key)) {
-            return null;
+            throw new StorageException("Error reading cache item. Use method contains(String) to check exisiting cache item");
         }
 
         File storageFile = getStorageFile(key);
@@ -63,8 +60,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             result = read(storageFile);
         }
         catch (Exception e) {
-            Log.e(LOG_TAG, "Error reading object from file storage", e);
-            // do not throw any exception, just log ant return null
+            throw new StorageException("Error reading item from cache storage");
         }
         return result;
     }
@@ -75,14 +71,28 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     @Override
-    public void clear() {
+    public void clear() throws StorageException {
         if (!storageDirecory.exists()) {
             return;
         }
         for (File storageFile : storageDirecory.listFiles()) {
-            storageFile.delete();
+            boolean isDeleted = storageFile.delete();
+            if (!isDeleted) {
+                throw new StorageException(String.format("Error deleting item %s from cache storage",
+                        storageFile.getAbsolutePath()));
+            }
         }
         storageDirecory.delete();
+    }
+
+    @Override
+    public void remove(String key) {
+        File storageFile = getStorageFile(key);
+        boolean isDeleted = storageFile.delete();
+        if (!isDeleted) {
+            String errorMessageFormat = "Error deleting cache item with key %s and path %s from cache storage";
+            throw new StorageException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
+        }
     }
 
     protected abstract void write(File file, T value) throws IOException;

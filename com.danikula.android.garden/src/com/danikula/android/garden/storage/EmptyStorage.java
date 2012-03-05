@@ -20,4 +20,8 @@ public class EmptyStorage<K, T> implements Storage<K, T>{
     public void clear() {
     }
 
+    @Override
+    public void remove(K key) {
+    }
+
 }

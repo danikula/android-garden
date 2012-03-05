@@ -31,4 +31,9 @@ public class StrongMemoryStorage<K, T> implements Storage<K, T> {
         return storage.containsKey(key);
     }
 
+    @Override
+    public void remove(K key) {
+        storage.remove(key);
+    }
+
 }

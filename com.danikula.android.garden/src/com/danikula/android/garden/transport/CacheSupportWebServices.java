@@ -2,10 +2,15 @@ package com.danikula.android.garden.transport;
 
 import java.io.Serializable;
 
+import android.util.Log;
+
 import com.danikula.android.garden.storage.Storage;
+import com.danikula.android.garden.storage.StorageException;
 import com.danikula.android.garden.utils.Validate;
 
 public class CacheSupportWebServices extends WebServices {
+
+    private static final String LOG_TAG = CacheSupportWebServices.class.getName();
 
     private Storage<String, Serializable> cache;
 
@@ -22,14 +27,25 @@ public class CacheSupportWebServices extends WebServices {
     @Override
     public <T> T invoke(AbstractRequest<T> request) throws TransportException {
         String requestId = request.getId();
-        T responsePayload = null;
-        if (cache.contains(requestId)) {
-            responsePayload = (T) cache.get(requestId);
+        try {
+            if (cache.contains(requestId)) {
+                return (T) cache.get(requestId);
+            }
+            else {
+                return invokeRequestAndCache(request, requestId);
+            }
         }
-        else {
-            responsePayload = super.invoke(request);
-            cacheResponsePayload(requestId, responsePayload);
+        catch (StorageException e) {
+            Log.e(LOG_TAG, "Error reading payload from cache", e);
+            cache.remove(requestId);
+            return invokeRequestAndCache(request, requestId);
         }
+    }
+
+    private <T> T invokeRequestAndCache(AbstractRequest<T> request, String requestId) throws TransportException {
+        T responsePayload;
+        responsePayload = super.invoke(request);
+        cacheResponsePayload(requestId, responsePayload);
         return responsePayload;
     }
 
@@ -38,7 +54,13 @@ public class CacheSupportWebServices extends WebServices {
             throw new IllegalStateException(String.format("Error saving payload to cache! %s is not serializable!",
                     responsePayload));
         }
-        Serializable cacheItem = (Serializable) responsePayload; 
-        cache.put(requestId, cacheItem);
+        try {
+            Serializable cacheItem = (Serializable) responsePayload;
+            cache.put(requestId, cacheItem);
+        }
+        catch (StorageException e) {
+            // just log
+            Log.e(LOG_TAG, "Error saving payload to cache", e);
+        }
     }
 }

@@ -9,5 +9,7 @@ public interface Storage<K, T> {
     T get (K key);
     
     void clear();
+    
+    void remove(K key);
 
 }

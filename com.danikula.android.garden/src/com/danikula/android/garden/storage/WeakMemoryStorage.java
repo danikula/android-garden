@@ -32,4 +32,8 @@ public class WeakMemoryStorage<K, T> implements Storage<K, T> {
         return storage.containsKey(key) && storage.get(key).get() != null;
     }
 
+    @Override
+    public void remove(K key) {
+        storage.remove(key);
+    }
 }
