@@ -1,4 +1,4 @@
-package com.danikula.android.garden.ui;
+package com.danikula.android.garden.ui.listadapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
