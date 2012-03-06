@@ -29,8 +29,6 @@ public abstract class AbstractRequest<T> {
 
     private List<NameValuePair> params = new LinkedList<NameValuePair>();
 
-    private List<ByteArrayBody> attaches = new LinkedList<ByteArrayBody>();
-
     protected abstract AbstractResponseParser<T> getResponseParser();
 
     public T parseServerResponse(String serverResponse) throws ResponseParsingException {
@@ -49,18 +47,10 @@ public abstract class AbstractRequest<T> {
         HttpRequestBase request = HttpRequestFactory.newRequestInstance(httpMethod);
         if (HttpMethod.POST.equals(httpMethod) || HttpMethod.PUT.equals(httpMethod)) {
             request.setURI(getURI(getUrl()));
-            if (attaches.isEmpty()) {
-                UrlEncodedFormEntity entity = newUrlEncodedFormEntity(params);
-                ((HttpEntityEnclosingRequestBase) request).setEntity(entity);
-            }
-            else {
-                setMultiPartEntity((HttpEntityEnclosingRequestBase) request);
-            }
+            UrlEncodedFormEntity entity = newUrlEncodedFormEntity(params);
+            ((HttpEntityEnclosingRequestBase) request).setEntity(entity);
         }
         else {
-            if (!attaches.isEmpty()) {
-                throw new IllegalStateException("Attaches are permitted only for POST and PUT methods!");
-            }
             request.setURI(getURI(getUrlWithParams()));
         }
         return request;
@@ -82,8 +72,12 @@ public abstract class AbstractRequest<T> {
         this.httpMethod = httpMethod;
     }
 
-    protected void addAttach(String fileName, byte[] attach) {
-        attaches.add(new ByteArrayBody(attach, fileName));
+    protected HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    protected List<NameValuePair> getParams() {
+        return params;
     }
 
     private String getUrl() {
@@ -127,17 +121,6 @@ public abstract class AbstractRequest<T> {
         }
     }
 
-    private StringBody newStringBody(NameValuePair param) {
-        try {
-            return new StringBody(param.getValue());
-        }
-        catch (UnsupportedEncodingException e) {
-            // this code will not be invoked
-            throw new IllegalArgumentException("Can't create a new StringBody with encoding " + HTTP.UTF_8, e);
-        }
-    }
-
-    // TODO: вынести зависимость на мультипарт в отдельный класс, чтобы не таскать либу в 99% ненужную
     private UrlEncodedFormEntity newUrlEncodedFormEntity(List<NameValuePair> params) {
         try {
             return new UrlEncodedFormEntity(params, HTTP.UTF_8);
@@ -146,17 +129,6 @@ public abstract class AbstractRequest<T> {
             // this code will not be invoked
             throw new IllegalArgumentException("Can't encode params with encoding " + HTTP.UTF_8, e);
         }
-    }
-
-    private void setMultiPartEntity(HttpEntityEnclosingRequestBase request) {
-        MultipartEntity multipartEntity = new MultipartEntity();
-        for (NameValuePair param : params) {
-            multipartEntity.addPart(param.getName(), newStringBody(param));
-        }
-        for (ByteArrayBody attach : attaches) {
-            multipartEntity.addPart(attach.getFilename(), attach);
-        }
-        request.setEntity(multipartEntity);
     }
 
     @Override
