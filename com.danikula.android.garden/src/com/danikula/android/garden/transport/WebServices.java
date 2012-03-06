@@ -26,19 +26,19 @@ import com.danikula.android.garden.transport.request.AbstractRequest;
 import com.danikula.android.garden.transport.response.ResponseParsingException;
 
 public class WebServices {
-    
+
     private static final String LOG_TAG = WebServices.class.getSimpleName();
 
     private static final int TIMEOUT_MS = 10000;
 
     private HttpClient httpClient;
-    
+
     private boolean trace;
 
     public WebServices() {
         this(false);
     }
-    
+
     public WebServices(boolean trace) {
         this.trace = trace;
         this.httpClient = createHttpClient();
@@ -46,20 +46,20 @@ public class WebServices {
 
     public <T> T invoke(AbstractRequest<T> request) throws TransportException {
         onBeforeInvoke(request);
-        
+
         if (trace) {
             Log.d(LOG_TAG, String.format("Invoke %s", request));
         }
-        
+
         InputStream serverResponse = null;
         try {
-            serverResponse = getInputStream(request);
+            serverResponse = executeRequest(request);
             String content = IoUtils.streamToString(serverResponse);
-            
-            if(trace) {
+
+            if (trace) {
                 Log.d(LOG_TAG, String.format("Response: '%s'", content));
             }
-            
+
             onServerResponseReceived(request, content);
             T response = request.parseServerResponse(content);
             onAfterInvoke(request, response);
@@ -104,14 +104,19 @@ public class WebServices {
         return new DefaultHttpClient(cm, params);
     }
 
-    public <T> InputStream getInputStream(AbstractRequest<T> request) throws IOException {
-        HttpResponse response = httpClient.execute(request.getRequest());
-        StatusLine status = response.getStatusLine();
-        if (status.getStatusCode() != HttpStatus.SC_OK) {
-            // dumpResponse(response.getEntity().getContent());
-            throw new IOException(String.format("Error getting data from '%s'. %d %s", request, status.getStatusCode(),
-                    status.getReasonPhrase()));
+    private <T> InputStream executeRequest(AbstractRequest<T> request) throws TransportException {
+        try {
+            HttpResponse response = httpClient.execute(request.getRequest());
+            StatusLine status = response.getStatusLine();
+            int responseStatus = status.getStatusCode();
+            if (responseStatus != HttpStatus.SC_OK) {
+                String errorMessage = String.format("Bad request '%s'. %d %s", request, responseStatus, status.getReasonPhrase());
+                throw new TransportException(errorMessage, responseStatus);
+            }
+            return response.getEntity().getContent();
         }
-        return response.getEntity().getContent();
+        catch (IOException e) {
+            throw new TransportException(String.format("Error executing request '%s'", request), e);
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.danikula.android.garden.transport;
 public class TransportException extends Exception {
 
     private static final long serialVersionUID = -1L;
-    
+
     private int httpStatus;
 
     public TransportException(String message) {
@@ -17,7 +17,7 @@ public class TransportException extends Exception {
     public TransportException(Throwable cause) {
         super(cause);
     }
-    
+
     public TransportException(String message, int httpStatus) {
         super(message);
         this.httpStatus = httpStatus;
@@ -32,7 +32,7 @@ public class TransportException extends Exception {
         super(cause);
         this.httpStatus = httpStatus;
     }
-    
+
     public int getHttpStatus() {
         return httpStatus;
     }

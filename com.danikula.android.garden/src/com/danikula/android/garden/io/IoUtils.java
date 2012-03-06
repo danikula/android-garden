@@ -33,7 +33,7 @@ public class IoUtils {
     public static String streamToString(InputStream inputStream) throws IOException {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(inputStream, STREAM_ENCODING));
+            reader = new BufferedReader(new InputStreamReader(inputStream, STREAM_ENCODING), DEFAULT_BUFFER_SIZE);
             StringBuilder str = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
