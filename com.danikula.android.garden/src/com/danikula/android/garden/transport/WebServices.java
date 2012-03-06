@@ -22,6 +22,8 @@ import org.apache.http.protocol.HTTP;
 import android.util.Log;
 
 import com.danikula.android.garden.io.IoUtils;
+import com.danikula.android.garden.transport.request.AbstractRequest;
+import com.danikula.android.garden.transport.response.ResponseParsingException;
 
 public class WebServices {
     

@@ -1,4 +1,4 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.request;
 
 import java.util.HashMap;
 

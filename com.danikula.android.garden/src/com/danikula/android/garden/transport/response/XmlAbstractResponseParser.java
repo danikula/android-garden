@@ -1,4 +1,4 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.response;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

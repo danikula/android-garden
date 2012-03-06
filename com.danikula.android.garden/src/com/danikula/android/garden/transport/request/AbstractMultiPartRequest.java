@@ -1,4 +1,4 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.request;
 
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
@@ -11,6 +11,7 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.protocol.HTTP;
+
 
 public abstract class AbstractMultiPartRequest<T> extends AbstractRequest<T> {
 

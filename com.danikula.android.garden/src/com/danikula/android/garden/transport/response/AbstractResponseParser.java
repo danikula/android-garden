@@ -1,4 +1,5 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.response;
+
 
 public abstract class AbstractResponseParser<T> {
 

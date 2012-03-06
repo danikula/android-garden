@@ -1,4 +1,5 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.response;
+
 
 public class EmptyResponseParser extends AbstractResponseParser<Void> {
 

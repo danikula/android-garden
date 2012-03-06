@@ -1,4 +1,4 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.request;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -11,12 +11,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ByteArrayBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
+import com.danikula.android.garden.transport.response.AbstractResponseParser;
+import com.danikula.android.garden.transport.response.ResponseParsingException;
 import com.danikula.android.garden.utils.StringUtils;
 
 public abstract class AbstractRequest<T> {

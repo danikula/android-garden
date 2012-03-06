@@ -1,6 +1,6 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.response;
 
-/*package private*/ class ResponseParsingException extends Exception {
+public class ResponseParsingException extends Exception {
 
     private static final long serialVersionUID = -1L;
 

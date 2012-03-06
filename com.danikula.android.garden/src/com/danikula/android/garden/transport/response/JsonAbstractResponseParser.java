@@ -1,7 +1,8 @@
-package com.danikula.android.garden.transport;
+package com.danikula.android.garden.transport.response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public abstract class JsonAbstractResponseParser<T> extends AbstractResponseParser<T> {
 

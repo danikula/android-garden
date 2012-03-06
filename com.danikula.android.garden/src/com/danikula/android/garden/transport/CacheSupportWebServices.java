@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.danikula.android.garden.storage.Storage;
 import com.danikula.android.garden.storage.StorageException;
+import com.danikula.android.garden.transport.request.AbstractRequest;
 import com.danikula.android.garden.utils.Validate;
 
 public class CacheSupportWebServices extends WebServices {
