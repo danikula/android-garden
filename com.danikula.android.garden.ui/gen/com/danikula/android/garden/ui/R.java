@@ -77,18 +77,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int actionbar_compat_progress=0x7f030002;
     }
     public static final class style {
-        public static int ActionBar=0x7f070008;
-        public static int ActionBarCompat=0x7f070001;
-        public static int ActionBarCompatHomeItem=0x7f070007;
-        public static int ActionBarCompatItem=0x7f070006;
-        public static int ActionBarCompatItemBase=0x7f070002;
-        public static int ActionBarCompatProgressIndicator=0x7f070003;
-        public static int ActionBarCompatTitle=0x7f070005;
-        public static int ActionBarCompatTitleBase=0x7f070004;
-        public static int ActionBarTitle=0x7f070009;
+        public static int ActionBar=0x7f07000a;
+        public static int ActionBarCompatBackgroundBlack=0x7f070003;
+        public static int ActionBarCompatBackgroundLight=0x7f070002;
+        public static int ActionBarCompatHomeItem=0x7f070009;
+        public static int ActionBarCompatItem=0x7f070008;
+        public static int ActionBarCompatItemBase=0x7f070004;
+        public static int ActionBarCompatProgressIndicator=0x7f070005;
+        public static int ActionBarCompatTitle=0x7f070007;
+        public static int ActionBarCompatTitleBase=0x7f070006;
+        public static int ActionBarTitle=0x7f07000b;
+        public static int Theme_Black_ActionBar=0x7f070001;
         public static int Theme_Light_ActionBar=0x7f070000;
-        public static int Theme_RemoteImageViewDefaults=0x7f07000a;
-        public static int Widget_RemoteImageView=0x7f07000b;
+        public static int Theme_RemoteImageViewDefaults=0x7f07000c;
+        public static int Widget_RemoteImageView=0x7f07000d;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionbarCompatTheme.

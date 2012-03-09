@@ -101,24 +101,26 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int toggle_title=0x7f080004;
     }
     public static final class style {
-        public static final int ActionBar=0x7f070008;
-        public static final int ActionBarCompat=0x7f070001;
-        public static final int ActionBarCompatHomeItem=0x7f070007;
-        public static final int ActionBarCompatItem=0x7f070006;
-        public static final int ActionBarCompatItemBase=0x7f070002;
-        public static final int ActionBarCompatProgressIndicator=0x7f070003;
-        public static final int ActionBarCompatTitle=0x7f070005;
-        public static final int ActionBarCompatTitleBase=0x7f070004;
-        public static final int ActionBarTitle=0x7f070009;
+        public static final int ActionBar=0x7f07000a;
+        public static final int ActionBarCompatBackgroundBlack=0x7f070003;
+        public static final int ActionBarCompatBackgroundLight=0x7f070002;
+        public static final int ActionBarCompatHomeItem=0x7f070009;
+        public static final int ActionBarCompatItem=0x7f070008;
+        public static final int ActionBarCompatItemBase=0x7f070004;
+        public static final int ActionBarCompatProgressIndicator=0x7f070005;
+        public static final int ActionBarCompatTitle=0x7f070007;
+        public static final int ActionBarCompatTitleBase=0x7f070006;
+        public static final int ActionBarTitle=0x7f07000b;
+        public static final int Theme_Black_ActionBar=0x7f070001;
         /**  <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item> 
          */
-        public static final int Theme_Black_CustomRemoteImageView=0x7f07000d;
+        public static final int Theme_Black_CustomRemoteImageView=0x7f07000f;
         public static final int Theme_Light_ActionBar=0x7f070000;
         /**  customization 
          */
-        public static final int Theme_Light_ActionBar_Custom=0x7f07000c;
-        public static final int Theme_RemoteImageViewDefaults=0x7f07000a;
-        public static final int Widget_RemoteImageView=0x7f07000b;
+        public static final int Theme_Light_ActionBar_Custom=0x7f07000e;
+        public static final int Theme_RemoteImageViewDefaults=0x7f07000c;
+        public static final int Widget_RemoteImageView=0x7f07000d;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionbarCompatTheme.

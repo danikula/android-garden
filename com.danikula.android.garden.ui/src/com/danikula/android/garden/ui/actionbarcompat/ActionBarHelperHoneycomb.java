@@ -77,6 +77,11 @@ public class ActionBarHelperHoneycomb extends ActionBarHelper {
     public boolean requestWindowFeature(int featureId) {
         return mActivity.requestWindowFeature(featureId);
     }
+    
+    @Override
+    public void setDisplayShowHomeEnabled(boolean visibility) {
+       mActivity.getActionBar().setDisplayShowHomeEnabled(visibility);
+    }
 
     /**
      * Returns a {@link Context} suitable for inflating layouts for the action bar. The implementation for this method in
