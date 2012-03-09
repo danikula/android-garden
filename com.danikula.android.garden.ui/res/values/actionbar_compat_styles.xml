@@ -18,10 +18,13 @@
 
     <style name="Theme.Light.ActionBar" parent="android:style/Theme.Light">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompatBackgroundLight</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompatBackground</item>
+        <!-- 
         <item name="android:windowContentOverlay">@drawable/actionbar_compat_actionbar_shadow</item>
+         -->
 
         <!-- for programmatic instantiation -->
+        <item name="actionbarCompatTitleBackground">@android:color/white</item>
         <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
         <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
         <item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
@@ -30,22 +33,20 @@
     
     <style name="Theme.Black.ActionBar" parent="android:style/Theme.Black">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompatBackgroundBlack</item>
-        <item name="android:windowContentOverlay">@drawable/actionbar_compat_actionbar_shadow</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompatBackground</item>
+        <!--<item name="android:windowContentOverlay">@drawable/actionbar_compat_actionbar_shadow</item>
+        -->
 
         <!-- for programmatic instantiation -->
+        <item name="actionbarCompatTitleBackground">@android:color/black</item>
         <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
         <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
         <item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
         <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
     </style>    
 
-    <style name="ActionBarCompatBackgroundLight">
-        <item name="android:background">#eee</item>
-    </style>
-
-    <style name="ActionBarCompatBackgroundBlack">
-        <item name="android:background">#000</item>
+    <style name="ActionBarCompatBackground">
+        <item name="android:background">?attr/actionbarCompatTitleBackground</item>
     </style>
 
     <style name="ActionBarCompatItemBase">
@@ -70,7 +71,7 @@
     </style>
 
     <style name="ActionBarCompatTitle" parent="style/ActionBarCompatTitleBase">
-        <item name="android:textColor">@color/actionbar_title_color</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ActionBarCompatItem" parent="style/ActionBarCompatItemBase">

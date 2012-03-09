@@ -97,6 +97,4 @@ public abstract class ActionBarHelper {
     
     public abstract boolean requestWindowFeature(int featureId);
     
-    public abstract void setDisplayShowHomeEnabled(boolean visibility);
-        
 }

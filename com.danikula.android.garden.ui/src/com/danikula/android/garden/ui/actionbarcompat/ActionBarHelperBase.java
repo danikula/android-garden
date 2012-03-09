@@ -54,8 +54,6 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
     protected Set<Integer> mActionItemIds = new HashSet<Integer>();
     
-    private boolean displayHome = true;
-
     protected ActionBarHelperBase(Activity activity) {
         super(activity);
     }
@@ -169,11 +167,6 @@ public class ActionBarHelperBase extends ActionBarHelper {
         return true;
     }
     
-    @Override
-    public void setDisplayShowHomeEnabled(boolean visibility) {
-        displayHome = visibility;
-    }
-
     /**
      * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and
      * will return null on Honeycomb.
@@ -207,9 +200,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
         }
         if (itemId != android.R.id.home) {
             actionButton.setImageDrawable(item.getIcon());
-        } else {
-            actionButton.setVisibility(displayHome ? View.VISIBLE : View.GONE);
-        }
+        } 
         actionButton.setScaleType(ImageView.ScaleType.CENTER);
         actionButton.setContentDescription(item.getTitle());
         actionButton.setOnClickListener(new View.OnClickListener() {
