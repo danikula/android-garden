@@ -12,39 +12,43 @@ public final class R {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int actionbarCompatItemHomeStyle=0x7f010002;
+        public static final int actionbarCompatItemHomeStyle=0x7f010003;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int actionbarCompatItemStyle=0x7f010001;
+        public static final int actionbarCompatItemStyle=0x7f010002;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int actionbarCompatProgressIndicatorStyle=0x7f010003;
+        public static final int actionbarCompatProgressIndicatorStyle=0x7f010004;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int actionbarCompatTitleStyle=0x7f010000;
+        public static final int actionbarCompatTitleBackground=0x7f010000;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int borderDrawable=0x7f010005;
+        public static final int actionbarCompatTitleStyle=0x7f010001;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int maskDrawable=0x7f010004;
+        public static final int borderDrawable=0x7f010006;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int remoteImageViewStyle=0x7f010006;
+        public static final int maskDrawable=0x7f010005;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int riErrorImage=0x7f010008;
+        public static final int remoteImageViewStyle=0x7f010007;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int riLoadingImage=0x7f010007;
+        public static final int riErrorImage=0x7f010009;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int riLoadingImage=0x7f010008;
     }
     public static final class color {
         public static final int actionbar_title_color=0x7f040000;
@@ -101,24 +105,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int toggle_title=0x7f080004;
     }
     public static final class style {
-        public static final int ActionBar=0x7f070008;
-        public static final int ActionBarCompat=0x7f070001;
-        public static final int ActionBarCompatHomeItem=0x7f070007;
-        public static final int ActionBarCompatItem=0x7f070006;
-        public static final int ActionBarCompatItemBase=0x7f070002;
-        public static final int ActionBarCompatProgressIndicator=0x7f070003;
-        public static final int ActionBarCompatTitle=0x7f070005;
-        public static final int ActionBarCompatTitleBase=0x7f070004;
-        public static final int ActionBarTitle=0x7f070009;
+        public static final int ActionBarCompatBackground=0x7f070002;
+        public static final int ActionBarCompatHomeItem=0x7f070008;
+        public static final int ActionBarCompatItem=0x7f070007;
+        public static final int ActionBarCompatItemBase=0x7f070003;
+        public static final int ActionBarCompatProgressIndicator=0x7f070004;
+        public static final int ActionBarCompatTitle=0x7f070006;
+        public static final int ActionBarCompatTitleBase=0x7f070005;
+        /**  <item name="android:textColor">@color/actionbar_title_color</item> 
+         */
+        public static final int ActionBarTitle=0x7f07000c;
+        public static final int TextAppearance_Widget_ActionBar_Title_Bold=0x7f07000b;
+        public static final int Theme_Black_ActionBar=0x7f070001;
         /**  <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item> 
          */
-        public static final int Theme_Black_CustomRemoteImageView=0x7f07000d;
+        public static final int Theme_Black_CustomRemoteImageView=0x7f070010;
+        /**  <item name="android:windowContentOverlay">@drawable/actionbar_compat_actionbar_shadow</item> 
+         */
         public static final int Theme_Light_ActionBar=0x7f070000;
         /**  customization 
          */
-        public static final int Theme_Light_ActionBar_Custom=0x7f07000c;
-        public static final int Theme_RemoteImageViewDefaults=0x7f07000a;
-        public static final int Widget_RemoteImageView=0x7f07000b;
+        public static final int Theme_Light_ActionBar_Custom=0x7f07000f;
+        public static final int Theme_RemoteImageViewDefaults=0x7f07000d;
+        public static final int Widget_Holo_ActionBar_Default=0x7f07000a;
+        public static final int Widget_Holo_Light_ActionBar_Default=0x7f070009;
+        public static final int Widget_RemoteImageView=0x7f07000e;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionbarCompatTheme.
@@ -130,15 +141,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <tr><td><code>{@link #ActionbarCompatTheme_actionbarCompatItemHomeStyle com.danikula.android.garden.sample:actionbarCompatItemHomeStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #ActionbarCompatTheme_actionbarCompatItemStyle com.danikula.android.garden.sample:actionbarCompatItemStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #ActionbarCompatTheme_actionbarCompatProgressIndicatorStyle com.danikula.android.garden.sample:actionbarCompatProgressIndicatorStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionbarCompatTheme_actionbarCompatTitleBackground com.danikula.android.garden.sample:actionbarCompatTitleBackground}</code></td><td></td></tr>
            <tr><td><code>{@link #ActionbarCompatTheme_actionbarCompatTitleStyle com.danikula.android.garden.sample:actionbarCompatTitleStyle}</code></td><td></td></tr>
            </table>
            @see #ActionbarCompatTheme_actionbarCompatItemHomeStyle
            @see #ActionbarCompatTheme_actionbarCompatItemStyle
            @see #ActionbarCompatTheme_actionbarCompatProgressIndicatorStyle
+           @see #ActionbarCompatTheme_actionbarCompatTitleBackground
            @see #ActionbarCompatTheme_actionbarCompatTitleStyle
          */
         public static final int[] ActionbarCompatTheme = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#actionbarCompatItemHomeStyle}
@@ -149,7 +163,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:actionbarCompatItemHomeStyle
         */
-        public static final int ActionbarCompatTheme_actionbarCompatItemHomeStyle = 2;
+        public static final int ActionbarCompatTheme_actionbarCompatItemHomeStyle = 3;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#actionbarCompatItemStyle}
           attribute's value can be found in the {@link #ActionbarCompatTheme} array.
@@ -159,7 +173,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:actionbarCompatItemStyle
         */
-        public static final int ActionbarCompatTheme_actionbarCompatItemStyle = 1;
+        public static final int ActionbarCompatTheme_actionbarCompatItemStyle = 2;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#actionbarCompatProgressIndicatorStyle}
           attribute's value can be found in the {@link #ActionbarCompatTheme} array.
@@ -169,7 +183,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:actionbarCompatProgressIndicatorStyle
         */
-        public static final int ActionbarCompatTheme_actionbarCompatProgressIndicatorStyle = 3;
+        public static final int ActionbarCompatTheme_actionbarCompatProgressIndicatorStyle = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#actionbarCompatTitleBackground}
+          attribute's value can be found in the {@link #ActionbarCompatTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionbarCompatTitleBackground
+        */
+        public static final int ActionbarCompatTheme_actionbarCompatTitleBackground = 0;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#actionbarCompatTitleStyle}
           attribute's value can be found in the {@link #ActionbarCompatTheme} array.
@@ -179,7 +203,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:actionbarCompatTitleStyle
         */
-        public static final int ActionbarCompatTheme_actionbarCompatTitleStyle = 0;
+        public static final int ActionbarCompatTheme_actionbarCompatTitleStyle = 1;
         /** Attributes that can be used with a BezelImageView.
            <p>Includes the following attributes:</p>
            <table>
@@ -193,7 +217,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #BezelImageView_maskDrawable
          */
         public static final int[] BezelImageView = {
-            0x7f010004, 0x7f010005
+            0x7f010005, 0x7f010006
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#borderDrawable}
@@ -230,7 +254,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #RemoteImageView_riLoadingImage
          */
         public static final int[] RemoteImageView = {
-            0x7f010006, 0x7f010007, 0x7f010008
+            0x7f010007, 0x7f010008, 0x7f010009
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#remoteImageViewStyle}

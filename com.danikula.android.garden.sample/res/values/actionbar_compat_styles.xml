@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Light.ActionBar.Custom" parent="@style/Theme.Light.ActionBar">
+    <style name="Theme.Light.ActionBar.Custom" parent="@style/Theme.Black.ActionBar">
         <!-- customization -->
     </style>
 

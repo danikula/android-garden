@@ -24,8 +24,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.danikula.android.garden.ui.R;
 import com.danikula.android.garden.ui.actionbarcompat.ActionBarActivity;
+import com.danikula.android.garden.utils.UiUtils;
 
 public class ActionBarCompatSampleActivity extends ActionBarActivity {
     private boolean mAlternateTitle = false;
@@ -88,5 +88,12 @@ public class ActionBarCompatSampleActivity extends ActionBarActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+//        UiUtils.setVisibility(false, findViewById(android.R.id.home));
     }
 }

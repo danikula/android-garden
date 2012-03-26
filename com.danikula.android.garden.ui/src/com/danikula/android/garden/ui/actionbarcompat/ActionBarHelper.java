@@ -96,5 +96,5 @@ public abstract class ActionBarHelper {
     public abstract void setProgressBarIndeterminateVisibility(boolean visibility);
     
     public abstract boolean requestWindowFeature(int featureId);
-        
+    
 }

@@ -77,7 +77,7 @@ public class ActionBarHelperHoneycomb extends ActionBarHelper {
     public boolean requestWindowFeature(int featureId) {
         return mActivity.requestWindowFeature(featureId);
     }
-
+    
     /**
      * Returns a {@link Context} suitable for inflating layouts for the action bar. The implementation for this method in
      * {@link ActionBarHelperICS} asks the action bar for a themed context.

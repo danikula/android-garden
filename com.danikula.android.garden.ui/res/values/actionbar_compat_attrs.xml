@@ -17,6 +17,7 @@
 <resources>
 
     <declare-styleable name="ActionbarCompatTheme">
+        <attr name="actionbarCompatTitleBackground" format="reference" />
         <attr name="actionbarCompatTitleStyle" format="reference" />
         <attr name="actionbarCompatItemStyle" format="reference" />
         <attr name="actionbarCompatItemHomeStyle" format="reference" />

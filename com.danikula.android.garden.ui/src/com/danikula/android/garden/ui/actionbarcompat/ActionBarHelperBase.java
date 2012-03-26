@@ -53,7 +53,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
     private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
 
     protected Set<Integer> mActionItemIds = new HashSet<Integer>();
-
+    
     protected ActionBarHelperBase(Activity activity) {
         super(activity);
     }
@@ -166,7 +166,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
         // do not combine windows feature with custom title view
         return true;
     }
-
+    
     /**
      * Returns the {@link android.view.ViewGroup} for the action bar on phones (compatibility action bar). Can return null, and
      * will return null on Honeycomb.
@@ -200,7 +200,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
         }
         if (itemId != android.R.id.home) {
             actionButton.setImageDrawable(item.getIcon());
-        }
+        } 
         actionButton.setScaleType(ImageView.ScaleType.CENTER);
         actionButton.setContentDescription(item.getTitle());
         actionButton.setOnClickListener(new View.OnClickListener() {
