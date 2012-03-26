@@ -14,6 +14,7 @@ import com.danikula.android.garden.io.FlushedInputStream;
 import com.danikula.android.garden.io.IoUtils;
 import com.danikula.android.garden.storage.EmptyStorage;
 import com.danikula.android.garden.storage.Storage;
+import com.danikula.android.garden.storage.StorageException;
 import com.danikula.android.garden.utils.Validate;
 
 public class ImageLoaderImpl implements ImageLoader {
@@ -65,7 +66,12 @@ public class ImageLoaderImpl implements ImageLoader {
     }
 
     private synchronized void cache(String url, Bitmap bitmap) {
-        cacheStorage.put(url, bitmap);
+        try {
+            cacheStorage.put(url, bitmap);
+        } catch (StorageException e) {
+            // just log & ignore this error
+            Log.e(LOG_TAG, "Error saving bitmap in cache", e);
+        }
     }
 
     private class DownloadImageTask extends AsyncTask<Void, Void, Bitmap> {
