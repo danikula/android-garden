@@ -201,6 +201,12 @@ public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandab
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return !isLoadingChildView(groupPosition, childPosition);
     }
+    
+    public boolean isHasChildren(int groupIndex) {
+        List<C> children = childItems.get(groupIndex);
+        boolean isAloneChild = children.size() == 1;  
+        return isAloneChild ? !isLoadingChildView(groupIndex, 0) : children.size() != 0;
+    }
 
     private boolean isLoadingChildView(int groupPosition, int childPosition) {
         return getChild(groupPosition, childPosition) == null;
