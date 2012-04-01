@@ -4,26 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.danikula.android.garden.utils.Validate;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 
-/**
- * Useful adapter for {@link ExpandableListView}.
- * 
- * <p>
- * Adapter shows progres during loading data for groups and child rows.
- * </p>
- * @author Alexey Danilov
- *
- * @param <G> type of group items
- * @param <C> type of child items
- */
+import com.danikula.android.garden.utils.Validate;
+
 public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandableListAdapter {
 
     private static final Object LOADING_ROW_MARKER = new Object();
@@ -107,6 +95,11 @@ public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandab
     }
 
     protected abstract boolean areEquals(G currentGroup, G searchingGroup);
+
+    public boolean isHasChilds(int groupPosition) {
+        int size = childItems.get(groupPosition).size();
+        return size == 1 ? !isLoadingChildView(groupPosition, 0) : size != 0;
+    }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
@@ -200,12 +193,6 @@ public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandab
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return !isLoadingChildView(groupPosition, childPosition);
-    }
-    
-    public boolean isHasChildren(int groupIndex) {
-        List<C> children = childItems.get(groupIndex);
-        boolean isAloneChild = children.size() == 1;  
-        return isAloneChild ? !isLoadingChildView(groupIndex, 0) : children.size() != 0;
     }
 
     private boolean isLoadingChildView(int groupPosition, int childPosition) {
