@@ -12,7 +12,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
 
     private static final String DEFAULT_EXTENSION = "bin";
 
-    private File storageDirecory;
+    private File storageDir;
 
     private String fileExtension;
 
@@ -23,7 +23,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     public FileBasedStorage(String storagePath, String fileExtension) {
         Validate.notNull(storagePath, "storage directory");
         Validate.notNull(fileExtension, "extension");
-        this.storageDirecory = new File(storagePath);
+        this.storageDir = new File(storagePath);
         this.fileExtension = fileExtension;
     }
 
@@ -32,8 +32,8 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         Validate.notNull(key, "key");
         Validate.notNull(value, "value");
 
-        if (!storageDirecory.canWrite()) {
-            boolean created = storageDirecory.mkdirs();
+        if (!storageDir.canWrite()) {
+            boolean created = storageDir.mkdirs();
             if (!created) {
                 throw new StorageException("Error creating cache directory");
             }
@@ -74,17 +74,17 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
 
     @Override
     public void clear() throws StorageException {
-        if (!storageDirecory.exists()) {
+        if (!storageDir.exists()) {
             return;
         }
-        for (File storageFile : storageDirecory.listFiles()) {
+        for (File storageFile : storageDir.listFiles()) {
             boolean isDeleted = storageFile.delete();
             if (!isDeleted) {
                 String errorMessageFormat = "Error deleting cache item '%s' from cache storage";
                 throw new StorageException(String.format(errorMessageFormat, storageFile.getAbsolutePath()));
             }
         }
-        storageDirecory.delete();
+        storageDir.delete();
     }
 
     @Override
@@ -103,6 +103,6 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
 
     private File getStorageFile(String key) {
         String fileName = StringUtils.join(StringUtils.computeMD5(key), ".", fileExtension);
-        return new File(storageDirecory, fileName);
+        return new File(storageDir, fileName);
     }
 }

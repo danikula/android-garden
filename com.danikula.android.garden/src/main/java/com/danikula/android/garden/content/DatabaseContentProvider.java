@@ -3,6 +3,8 @@ package com.danikula.android.garden.content;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.danikula.android.garden.utils.Validate;
+
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -10,6 +12,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.provider.BaseColumns;
 
 /**
  * Базовый класс для реализации своего контент провайдера.
@@ -17,7 +20,7 @@ import android.net.Uri;
  * Список фич:
  * <ul>
  * <li>
- * удобный способ регистрации типов сущеностей с помощью методов {@link #registerMultipleItem(int, String)}
+ * удобный способ регистрации типов сущностей с помощью методов {@link #registerMultipleEntity(int, String)}
  * {@link #registerSingleItem(int, String, String)} и как следствие реализованный метод {@link #getType(Uri)}</li>
  * <li>дефолтовая реализация методов CRUD!</li>
  * <li>to be continued....</li>
@@ -28,20 +31,14 @@ import android.net.Uri;
  * <pre>
  * public class TasksContentProvider extends DatabaseContentProvider {
  * 
- *     private static final String CONTENT_AUTHORITY = &quot;com.ineed.taskprovider&quot;;
- *     static final Uri BASE_CONTENT_URI = Uri.parse(&quot;content://&quot; + CONTENT_AUTHORITY);
- * 
- *     private static final int TASKS = 100;
- *     private static final int TASK_ITEM = 101;
+ *     private static final String CONTENT_AUTHORITY = &quot;com.ineed.taskprovider&quot;
  * 
  *     public TasksContentProvider() {
- *         addMathURI(CONTENT_AUTHORITY, TaskItem.PATH, TASKS);
- *         addMathURI(CONTENT_AUTHORITY, TaskItem.PATH + &quot;/*&quot;, TASK_ITEM);
- * 
- *         registerMultipleItem(TASKS, Tables.TASK);
- *         registerSingleItem(TASK_ITEM, Tables.TASK, TaskItem._ID);
+ *         super(CONTENT_AUTHORITY);
+ *         registerEntity("task");
+ *         registerEntity("user");
  *     }
- * 
+ *     
  *     &#064;Override
  *     protected DatabaseHelper getDatabaseHelper() {
  *         return new TaskDatabaseHelper(getContext());
@@ -61,7 +58,16 @@ public abstract class DatabaseContentProvider extends ContentProvider {
 
     private DatabaseHelper dbHelper;
 
-    private UriMatcher uriMathcer = new UriMatcher(UriMatcher.NO_MATCH);
+    private UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    private String authority;
+
+    private int entityCounter;
+
+    public DatabaseContentProvider(String authority) {
+        Validate.notNull(authority, "authority must be not null!");
+        this.authority = authority;
+    }
 
     @Override
     public boolean onCreate() {
@@ -155,7 +161,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         SelectionBuilder builder = new SelectionBuilder().table(item.getTable());
         if (item.isSingle()) {
             final String id = uri.getPathSegments().get(1);
-            builder.table(item.getTable()).where(item.getIdPropertyName() + "=?", id);
+            builder.table(item.getTable()).where(BaseColumns._ID + "=?", id);
         }
         return builder;
     }
@@ -166,42 +172,34 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         checkDatabaseHelperExist();
         return dbHelper.getWritableDatabase();
     }
-    
+
     protected SQLiteDatabase getReadableDb() {
         checkDatabaseHelperExist();
         return dbHelper.getReadableDatabase();
     }
-    
-    /**
-     * Регистрирует новую сущности.
-     * 
-     * @param code int идентификтор сущности, возвращаемые для данной сущности методом {@link #match(Uri)}
-     * @param table String имя таблицы, в которой хранится сущность
-     */
-    protected void registerSingleItem(int code, String table, String propertyName) {
-        contentTypeRegister.put(code, new Item(table, propertyName, true));
-    }
-
-    /**
-     * Регистрирует новую сущности.
-     * 
-     * @param code int идентификтор сущности, возвращаемые для данной сущности методом {@link #match(Uri)}
-     * @param table String имя таблицы, в которой хранится сущность
-     */
-    protected void registerMultipleItem(int code, String table) {
-        contentTypeRegister.put(code, new Item(table, null, false));
-    }
 
     protected int match(Uri uri) {
-        return uriMathcer.match(uri);
+        return uriMatcher.match(uri);
     }
 
-    protected void addMathURI(String authority, String path, int code) {
-        uriMathcer.addURI(authority, path, code);
+    /**
+     * Регистрирует новую сущности.
+     * 
+     * @param code String имя сущности, должно совпадать с именем таблицы
+     */
+    protected void registerEntity(String entityName) {
+        int singleEntityCode = ++entityCounter;
+        contentTypeRegister.put(singleEntityCode, new Item(entityName, true));
+        uriMatcher.addURI(authority, entityName + "/*", singleEntityCode);
+
+        int multiEntityCode = ++entityCounter;
+        contentTypeRegister.put(multiEntityCode, new Item(entityName, false));
+        uriMatcher.addURI(authority, entityName, multiEntityCode);
     }
-    
+
     /**
      * Возвращает имя таблицы, исходя из типа сущности
+     * 
      * @param uri Uri uri, для которого необходимо определить таблицу, где хранится сущность
      * @return String имя таблицы
      * @see #getType(Uri)

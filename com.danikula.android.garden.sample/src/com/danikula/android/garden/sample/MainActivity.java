@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.danikula.aibolit.Aibolit;
-import com.danikula.android.garden.ui.MutableListAdapter;
+import com.danikula.android.garden.ui.listadapter.MutableListAdapter;
 
 public class MainActivity extends ListActivity {
 

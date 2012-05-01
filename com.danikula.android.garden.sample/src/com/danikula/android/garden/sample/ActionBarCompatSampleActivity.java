@@ -25,7 +25,6 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.danikula.android.garden.ui.actionbarcompat.ActionBarActivity;
-import com.danikula.android.garden.utils.UiUtils;
 
 public class ActionBarCompatSampleActivity extends ActionBarActivity {
     private boolean mAlternateTitle = false;
