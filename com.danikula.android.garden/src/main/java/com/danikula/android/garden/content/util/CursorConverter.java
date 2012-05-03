@@ -22,6 +22,11 @@ public abstract class CursorConverter<T> implements Converter<Cursor, T> {
         return cursor.getInt(columnIndex);
     }
     
+    protected long getLong(Cursor cursor, String columnName) {
+        int columnIndex = getColumnIndex(cursor, columnName);
+        return cursor.getLong(columnIndex);
+    }
+    
     protected double getDouble(Cursor cursor, String columnName) {
         int columnIndex = getColumnIndex(cursor, columnName);
         return cursor.getDouble(columnIndex);
