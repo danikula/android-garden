@@ -8,6 +8,7 @@ import java.util.Set;
 import com.danikula.android.garden.utils.Validate;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 
 /**
  * Some useful methods for operating with content provider.
@@ -29,7 +30,7 @@ public class ContentUtils {
         }
         cursor.close();
     }
-    
+
     /**
      * Converts first row from cursor to object if cursor isn't empty, otherwise returns <code>null</code>.
      * 
@@ -43,7 +44,7 @@ public class ContentUtils {
      */
     public static <T> T getFirstObject(Cursor cursor, CursorConverter<T> converter) {
         Validate.notNull(converter, "converter");
-        
+
         T entity = null;
         if (cursor != null) {
             cursor.moveToFirst();
@@ -53,14 +54,13 @@ public class ContentUtils {
         return entity;
     }
 
-
     public static <T> List<T> convertToListAndClose(Cursor cursor, CursorConverter<T> converter) {
         Validate.notNull(converter, "converter");
         List<T> list = new ArrayList<T>();
         iterateAndClose(cursor, new ObjectsCollector<T>(converter, list));
         return list;
     }
-    
+
     public static Set<Integer> collectIntValues(Cursor cursor, String columnName) {
         Set<Integer> ids = new LinkedHashSet<Integer>();
         iterateAndClose(cursor, new IntValuesCollector(columnName, ids));
@@ -91,8 +91,19 @@ public class ContentUtils {
         return value != 0;
     }
 
+    public String dumpAndClose(Cursor cursor) {
+        try {
+            return DatabaseUtils.dumpCursorToString(cursor);
+        }
+        finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
     private static final class ObjectsCollector<T> implements IterateCursorHandler {
-        
+
         private final CursorConverter<T> converter;
         private final List<T> list;
 
