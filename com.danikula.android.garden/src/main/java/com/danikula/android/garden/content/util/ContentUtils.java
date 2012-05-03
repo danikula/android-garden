@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.danikula.android.garden.utils.Converter;
 import com.danikula.android.garden.utils.Validate;
 
 import android.database.Cursor;
@@ -30,19 +29,7 @@ public class ContentUtils {
         }
         cursor.close();
     }
-
-    public static <T> List<T> convertToListAndClose(Cursor cursor, final Converter<Cursor, T> converter) {
-        final List<T> list = new ArrayList<T>();
-        iterateAndClose(cursor, new DefaultIterateCursorHandler() {
-
-            @Override
-            public void onRow(Cursor c) {
-                list.add(converter.convert(c));
-            }
-        });
-        return list;
-    }
-
+    
     /**
      * Converts first row from cursor to object if cursor isn't empty, otherwise returns <code>null</code>.
      * 
@@ -54,7 +41,7 @@ public class ContentUtils {
      * @param converter converter to be used for converting cursor row to typed object
      * @return first row from cursor converted to object if cursor isn't empty, or <code>null</code> otherwise.
      */
-    public static <T> T getFirstObject(Cursor cursor, Converter<Cursor, T> converter) {
+    public static <T> T getFirstObject(Cursor cursor, CursorConverter<T> converter) {
         Validate.notNull(converter, "converter");
         
         T entity = null;
@@ -66,6 +53,14 @@ public class ContentUtils {
         return entity;
     }
 
+
+    public static <T> List<T> convertToListAndClose(Cursor cursor, CursorConverter<T> converter) {
+        Validate.notNull(converter, "converter");
+        List<T> list = new ArrayList<T>();
+        iterateAndClose(cursor, new ObjectsCollector<T>(converter, list));
+        return list;
+    }
+    
     public static Set<Integer> collectIntValues(Cursor cursor, String columnName) {
         Set<Integer> ids = new LinkedHashSet<Integer>();
         iterateAndClose(cursor, new IntValuesCollector(columnName, ids));
@@ -96,19 +91,42 @@ public class ContentUtils {
         return value != 0;
     }
 
-    private static final class IntValuesCollector extends DefaultIterateCursorHandler {
+    private static final class ObjectsCollector<T> implements IterateCursorHandler {
+        
+        private final CursorConverter<T> converter;
+        private final List<T> list;
+
+        private ObjectsCollector(CursorConverter<T> converter, List<T> list) {
+            this.converter = converter;
+            this.list = list;
+        }
+
+        @Override
+        public void onRow(Cursor c) {
+            list.add(converter.convert(c));
+        }
+    }
+
+    private static final class IntValuesCollector implements IterateCursorHandler {
 
         private Set<Integer> values;
-        private final String columnName;
+        private CursorConverter<Integer> converter;
 
-        private IntValuesCollector(String columnName, Set<Integer> values) {
-            this.columnName = columnName;
+        private IntValuesCollector(final String columnName, Set<Integer> values) {
             this.values = values;
+            this.converter = new CursorConverter<Integer>() {
+
+                @Override
+                public Integer convert(Cursor cursor) {
+                    return getInt(cursor, columnName);
+                }
+            };
         }
 
         @Override
         public void onRow(Cursor cursor) {
-            values.add(getInt(cursor, columnName));
+            Integer value = converter.convert(cursor);
+            values.add(value);
         }
     }
 
