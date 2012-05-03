@@ -3,7 +3,7 @@ package com.danikula.android.garden.content;
 /**
  * Класс для конструирования sql скрипта создания таблицы
  * 
- * @author danik
+ * @author Alexey Danilov
  * 
  */
 public class TableCreatorBuilder {

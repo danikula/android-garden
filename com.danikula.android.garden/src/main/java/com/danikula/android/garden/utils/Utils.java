@@ -63,9 +63,5 @@ public class Utils {
          */
         public boolean mathes(T item);
     }
-    
-    public interface Converter<I, O> {
-        
-        O convert(I input);
-    }
+
 }
