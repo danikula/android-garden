@@ -20,8 +20,7 @@ import android.provider.BaseColumns;
  * Список фич:
  * <ul>
  * <li>
- * удобный способ регистрации типов сущностей с помощью методов {@link #registerMultipleEntity(int, String)}
- * {@link #registerSingleItem(int, String, String)} и как следствие реализованный метод {@link #getType(Uri)}</li>
+ * удобный способ регистрации типов сущностей с помощью метода {@link #registerEntity(String)}</li>
  * <li>дефолтовая реализация методов CRUD!</li>
  * <li>to be continued....</li>
  * </ul>
@@ -92,8 +91,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
 
     private void checkCodeExist(int code) {
         if (!contentTypeRegister.containsKey(code)) {
-            throw new IllegalArgumentException(String.format("Type with code '%s' is not registered!. "
-                    + "Use method 'registerContentType' for registering a new content type", code));
+            throw new IllegalArgumentException(String.format("Type with code '%s' is not registered!", code));
         }
     }
 
@@ -135,19 +133,19 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     /** {@inheritDoc} */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        final SelectionBuilder builder = buildSelection(uri);
-        int retVal = builder.where(selection, selectionArgs).delete(getDb());
+        SelectionBuilder builder = buildSelection(uri);
+        int returnValue = builder.where(selection, selectionArgs).delete(getDb());
         getContext().getContentResolver().notifyChange(uri, null);
-        return retVal;
+        return returnValue;
     }
 
     /** {@inheritDoc} */
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        final SelectionBuilder builder = buildSelection(uri);
-        int retVal = builder.where(selection, selectionArgs).update(getDb(), values);
+        SelectionBuilder builder = buildSelection(uri);
+        int returnValue = builder.where(selection, selectionArgs).update(getDb(), values);
         getContext().getContentResolver().notifyChange(uri, null);
-        return retVal;
+        return returnValue;
     }
 
     /**
@@ -183,9 +181,9 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     }
 
     /**
-     * Регистрирует новую сущности.
+     * Регистрирует новую сущность.
      * 
-     * @param code String имя сущности, должно совпадать с именем таблицы
+     * @param entityName String имя сущности, должно совпадать с именем таблицы
      */
     protected void registerEntity(String entityName) {
         int singleEntityCode = ++entityCounter;
@@ -195,6 +193,21 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         int multiEntityCode = ++entityCounter;
         contentTypeRegister.put(multiEntityCode, new Item(entityName, false));
         uriMatcher.addURI(authority, entityName, multiEntityCode);
+    }
+
+    /**
+     * Регистрирует ресурс по указанному uri.
+     * 
+     * @param entityName имя сущности, должно совпадать с именем таблицы
+     * @param path относительный путь uri
+     * @param is <code>true</code> если ресурс представляет собой единичную сущность, <code>false</code> если список 
+     * @return code код зарегестрированного ресурса
+     */
+    protected int registerResource(String entityName, String path, boolean isSingle) {
+        int code = ++entityCounter;
+        contentTypeRegister.put(code, new Item(entityName, isSingle));
+        uriMatcher.addURI(authority, path, code);
+        return code;
     }
 
     /**

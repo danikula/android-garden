@@ -46,7 +46,7 @@ public class ContentUtils {
         Validate.notNull(converter, "converter");
 
         T entity = null;
-        if (cursor != null) {
+        if (cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
             entity = converter.convert(cursor);
             cursor.close();
@@ -91,7 +91,7 @@ public class ContentUtils {
         return value != 0;
     }
 
-    public String dumpAndClose(Cursor cursor) {
+    public static String dumpAndClose(Cursor cursor) {
         try {
             return DatabaseUtils.dumpCursorToString(cursor);
         }
