@@ -3,6 +3,9 @@ package com.danikula.android.garden.sample;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.danikula.aibolit.Aibolit;
+import com.danikula.android.garden.ui.list.MutableListAdapter;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -11,9 +14,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.danikula.aibolit.Aibolit;
-import com.danikula.android.garden.ui.listadapter.MutableListAdapter;
 
 public class MainActivity extends ListActivity {
 
