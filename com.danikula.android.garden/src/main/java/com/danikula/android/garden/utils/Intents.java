@@ -14,7 +14,11 @@ import android.net.Uri;
 public class Intents {
 
     private static final String MIME_TYPE_TEXT_PLAIN = "text/plain";
+    
+    private static final String PHONE_PREFIX = "tel://";
 
+    private static final String YOUTUBE_PREFIX = "vnd.youtube:";
+    
     /**
      * Запускает приложение Android Market для просмотра информации о приложении
      * 
@@ -37,6 +41,17 @@ public class Intents {
 
         activity.startActivity(intent);
     }
+    
+    /**
+     * Starts youtube application to watch video
+     * @param activity activity to be used for launching youtube application 
+     * @param videoId youtube video id
+     * @throws ActivityNotFoundException if there is no installed app for watching video 
+     */
+    public static void watchYoutube(Activity activity, String videoId) throws ActivityNotFoundException {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_PREFIX + videoId));
+        activity.startActivity(intent);
+    }
 
     public static void openEmailClient(Activity activity, String subject, String to, String body)
         throws ActivityNotFoundException {
@@ -46,6 +61,20 @@ public class Intents {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_TEXT, body);
         activity.startActivity(emailIntent);
+    }
+    
+    /**
+     * Opens dialer and call to cpecified number.
+     * 
+     * <p>Note this method requires permission <b>android.permission.CALL_PHONE</b></p>
+     * @param activity activity used for starting dialer
+     * @param phone phone to call
+     * @throws ActivityNotFoundException if device has'n dialer
+     */
+    public static void call(Activity activity, String phone) throws ActivityNotFoundException {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse(PHONE_PREFIX + phone));
+        activity.startActivity(callIntent);
     }
 
     /**

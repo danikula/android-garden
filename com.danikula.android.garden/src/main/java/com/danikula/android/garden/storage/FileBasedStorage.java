@@ -6,6 +6,8 @@ import java.io.IOException;
 import com.danikula.android.garden.utils.StringUtils;
 import com.danikula.android.garden.utils.Validate;
 
+import android.os.Environment;
+
 public abstract class FileBasedStorage<T> implements Storage<String, T> {
 
     private static final String LOG_TAG = FileBasedStorage.class.getSimpleName();
@@ -35,7 +37,9 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         if (!storageDir.canWrite()) {
             boolean created = storageDir.mkdirs();
             if (!created) {
-                throw new StorageException("Error creating cache directory");
+                String errorMsgFormat = "Error creating cache directory '%s'. External storage state: %s";
+                String error = String.format(errorMsgFormat, storageDir.getAbsolutePath(), Environment.getExternalStorageState());
+                throw new StorageException(error);
             }
         }
 
