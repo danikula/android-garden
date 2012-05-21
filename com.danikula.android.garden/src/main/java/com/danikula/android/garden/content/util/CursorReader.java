@@ -1,9 +1,9 @@
 package com.danikula.android.garden.content.util;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.danikula.android.garden.utils.Validate;
 
 import android.database.Cursor;
 
@@ -37,8 +37,8 @@ public class CursorReader {
     }
 
     private int getColumnIndex(Cursor cursor, String columnName) {
-        Validate.notNull(cursor, "Cursor must be not null!");
-        Validate.notNull(columnName, "Column's name must be not null!");
+        checkNotNull(cursor, "Cursor must be not null!");
+        checkNotNull(columnName, "Column's name must be not null!");
         
         int columnIndex = -1;
         if (columns.containsKey(columnName)) {

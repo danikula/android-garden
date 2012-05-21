@@ -1,8 +1,9 @@
 package com.danikula.android.garden.ui.list;
 
-import java.util.HashMap;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
-import com.danikula.android.garden.utils.Validate;
+import java.util.HashMap;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +21,7 @@ public class ViewHolder {
 
         for (int id : ids) {
             View view = parent.findViewById(id);
-            Validate.notNull(view, "view with id " + id);
+            checkNotNull(view, "View vith id '%s' must be not null!", id);
             views.put(id, view);
         }
     }
@@ -54,9 +55,8 @@ public class ViewHolder {
     private <V extends View> V findViewAndCheckType(int viewId, Class<? extends View> classView) {
         V view = findView(viewId);
 
-        Validate.notNull(view, "View with id " + viewId);
-        Validate.checkTrue(classView.isInstance(view),
-                String.format("View with id '%s' is not %s", viewId, classView.getSimpleName()));
+        checkNotNull(view, "View with id '%s' must be not null!", viewId);
+        checkState(classView.isInstance(view), "View with id '%s' is not %s", viewId, classView.getSimpleName());
 
         return view;
     }

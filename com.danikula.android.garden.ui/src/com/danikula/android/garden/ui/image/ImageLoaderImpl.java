@@ -1,21 +1,22 @@
 package com.danikula.android.garden.ui.image;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.danikula.android.garden.io.FlushedInputStream;
 import com.danikula.android.garden.io.IoUtils;
 import com.danikula.android.garden.storage.EmptyStorage;
 import com.danikula.android.garden.storage.Storage;
 import com.danikula.android.garden.storage.StorageException;
-import com.danikula.android.garden.utils.Validate;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 
 public class ImageLoaderImpl implements ImageLoader {
 
@@ -28,14 +29,13 @@ public class ImageLoaderImpl implements ImageLoader {
     }
 
     public ImageLoaderImpl(Storage<String, Bitmap> cacheStorage) {
-        Validate.notNull(cacheStorage, "Cache storage can not be null!");
-        this.cacheStorage = cacheStorage;
+        this.cacheStorage = checkNotNull(cacheStorage, "Cache storage must be not null!");
     }
 
     @Override
     public void loadImageAsynk(String url, LoadImageCallback callback) {
-        Validate.notNull(url, "URL can not be null!");
-        Validate.notNull(callback, "LoadImageCallback can not be null!");
+        checkNotNull(url, "Url must be not null!");
+        checkNotNull(callback, "Callback must be not null!");
 
         if (cacheStorage.contains(url)) {
             callback.onLoaded(url, cacheStorage.get(url));

@@ -1,10 +1,11 @@
 package com.danikula.android.garden.storage;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.File;
 import java.io.IOException;
 
 import com.danikula.android.garden.utils.StringUtils;
-import com.danikula.android.garden.utils.Validate;
 
 import android.os.Environment;
 
@@ -23,16 +24,14 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     public FileBasedStorage(String storagePath, String fileExtension) {
-        Validate.notNull(storagePath, "storage directory");
-        Validate.notNull(fileExtension, "extension");
-        this.storageDir = new File(storagePath);
-        this.fileExtension = fileExtension;
+        this.storageDir = new File(checkNotNull(storagePath));
+        this.fileExtension = checkNotNull(fileExtension, "File extension must be not null!");
     }
 
     @Override
     public void put(String key, T value) throws StorageException {
-        Validate.notNull(key, "key");
-        Validate.notNull(value, "value");
+        checkNotNull(key, "Key must be not null!");
+        checkNotNull(key, "Value must be not null!");
 
         if (!storageDir.canWrite()) {
             boolean created = storageDir.mkdirs();

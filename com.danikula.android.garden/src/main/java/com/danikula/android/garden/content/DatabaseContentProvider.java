@@ -1,10 +1,10 @@
 package com.danikula.android.garden.content;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.danikula.android.garden.utils.Validate;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -68,8 +68,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     private int entityCounter;
 
     public DatabaseContentProvider(String authority) {
-        Validate.notNull(authority, "authority must be not null!");
-        this.authority = authority;
+        this.authority = checkNotNull(authority, "Authority must be not null!");
     }
 
     @Override
@@ -151,15 +150,14 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
         return returnValue;
     }
-    
+
     /**
-     * Apply the given set of {@link ContentProviderOperation}, executing inside
-     * a {@link SQLiteDatabase} transaction. All changes will be rolled back if
-     * any single one fails.
+     * Apply the given set of {@link ContentProviderOperation}, executing inside a {@link SQLiteDatabase} transaction. All changes
+     * will be rolled back if any single one fails.
      */
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
-            throws OperationApplicationException {
+        throws OperationApplicationException {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
@@ -170,7 +168,8 @@ public abstract class DatabaseContentProvider extends ContentProvider {
             }
             db.setTransactionSuccessful();
             return results;
-        } finally {
+        }
+        finally {
             db.endTransaction();
         }
     }
@@ -227,7 +226,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
      * 
      * @param entityName имя сущности, должно совпадать с именем таблицы
      * @param path относительный путь uri
-     * @param is <code>true</code> если ресурс представляет собой единичную сущность, <code>false</code> если список 
+     * @param is <code>true</code> если ресурс представляет собой единичную сущность, <code>false</code> если список
      * @return code код зарегестрированного ресурса
      */
     protected int registerResource(String entityName, String path, boolean isSingle) {

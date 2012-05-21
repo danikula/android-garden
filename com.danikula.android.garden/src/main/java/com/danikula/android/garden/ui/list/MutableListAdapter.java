@@ -1,5 +1,7 @@
 package com.danikula.android.garden.ui.list;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
-import com.danikula.android.garden.utils.Validate;
 
 public abstract class MutableListAdapter<T> extends BaseAdapter {
 
@@ -23,8 +23,7 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     private List<T> objects = new ArrayList<T>();
 
     public MutableListAdapter(Context context, int layoutId) {
-        Validate.notNull(context, "Context should be not null");
-        this.context = context;
+        this.context = checkNotNull(context, "Context should be not null");
         this.layoutId = layoutId;
     }
 

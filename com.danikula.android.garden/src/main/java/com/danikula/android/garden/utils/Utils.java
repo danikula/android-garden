@@ -1,5 +1,7 @@
 package com.danikula.android.garden.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Utils {
             // do nothing
         }
     }
-    
+
     /**
      * Фильтрует список по заданному критерию.
      * 
@@ -24,8 +26,8 @@ public class Utils {
      * @throws IllegalArgumentException если коллекция или фильтр равны <code>null</code>
      */
     public static <T> List<T> filterList(List<T> items, Filter<T> filter) {
-        Validate.notNull(items, "list");
-        Validate.notNull(filter, "filter");
+        checkNotNull(items, "List of items must be not null!");
+        checkNotNull(filter, "Filter must be not null!");
 
         List<T> filteredList = new ArrayList<T>();
         for (T item : items) {
@@ -35,8 +37,8 @@ public class Utils {
         }
         return filteredList;
     }
-    
-    public static <I, O>List<O> convert(List<I> source, Converter<I, O> converter) {
+
+    public static <I, O> List<O> convert(List<I> source, Converter<I, O> converter) {
         List<O> result = null;
         if (source != null) {
             result = new ArrayList<O>();

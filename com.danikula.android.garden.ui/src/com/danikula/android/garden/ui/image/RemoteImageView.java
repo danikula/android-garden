@@ -1,5 +1,9 @@
 package com.danikula.android.garden.ui.image;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.danikula.android.garden.ui.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -7,9 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.danikula.android.garden.ui.R;
-import com.danikula.android.garden.utils.Validate;
 
 public class RemoteImageView extends ImageView {
 
@@ -40,7 +41,7 @@ public class RemoteImageView extends ImageView {
     }
 
     public void loadImage(String url, ImageLoader imageLoader) {
-        Validate.notNull(imageLoader, "ImageLoader can not be null!");
+        checkNotNull(imageLoader, "Image loader must be not null!");
 
         if (TextUtils.isEmpty(url)) {
             setImageDrawable(errorImage);

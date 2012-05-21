@@ -1,5 +1,7 @@
 package com.danikula.android.garden.ui.list;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-
-import com.danikula.android.garden.utils.Validate;
 
 public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandableListAdapter {
 
@@ -38,7 +38,7 @@ public abstract class ProgressedExpandableListAdapter<G, C> extends BaseExpandab
     }
 
     public void setGroupObjects(List<G> groupItems) {
-        Validate.notNull(groupItems, "group items");
+        checkNotNull(groupItems, "Group items must be not null!");
         this.groupItems.clear();
         this.groupItems.addAll(groupItems);
 

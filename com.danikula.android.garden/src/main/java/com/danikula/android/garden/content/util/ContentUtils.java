@@ -1,11 +1,13 @@
 package com.danikula.android.garden.content.util;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.danikula.android.garden.utils.Validate;
+import com.google.common.base.Optional;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -40,22 +42,24 @@ public class ContentUtils {
      * 
      * @param cursor Cursor cursor to read, can be <code>null</code>
      * @param converter converter to be used for converting cursor row to typed object
-     * @return first row from cursor converted to object if cursor isn't empty, or <code>null</code> otherwise.
+     * @return first row from cursor converted to object if cursor isn't empty, otherwise value will be empty.
      */
-    public static <T> T getFirstObject(Cursor cursor, CursorConverter<T> converter) {
-        Validate.notNull(converter, "converter");
+    public static <T> Optional<T> getFirst(Cursor cursor, CursorConverter<T> converter) {
+        checkNotNull(converter, "Converter must be not null!");
 
-        T entity = null;
+        Optional<T> result = Optional.absent();
         if (cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
-            entity = converter.convert(cursor);
+            T entity = converter.convert(cursor);
+            result = Optional.of(entity);
             cursor.close();
         }
-        return entity;
+        return result;
     }
 
     public static <T> List<T> convertToListAndClose(Cursor cursor, CursorConverter<T> converter) {
-        Validate.notNull(converter, "converter");
+        checkNotNull(converter, "Converter must be not null!");
+
         List<T> list = new ArrayList<T>();
         iterateAndClose(cursor, new ObjectsCollector<T>(converter, list));
         return list;
