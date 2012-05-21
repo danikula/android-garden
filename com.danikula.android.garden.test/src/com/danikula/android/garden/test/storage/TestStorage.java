@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import com.danikula.android.garden.storage.DiscStorage;
 import com.danikula.android.garden.storage.Storage;
 import com.danikula.android.garden.storage.StrongMemoryStorage;
-import com.danikula.android.garden.storage.WeakMemoryStorage;
+import com.danikula.android.garden.storage.SoftMemoryStorage;
 
 import android.os.Environment;
 import android.util.Log;
@@ -15,7 +15,7 @@ import android.util.Log;
 public class TestStorage extends TestCase{
     
     public void testWeakMemoryStorage() {
-        runTestStorage(new WeakMemoryStorage<String, String>());
+        runTestStorage(new SoftMemoryStorage<String, String>());
     }
     
     public void testStrongMemoryStorage() {

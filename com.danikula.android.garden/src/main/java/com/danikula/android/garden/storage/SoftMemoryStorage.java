@@ -4,11 +4,11 @@ import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WeakMemoryStorage<K, T> implements Storage<K, T> {
+public class SoftMemoryStorage<K, T> implements Storage<K, T> {
 
     private Map<K, SoftReference<T> > storage;
 
-    public WeakMemoryStorage() {
+    public SoftMemoryStorage() {
         this.storage = new HashMap<K, SoftReference<T> >();
     }
 
