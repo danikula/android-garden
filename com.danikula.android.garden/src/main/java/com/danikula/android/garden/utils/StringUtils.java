@@ -13,10 +13,6 @@ public class StringUtils {
         return String.format("%02d:%02d", seconds / SEC_IN_MIN, seconds % SEC_IN_MIN);
     }
     
-    public static String getStringNullSafe(String string) {
-        return isEmpty(string) ? "" : string;
-    }
-    
     public static String escapeFilePath(String fileName) {
         return fileName.replaceAll("[*?\"\\\\/<>]+", "").replaceAll("\\s+", " ");
     }
@@ -40,31 +36,7 @@ public class StringUtils {
         return sb.toString();
     }
 
-    public static String join(String... substrings) {
-        StringBuffer stringBuffer = new StringBuffer();
-        for (String substring : substrings) {
-            stringBuffer.append(substring);
-        }
-        return stringBuffer.toString();
-    }
-
-    public static String join(char separator, String... substrings) {
-        StringBuffer stringBuffer = new StringBuffer();
-        for (String substring : substrings) {
-            if (stringBuffer.length() != 0) {
-                stringBuffer.append(separator);
-            }
-            stringBuffer.append(substring);
-        }
-        return stringBuffer.toString();
-    }
-    
     public static String formatFileSizeInMb(String format, long size) {
         return String.format(format, (float) size / BYTES_IN_MEGABYTE);
     }
-    
-    public static boolean isEmpty(CharSequence str) {
-        return str == null || str.length() == 0;
-    }
-    
 }

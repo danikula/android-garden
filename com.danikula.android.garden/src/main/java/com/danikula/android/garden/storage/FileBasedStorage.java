@@ -6,7 +6,10 @@ import java.io.File;
 import java.io.IOException;
 
 import com.danikula.android.garden.utils.StringUtils;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
+import android.graphics.Paint.Join;
 import android.os.Environment;
 
 public abstract class FileBasedStorage<T> implements Storage<String, T> {
@@ -105,7 +108,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     protected abstract T read(File file) throws IOException;
 
     private File getStorageFile(String key) {
-        String fileName = StringUtils.join(StringUtils.computeMD5(key), ".", fileExtension);
+        String fileName = String.format("%s.%s", StringUtils.computeMD5(key), fileExtension);
         return new File(storageDir, fileName);
     }
 }

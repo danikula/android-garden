@@ -1,10 +1,14 @@
 package com.danikula.android.garden.content;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -57,7 +61,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     private static final String CONTENT_TYPE_ITEM_PATTERN = "vnd.android.cursor.item/vnd.%s.%s";
     private static final String CONTENT_TYPE_DIR_PATTERN = "vnd.android.cursor.dir/vnd.%s.%s";
 
-    private Map<Integer, Item> contentTypeRegister = new HashMap<Integer, Item>();
+    private Map<Integer, Item> contentTypeRegister = Maps.newHashMap();
 
     private DatabaseHelper dbHelper;
 
@@ -93,9 +97,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     }
 
     private void checkCodeExist(int code) {
-        if (!contentTypeRegister.containsKey(code)) {
-            throw new IllegalArgumentException(String.format("Type with code '%s' is not registered!", code));
-        }
+        checkArgument(contentTypeRegister.containsKey(code), "Type with code '%s' is not registered!", code);
     }
 
     /** {@inheritDoc} */
@@ -126,11 +128,19 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     /** {@inheritDoc} */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        for (int i = 0; i < values.length; i++) {
-            insertInTable(uri, values[i]);
+        int inserted = values.length;
+        try {
+            ArrayList<ContentProviderOperation> operations = Lists.newArrayList();
+            for (ContentValues contentValues : values) {
+                ContentProviderOperation insert = ContentProviderOperation.newInsert(uri).withValues(contentValues).build();
+                operations.add(insert);
+            }
+            applyBatch(operations);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
-        return values.length;
+        catch (OperationApplicationException e) {
+            inserted = 0;
+        }
+        return inserted;
     }
 
     /** {@inheritDoc} */
@@ -158,7 +168,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
         throws OperationApplicationException {
-        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             final int numOperations = operations.size();

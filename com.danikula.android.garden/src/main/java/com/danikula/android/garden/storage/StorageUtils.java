@@ -2,10 +2,10 @@ package com.danikula.android.garden.storage;
 
 import java.io.File;
 
+import com.google.common.base.Strings;
+
 import android.content.Context;
 import android.os.Environment;
-
-import com.danikula.android.garden.utils.StringUtils;
 
 public class StorageUtils {
 
@@ -13,12 +13,12 @@ public class StorageUtils {
 
     public static File getRecomendedExternalStorageDirectory(Context context, String additionalStorageFolder) {
         String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String storageDir = StringUtils.getStringNullSafe(additionalStorageFolder);
+        String storageDir = Strings.nullToEmpty(additionalStorageFolder);
         return new File(String.format(RECOMENDED_APPLICATION_FOLDER, sdPath, context.getPackageName(), storageDir));
     }
 
     public static File getTempStorageDirectory(Context context, String additionalStorageFolder) {
-        String storageSubDir = StringUtils.getStringNullSafe(additionalStorageFolder);
+        String storageSubDir = Strings.nullToEmpty(additionalStorageFolder);
         return new File(context.getCacheDir(), storageSubDir);
     }
 }

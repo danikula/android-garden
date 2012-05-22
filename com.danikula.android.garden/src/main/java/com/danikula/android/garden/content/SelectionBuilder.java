@@ -22,26 +22,21 @@
 
 package com.danikula.android.garden.content;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Helper for building selection clauses for {@link SQLiteDatabase}. Each
- * appended clause is combined using {@code AND}. This class is <em>not</em>
- * thread safe.
+ * Helper for building selection clauses for {@link SQLiteDatabase}. Each appended clause is combined using {@code AND}. This
+ * class is <em>not</em> thread safe.
  */
 public class SelectionBuilder {
     private static final String TAG = "SelectionBuilder";
-    private static final boolean LOGV = false;
-
     private String mTable = null;
     private Map<String, String> mProjectionMap = new HashMap<String, String>();
     private StringBuilder mSelection = new StringBuilder();
@@ -58,14 +53,13 @@ public class SelectionBuilder {
     }
 
     /**
-     * Append the given selection clause to the internal state. Each clause is
-     * surrounded with parenthesis and combined using {@code AND}.
+     * Append the given selection clause to the internal state. Each clause is surrounded with parenthesis and combined using
+     * {@code AND}.
      */
     public SelectionBuilder where(String selection, String... selectionArgs) {
         if (TextUtils.isEmpty(selection)) {
             if (selectionArgs != null && selectionArgs.length > 0) {
-                throw new IllegalArgumentException(
-                        "Valid selection required when including arguments=");
+                throw new IllegalArgumentException("Valid selection required when including arguments=");
             }
 
             // Shortcut when clause is empty
@@ -109,7 +103,7 @@ public class SelectionBuilder {
 
     /**
      * Return selection string for current internal state.
-     *
+     * 
      * @see #getSelectionArgs()
      */
     public String getSelection() {
@@ -118,7 +112,7 @@ public class SelectionBuilder {
 
     /**
      * Return selection arguments for current internal state.
-     *
+     * 
      * @see #getSelection()
      */
     public String[] getSelectionArgs() {
@@ -134,12 +128,6 @@ public class SelectionBuilder {
         }
     }
 
-    @Override
-    public String toString() {
-        return "SelectionBuilder[table=" + mTable + ", selection=" + getSelection()
-                + ", selectionArgs=" + Arrays.toString(getSelectionArgs()) + "]";
-    }
-
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
@@ -150,13 +138,11 @@ public class SelectionBuilder {
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
-            String having, String orderBy, String limit) {
+    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy, String having, String orderBy, String limit) {
         assertTable();
-        if (columns != null) mapColumns(columns);
-        if (LOGV) Log.v(TAG, "query(columns=" + Arrays.toString(columns) + ") " + this);
-        return db.query(mTable, columns, getSelection(), getSelectionArgs(), groupBy, having,
-                orderBy, limit);
+        if (columns != null)
+            mapColumns(columns);
+        return db.query(mTable, columns, getSelection(), getSelectionArgs(), groupBy, having, orderBy, limit);
     }
 
     /**
@@ -164,7 +150,6 @@ public class SelectionBuilder {
      */
     public int update(SQLiteDatabase db, ContentValues values) {
         assertTable();
-        if (LOGV) Log.v(TAG, "update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
 
@@ -173,7 +158,6 @@ public class SelectionBuilder {
      */
     public int delete(SQLiteDatabase db) {
         assertTable();
-        if (LOGV) Log.v(TAG, "delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());
     }
 }

@@ -1,5 +1,7 @@
 package com.danikula.android.garden.utils;
 
+import com.google.common.base.Strings;
+
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -34,7 +36,8 @@ public class UiUtils {
      * @param textView TextView компонент, который должен скрыться, если содержит пустой текст
      */
     public static void hideIfEmpty(TextView textView) {
-        setVisibility(!StringUtils.isEmpty(textView.getText()), textView);
+        String textContent = textView.getText().toString();
+        setVisibility(!Strings.isNullOrEmpty(textContent), textView);
     }
     
 }
