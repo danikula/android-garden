@@ -229,6 +229,12 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         contentTypeRegister.put(multiEntityCode, new Item(entityName, false));
         uriMatcher.addURI(authority, entityName, multiEntityCode);
     }
+    
+    protected void registerEntities(String... entities) {
+        for (String entity : entities) {
+            registerEntity(entity);
+        }
+    }
 
     /**
      * Регистрирует ресурс по указанному uri.

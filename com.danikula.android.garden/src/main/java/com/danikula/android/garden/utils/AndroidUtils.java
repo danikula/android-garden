@@ -1,5 +1,6 @@
 package com.danikula.android.garden.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -16,6 +17,10 @@ public class AndroidUtils {
 
     public static String getApplicationExternalStorageDirectory(Context context) {
         return String.format(APP_EXTERNAL_STORAGE_DIR_FORMAT, context.getPackageName());
+    }
+    
+    public static File getApplicationExternalStorageSubDirectory(Context context, String subfolderName) {
+        return new File(getApplicationExternalStorageDirectory(context), subfolderName);
     }
     
     public static Properties loadPropertiesFromAssets(Context context, String propertiesFileName) {
