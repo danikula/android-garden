@@ -59,18 +59,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int actionbar_compat_height=0x7f050000;
     }
     public static final class drawable {
-        public static final int actionbar_compat_action_refresh=0x7f020000;
-        public static final int actionbar_compat_action_search=0x7f020001;
-        public static final int actionbar_compat_action_share=0x7f020002;
-        public static final int actionbar_compat_actionbar_shadow=0x7f020003;
-        public static final int actionbar_compat_home=0x7f020004;
-        public static final int actionbar_compat_item=0x7f020005;
-        public static final int actionbar_compat_item_focused=0x7f020006;
-        public static final int actionbar_compat_item_pressed=0x7f020007;
-        public static final int actionbar_compat_menu_share=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int remote_image_error=0x7f02000a;
-        public static final int remote_image_loading=0x7f02000b;
+        public static final int actionbar_compat_actionbar_shadow=0x7f020000;
+        public static final int actionbar_compat_home=0x7f020001;
+        public static final int actionbar_compat_item=0x7f020002;
+        public static final int actionbar_compat_item_focused=0x7f020003;
+        public static final int actionbar_compat_item_pressed=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int remote_image_error=0x7f020006;
+        public static final int remote_image_loading=0x7f020007;
     }
     public static final class id {
         public static final int actionbar_compat=0x7f060000;
@@ -78,23 +74,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int actionbar_compat_item_refresh_progress=0x7f060002;
         public static final int actionbar_compat_progress=0x7f060004;
         public static final int actionbar_compat_title=0x7f060001;
-        public static final int loadButton=0x7f060008;
+        public static final int loadButton=0x7f060007;
         public static final int menu_refresh=0x7f060005;
-        public static final int menu_search=0x7f060009;
-        public static final int menu_share=0x7f06000a;
-        public static final int remoteImageView=0x7f060007;
-        public static final int toggle_title=0x7f060006;
+        public static final int remoteImageView=0x7f060006;
     }
     public static final class layout {
         public static final int actionbar_compat_indeterminate_progress=0x7f030000;
         public static final int actionbar_compat_layout=0x7f030001;
         public static final int actionbar_compat_progress=0x7f030002;
-        public static final int actionbar_compat_sample=0x7f030003;
-        public static final int main=0x7f030004;
-        public static final int remote_image_sample=0x7f030005;
-    }
-    public static final class menu {
-        public static final int actionbar_compat_main=0x7f090000;
+        public static final int main=0x7f030003;
+        public static final int remote_image_sample=0x7f030004;
     }
     public static final class string {
         public static final int alternate_title=0x7f080003;
