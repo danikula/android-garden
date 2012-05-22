@@ -2,14 +2,15 @@ package com.danikula.android.garden.content.util;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import android.database.Cursor;
 
 public class CursorReader {
     
-    private Map<String, Integer> columns = new HashMap<String, Integer>(); 
+    private Map<String, Integer> columns = Maps.newHashMap();
 
     public String getString(Cursor cursor, String columnName) {
         int columnIndex = getColumnIndex(cursor, columnName);

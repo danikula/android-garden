@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
@@ -259,9 +258,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
     }
 
     private void checkDatabaseHelperExist() {
-        if (dbHelper == null) {
-            throw new IllegalArgumentException("Database helper is not created. Be sure you are calling super.onCreate()");
-        }
+        checkNotNull(dbHelper, "Database helper is not created. Be sure you are calling super.onCreate()");
     }
 
 }

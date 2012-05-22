@@ -1,10 +1,13 @@
 package com.danikula.android.garden.ui.list;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,7 +23,7 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
 
     private int layoutId;
 
-    private List<T> objects = new ArrayList<T>();
+    private List<T> objects = Lists.newArrayList();
 
     public MutableListAdapter(Context context, int layoutId) {
         this.context = checkNotNull(context, "Context should be not null");
@@ -96,9 +99,8 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
     }
 
     protected View createView(Context context, int position) {
-        if (layoutId == UNDEFINED_LAYOUT_ID) {
-            throw new IllegalStateException("Layout identifier for row view is not specified!");
-        }
+        checkState(layoutId != UNDEFINED_LAYOUT_ID, "Layout identifier for row view is not specified!");
+
         return LayoutInflater.from(context).inflate(layoutId, null);
     }
 

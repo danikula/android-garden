@@ -3,11 +3,12 @@ package com.danikula.android.garden.content.util;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -18,20 +19,6 @@ import android.database.DatabaseUtils;
  * @author Alexey Danilov
  */
 public class ContentUtils {
-
-    public static void iterateAndClose(Cursor cursor, IterateCursorHandler handler) {
-        if (cursor == null) {
-            return;
-        }
-
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()) {
-            handler.onRow(cursor);
-            cursor.moveToNext();
-        }
-        cursor.close();
-    }
 
     /**
      * Converts first row from cursor to object if cursor isn't empty, otherwise returns <code>null</code>.
@@ -50,7 +37,7 @@ public class ContentUtils {
         Optional<T> result = Optional.absent();
         if (cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
-            T entity = converter.convert(cursor);
+            T entity = converter.apply(cursor);
             result = Optional.of(entity);
             cursor.close();
         }
@@ -60,15 +47,29 @@ public class ContentUtils {
     public static <T> List<T> convertToListAndClose(Cursor cursor, CursorConverter<T> converter) {
         checkNotNull(converter, "Converter must be not null!");
 
-        List<T> list = new ArrayList<T>();
+        List<T> list = Lists.newArrayList();
         iterateAndClose(cursor, new ObjectsCollector<T>(converter, list));
         return list;
     }
 
     public static Set<Integer> collectIntValues(Cursor cursor, String columnName) {
-        Set<Integer> ids = new LinkedHashSet<Integer>();
+        Set<Integer> ids = Sets.newLinkedHashSet();
         iterateAndClose(cursor, new IntValuesCollector(columnName, ids));
         return ids;
+    }
+    
+    private static void iterateAndClose(Cursor cursor, IterateCursorHandler handler) {
+        if (cursor == null) {
+            return;
+        }
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            handler.onRow(cursor);
+            cursor.moveToNext();
+        }
+        cursor.close();
     }
 
     public static List<Long> collectIntValuesInList(Cursor cursor, String columnName) {
@@ -118,7 +119,7 @@ public class ContentUtils {
 
         @Override
         public void onRow(Cursor c) {
-            list.add(converter.convert(c));
+            list.add(converter.apply(c));
         }
     }
 
@@ -132,7 +133,7 @@ public class ContentUtils {
             this.converter = new CursorConverter<Integer>() {
 
                 @Override
-                public Integer convert(Cursor cursor) {
+                public Integer apply(Cursor cursor) {
                     return getInt(cursor, columnName);
                 }
             };
@@ -140,9 +141,15 @@ public class ContentUtils {
 
         @Override
         public void onRow(Cursor cursor) {
-            Integer value = converter.convert(cursor);
+            Integer value = converter.apply(cursor);
             values.add(value);
         }
+    }
+    
+    private interface IterateCursorHandler {
+
+        void onRow(Cursor cursor);
+
     }
 
 }
