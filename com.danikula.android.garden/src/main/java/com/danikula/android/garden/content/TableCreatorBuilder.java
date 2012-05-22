@@ -25,53 +25,76 @@ public class TableCreatorBuilder {
         sql.append(String.format(", %s %s %s", name, type.toString(), required ? " NOT NULL" : ""));
         return this;
     }
+
+    public TableCreatorBuilder columns(String[] columns, Type type, boolean required) {
+        for (String column : columns) {
+            column(column, type, required);
+        }
+        return this;
+    }
+
+    public TableCreatorBuilder intColumn(String name) {
+        return column(name, Type.INT, false);
+    }
+
+    public TableCreatorBuilder intRequiredColumn(String name) {
+        return column(name, Type.INT, true);
+    }
+
+    public TableCreatorBuilder intColumns(String... names) {
+        return columns(names, Type.INT, false);
+    }
+
+    public TableCreatorBuilder intRequiredColumns(String... names) {
+        return columns(names, Type.INT, true);
+    }
     
-    public TableCreatorBuilder intColumn(String name, boolean required) {
-        return column(name, Type.INT, required);
+    public TableCreatorBuilder textColumn(String name) {
+        return column(name, Type.TEXT, false);
     }
 
-    public TableCreatorBuilder requiredIntColumn(String name) {
-        return intColumn(name, true);
+    public TableCreatorBuilder textRequiredColumn(String name) {
+        return column(name, Type.TEXT, true);
     }
 
-    public TableCreatorBuilder notRequiredIntColumn(String name) {
-        return intColumn(name, false);
+    public TableCreatorBuilder textColumns(String... names) {
+        return columns(names, Type.TEXT, false);
     }
 
-    public TableCreatorBuilder textColumn(String name, boolean required) {
-        return column(name, Type.TEXT, required);
+    public TableCreatorBuilder textRequiredColumns(String... names) {
+        return columns(names, Type.TEXT, true);
+    }
+    
+    public TableCreatorBuilder longColumn(String name) {
+        return column(name, Type.LONG, false);
     }
 
-    public TableCreatorBuilder requiredTextColumn(String name) {
-        return textColumn(name, true);
+    public TableCreatorBuilder longRequiredColumn(String name) {
+        return column(name, Type.LONG, true);
     }
 
-    public TableCreatorBuilder notRequiredTextColumn(String name) {
-        return textColumn(name, false);
+    public TableCreatorBuilder longColumns(String... names) {
+        return columns(names, Type.LONG, false);
     }
 
-    public TableCreatorBuilder longColumn(String name, boolean required) {
-        return column(name, Type.LONG, required);
+    public TableCreatorBuilder longRequiredColumns(String... names) {
+        return columns(names, Type.LONG, true);
+    }
+    
+    public TableCreatorBuilder doubleColumn(String name) {
+        return column(name, Type.DOUBLE, false);
     }
 
-    public TableCreatorBuilder requiredLongColumn(String name) {
-        return longColumn(name, true);
+    public TableCreatorBuilder doubleRequiredColumn(String name) {
+        return column(name, Type.DOUBLE, true);
     }
 
-    public TableCreatorBuilder notRequiredLongColumn(String name) {
-        return longColumn(name, false);
+    public TableCreatorBuilder doubleColumns(String... names) {
+        return columns(names, Type.DOUBLE, false);
     }
 
-    public TableCreatorBuilder doubleColumn(String name, boolean required) {
-        return column(name, Type.DOUBLE, required);
-    }
-
-    public TableCreatorBuilder requiredDoubleColumn(String name) {
-        return doubleColumn(name, true);
-    }
-
-    public TableCreatorBuilder notRequiredDoubleColumn(String name) {
-        return doubleColumn(name, false);
+    public TableCreatorBuilder doubleRequiredColumns(String... names) {
+        return columns(names, Type.DOUBLE, true);
     }
 
     public String build() {

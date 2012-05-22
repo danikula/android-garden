@@ -60,7 +60,7 @@ public class SelectionBuilder {
      */
     public SelectionBuilder where(String whereSelection, String... whereSelectionArgs) {
         if (TextUtils.isEmpty(whereSelection)) {
-            checkState(whereSelectionArgs != null && whereSelectionArgs.length > 0,
+            checkState(!(whereSelectionArgs != null && whereSelectionArgs.length > 0),
                     "Valid selection required when including arguments=");
             // Shortcut when clause is empty
             return this;

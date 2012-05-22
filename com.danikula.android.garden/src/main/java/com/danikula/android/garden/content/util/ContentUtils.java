@@ -10,8 +10,11 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.net.Uri;
 
 /**
  * Some useful methods for operating with content provider.
@@ -94,6 +97,18 @@ public class ContentUtils {
     public static boolean getBoolean(Cursor cursor, String columnName) {
         int value = getInt(cursor, columnName);
         return value != 0;
+    }
+    
+    public static ContentProviderOperation newInsert(Uri uri, ContentValues contentValues) {
+        return ContentProviderOperation.newInsert(uri).withValues(contentValues).build();
+    }
+
+    public static ContentProviderOperation newDelete(Uri uri, String where) {
+        return ContentProviderOperation.newDelete(uri).withSelection(where, null).build();
+    }
+
+    public static ContentProviderOperation newUpdate(Uri uri, ContentValues contentValues, String where) {
+        return ContentProviderOperation.newUpdate(uri).withValues(contentValues).withSelection(where, null).build();
     }
 
     public static String dumpAndClose(Cursor cursor) {
