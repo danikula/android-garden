@@ -2,6 +2,8 @@ package com.danikula.android.garden.content;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Joiner;
+
 public class Where {
 
     private static final String EQUALS = "%s = %s";
@@ -11,6 +13,8 @@ public class Where {
     private static final String AND = " AND ";
 
     private static final String OR = " OR ";
+
+    private static final String IN = "%s IN (%s)";
 
     private StringBuilder condition = new StringBuilder();
 
@@ -38,6 +42,14 @@ public class Where {
         checkNotNull(column, "Column must be not null!");
 
         return and(String.format(IS_NULL, column));
+    }
+    
+    public Where addIn(String column, Iterable<?> iterable) {
+        checkNotNull(column, "Column must be not null!");
+        checkNotNull(iterable, "Iterable must be not null!");
+
+        String set = Joiner.on(',').join(iterable);
+        return and(String.format(IN, column, set));
     }
 
     public Where addEqual(String column, String value) {
@@ -92,6 +104,10 @@ public class Where {
 
     public static String isNull(String column) {
         return new Where().addIsNull(column).build();
+    }
+
+    public static String in(String column, Iterable<? extends Number> iterable) {
+        return new Where().addIn(column, iterable).build();
     }
 
     private Where addCondition(String operator, String where) {

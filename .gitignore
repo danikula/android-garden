@@ -1,5 +1,7 @@
 /com.danikula.android.garden/bin
+
 /com.danikula.android.garden.ui/bin
+/com.danikula.android.garden.ui/gen
 
 /com.danikula.android.garden.sample/bin
 /com.danikula.android.garden.sample/gen

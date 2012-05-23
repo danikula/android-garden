@@ -3,6 +3,8 @@ package com.danikula.android.garden.content;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -98,6 +100,18 @@ public class WhereTest {
     public void testComplexConditionWithStringParam() throws Exception {
         String where = new Where().addEqual("name", "mike").or("age = 42").build();
         assertThat(where, equalTo("(name = 'mike') OR (age = 42)"));
+    }
+
+    @Test
+    public void testIn() throws Exception {
+        String where = new Where().addIn("number", Arrays.asList(2, 5, 6)).build();
+        assertThat(where, equalTo("(number IN (2,5,6))"));
+    }
+    
+    @Test
+    public void testStaticIn() throws Exception {
+        String where = Where.in("age", Arrays.asList(2l, 34l, 435l));
+        assertThat(where, equalTo("(age IN (2,34,435))"));
     }
 
     @Test(expected = NullPointerException.class)

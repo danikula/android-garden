@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RemoteImageSampleActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Black.CustomRemoteImageView"/>
-        <activity android:name=".ActionBarCompatSampleActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Light.ActionBar.Custom"/>
         
     </application>
 
