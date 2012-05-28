@@ -194,7 +194,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         SelectionBuilder builder = new SelectionBuilder().table(item.getTable());
         if (item.isSingle()) {
             final String id = uri.getPathSegments().get(1);
-            builder.table(item.getTable()).where(BaseColumns._ID + "=?", id);
+            builder.table(item.getTable()).where(Where.equal(BaseColumns._ID, id));
         }
         return builder;
     }
