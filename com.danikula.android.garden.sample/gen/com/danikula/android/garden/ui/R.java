@@ -44,6 +44,14 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int columnOrderPreserved=0x7f010005;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int customTypeface=0x7f01000d;
         /**  The column span: the difference between the right and left
         boundaries delimiting the group of cells occupied by this view.
         The default is one.
@@ -111,6 +119,10 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int rowOrderPreserved=0x7f010004;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int typefacedTextViewStyle=0x7f01000c;
         /**  When set to true, tells GridLayout to use default margins when none are specified
         in a view's layout parameters.
         The default value is false.
@@ -148,11 +160,13 @@ containing a value of this type.
         public static final int app_name=0x7f070000;
     }
     public static final class style {
-        /**  <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item> 
+        /**  <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item>  
          */
-        public static final int Theme_Black_CustomRemoteImageView=0x7f060002;
-        public static final int Theme_RemoteImageViewDefaults=0x7f060000;
-        public static final int Widget_RemoteImageView=0x7f060001;
+        public static final int Theme_Black_CustomRemoteImageView=0x7f060003;
+        public static final int Theme_RemoteImageViewDefaults=0x7f060001;
+        public static final int Widget_Button_Dashboard=0x7f060000;
+        public static final int Widget_CustomRemoteImageView=0x7f060004;
+        public static final int Widget_RemoteImageView=0x7f060002;
     }
     public static final class styleable {
         /** Attributes that can be used with a GridLayout.
@@ -420,27 +434,15 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #RemoteImageView_remoteImageViewStyle com.danikula.android.garden.sample:remoteImageViewStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #RemoteImageView_riErrorImage com.danikula.android.garden.sample:riErrorImage}</code></td><td></td></tr>
            <tr><td><code>{@link #RemoteImageView_riLoadingImage com.danikula.android.garden.sample:riLoadingImage}</code></td><td></td></tr>
            </table>
-           @see #RemoteImageView_remoteImageViewStyle
            @see #RemoteImageView_riErrorImage
            @see #RemoteImageView_riLoadingImage
          */
         public static final int[] RemoteImageView = {
-            0x7f010009, 0x7f01000a, 0x7f01000b
+            0x7f01000a, 0x7f01000b
         };
-        /**
-          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#remoteImageViewStyle}
-          attribute's value can be found in the {@link #RemoteImageView} array.
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:remoteImageViewStyle
-        */
-        public static final int RemoteImageView_remoteImageViewStyle = 0;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#riErrorImage}
           attribute's value can be found in the {@link #RemoteImageView} array.
@@ -450,7 +452,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:riErrorImage
         */
-        public static final int RemoteImageView_riErrorImage = 2;
+        public static final int RemoteImageView_riErrorImage = 1;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#riLoadingImage}
           attribute's value can be found in the {@link #RemoteImageView} array.
@@ -460,7 +462,34 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name android:riLoadingImage
         */
-        public static final int RemoteImageView_riLoadingImage = 1;
+        public static final int RemoteImageView_riLoadingImage = 0;
+        /** Attributes that can be used with a TypefacedTextView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #TypefacedTextView_customTypeface com.danikula.android.garden.sample:customTypeface}</code></td><td></td></tr>
+           </table>
+           @see #TypefacedTextView_customTypeface
+         */
+        public static final int[] TypefacedTextView = {
+            0x7f01000d
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#customTypeface}
+          attribute's value can be found in the {@link #TypefacedTextView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:customTypeface
+        */
+        public static final int TypefacedTextView_customTypeface = 0;
         /**  Give ourselves access to MarginLayout's styleables 
            <p>Includes the following attributes:</p>
            <table>

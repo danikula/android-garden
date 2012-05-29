@@ -2,13 +2,11 @@
 <resources>
 
     <style name="Theme.Black.CustomRemoteImageView" parent="@android:style/Theme.Black">
-        <!-- <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item> -->
+        <!-- <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item>  -->
     </style>
 
-    <!--
     <style name="Widget.CustomRemoteImageView" parent="@android:style/Widget">
-        <item name="loadingImage">@drawable/ic_launcher</item>
+        <item name="riLoadingImage">@drawable/ic_launcher</item>
     </style>
-    -->
 
 </resources>

@@ -1,7 +1,5 @@
 package com.danikula.android.garden.ui.image;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.danikula.android.garden.ui.R;
 
 import android.content.Context;
@@ -39,14 +37,27 @@ public class RemoteImageView extends ImageView {
 
         attributes.recycle();
     }
+    
+    protected void showLoadingStub() {
+        
+    }
+    
+    protected void showErrorStub() {
+        
+    }
+    
+    protected void showRealImage() {
+        
+    }
 
     public void loadImage(String url, ImageLoader imageLoader) {
-        checkNotNull(imageLoader, "Image loader must be not null!");
 
         if (TextUtils.isEmpty(url)) {
+            showErrorStub();
             setImageDrawable(errorImage);
         }
         else {
+            showLoadingStub();
             setImageDrawable(loadingImage);
             currentlyLoadedUrl = url;
             imageLoader.loadImageAsynk(url, new LoadRemoteImageCallback());
@@ -58,12 +69,14 @@ public class RemoteImageView extends ImageView {
         @Override
         public void onLoaded(String url, Bitmap bitmap) {
             if (url.equals(currentlyLoadedUrl)) {
+                showRealImage();
                 setImageBitmap(bitmap);
             }
         }
 
         @Override
         public void onError() {
+            showErrorStub();
             setImageDrawable(errorImage);
         }
     }

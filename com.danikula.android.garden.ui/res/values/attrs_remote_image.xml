@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="RemoteImageView">
-        <attr name="remoteImageViewStyle" format="reference"/>
-    </declare-styleable>
+
+    <attr name="remoteImageViewStyle" format="reference" />
 
     <declare-styleable name="RemoteImageView">
         <attr name="riLoadingImage" format="reference" />
