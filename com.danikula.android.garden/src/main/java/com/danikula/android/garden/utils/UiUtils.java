@@ -3,6 +3,8 @@ package com.danikula.android.garden.utils;
 import com.google.common.base.Strings;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -38,6 +40,11 @@ public class UiUtils {
     public static void hideIfEmpty(TextView textView) {
         String textContent = textView.getText().toString();
         setVisibility(!Strings.isNullOrEmpty(textContent), textView);
+    }
+    
+    public static int dipToPixels(Context context, int dip) {
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, resources.getDisplayMetrics());
     }
     
 }

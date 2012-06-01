@@ -31,23 +31,23 @@ public class ContentUtils {
      * </p>
      * 
      * @param cursor Cursor cursor to read, can be <code>null</code>
-     * @param converter converter to be used for converting cursor row to typed object
+     * @param mapper mapper to be used for converting cursor row to typed object
      * @return first row from cursor converted to object if cursor isn't empty, otherwise value will be empty.
      */
-    public static <T> Optional<T> getFirst(Cursor cursor, CursorConverter<T> converter) {
-        checkNotNull(converter, "Converter must be not null!");
+    public static <T> Optional<T> getFirst(Cursor cursor, EntityMapper<T> mapper) {
+        checkNotNull(mapper, "Converter must be not null!");
 
         Optional<T> result = Optional.absent();
         if (cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
-            T entity = converter.apply(cursor);
+            T entity = mapper.toEntity(cursor);
             result = Optional.of(entity);
             cursor.close();
         }
         return result;
     }
 
-    public static <T> List<T> convertToListAndClose(Cursor cursor, CursorConverter<T> converter) {
+    public static <T> List<T> convertToListAndClose(Cursor cursor, EntityMapper<T> converter) {
         checkNotNull(converter, "Converter must be not null!");
 
         List<T> list = Lists.newArrayList();
@@ -124,39 +124,44 @@ public class ContentUtils {
 
     private static final class ObjectsCollector<T> implements IterateCursorHandler {
 
-        private final CursorConverter<T> converter;
+        private final EntityMapper<T> mapper;
         private final List<T> list;
 
-        private ObjectsCollector(CursorConverter<T> converter, List<T> list) {
-            this.converter = converter;
+        private ObjectsCollector(EntityMapper<T> mapper, List<T> list) {
+            this.mapper = mapper;
             this.list = list;
         }
 
         @Override
         public void onRow(Cursor c) {
-            list.add(converter.apply(c));
+            list.add(mapper.toEntity(c));
         }
     }
 
     private static final class IntValuesCollector implements IterateCursorHandler {
 
         private Set<Integer> values;
-        private CursorConverter<Integer> converter;
+        private EntityMapper<Integer> converter;
 
         private IntValuesCollector(final String columnName, Set<Integer> values) {
             this.values = values;
-            this.converter = new CursorConverter<Integer>() {
+            this.converter = new EntityMapper<Integer>() {
+                
+                @Override
+                public Integer toEntity(Cursor cursor) {
+                    return getInt(cursor, columnName);
+                }
 
                 @Override
-                public Integer apply(Cursor cursor) {
-                    return getInt(cursor, columnName);
+                public ContentValues toContentValues(Integer entity) {
+                    throw new UnsupportedOperationException("Should not be used!");
                 }
             };
         }
 
         @Override
         public void onRow(Cursor cursor) {
-            Integer value = converter.apply(cursor);
+            Integer value = converter.toEntity(cursor);
             values.add(value);
         }
     }

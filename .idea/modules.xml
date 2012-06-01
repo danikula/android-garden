@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.danikula.android.garden/com.danikula.android.garden.iml" filepath="$PROJECT_DIR$/com.danikula.android.garden/com.danikula.android.garden.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.danikula.android.garden.sample/com.danikula.android.garden.sample.iml" filepath="$PROJECT_DIR$/com.danikula.android.garden.sample/com.danikula.android.garden.sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.danikula.android.garden.test/com.danikula.android.garden.test.iml" filepath="$PROJECT_DIR$/com.danikula.android.garden.test/com.danikula.android.garden.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.danikula.android.garden.ui/com.danikula.android.garden.ui.iml" filepath="$PROJECT_DIR$/com.danikula.android.garden.ui/com.danikula.android.garden.ui.iml" />
+    </modules>
+  </component>
+</project>
+

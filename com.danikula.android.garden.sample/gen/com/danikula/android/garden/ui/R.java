@@ -160,13 +160,10 @@ containing a value of this type.
         public static final int app_name=0x7f070000;
     }
     public static final class style {
-        /**  <item name="remoteImageViewStyle">@style/Widget.CustomRemoteImageView</item>  
-         */
-        public static final int Theme_Black_CustomRemoteImageView=0x7f060003;
-        public static final int Theme_RemoteImageViewDefaults=0x7f060001;
+        public static final int Theme_Black_CustomRemoteImageView=0x7f060002;
         public static final int Widget_Button_Dashboard=0x7f060000;
-        public static final int Widget_CustomRemoteImageView=0x7f060004;
-        public static final int Widget_RemoteImageView=0x7f060002;
+        public static final int Widget_RemoteImageView=0x7f060001;
+        public static final int Widget_RemoteImageView_Custom=0x7f060003;
     }
     public static final class styleable {
         /** Attributes that can be used with a GridLayout.

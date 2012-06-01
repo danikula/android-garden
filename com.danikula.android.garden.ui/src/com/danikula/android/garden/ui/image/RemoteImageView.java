@@ -31,23 +31,22 @@ public class RemoteImageView extends ImageView {
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.RemoteImageView, defStyle,
                 R.style.Widget_RemoteImageView);
-
         loadingImage = attributes.getDrawable(R.styleable.RemoteImageView_riLoadingImage);
         errorImage = attributes.getDrawable(R.styleable.RemoteImageView_riErrorImage);
 
         attributes.recycle();
     }
-    
+
     protected void showLoadingStub() {
-        
+
     }
-    
+
     protected void showErrorStub() {
-        
+
     }
-    
+
     protected void showRealImage() {
-        
+
     }
 
     public void loadImage(String url, ImageLoader imageLoader) {

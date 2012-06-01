@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/libs/android8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/libs/maps8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/libs/robolectric-1.1-jar-with-dependencies.jar!/" />
+    <varelement var="file://$MODULE_DIR$/../com.danikula.android.garden/src/test/java" kind="linksrc:" value="test" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/../com.danikula.android.garden/src/test/java" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../com.danikula.android.garden/src/test/java">
+      <sourceFolder url="file://$MODULE_DIR$/../com.danikula.android.garden/src/test/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="JavaSE-1.6" jdkType="JavaSDK" />
+    <orderEntry type="module" module-name="com.danikula.android.garden" />
+    <orderEntry type="module-library">
+      <library name="android8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/android8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="maps8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/maps8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="robolectric-1.1-jar-with-dependencies.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/robolectric-1.1-jar-with-dependencies.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="junit4">
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

@@ -18,7 +18,9 @@ public class Intents {
 
     private static final String MIME_TYPE_TEXT_PLAIN = "text/plain";
     
-    private static final String PHONE_PREFIX = "tel://";
+    private static final String TEL_PREFFIX = "tel:";
+
+    private static final String TEL_SCHEME = TEL_PREFFIX + "//";
 
     private static final String YOUTUBE_PREFIX = "vnd.youtube:";
     
@@ -82,7 +84,13 @@ public class Intents {
      */
     public static void call(Context context, String phone) throws ActivityNotFoundException {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse(PHONE_PREFIX + phone));
+        callIntent.setData(Uri.parse(TEL_SCHEME + phone));
+        context.startActivity(callIntent);
+    }
+
+    public static void openDialer(Context context, String phone) throws ActivityNotFoundException {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse(TEL_PREFFIX + phone));
         context.startActivity(callIntent);
     }
 
