@@ -1,23 +1,24 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StrongMemoryStorage<K, T> implements Storage<K, T> {
+public class CacheMemoryStorage<K, T> implements Cache<K, T> {
 
     private Map<K, T> storage;
 
-    public StrongMemoryStorage() {
-        this.storage = new HashMap<K, T>();
+    public CacheMemoryStorage() {
+        this.storage = Collections.synchronizedMap(new HashMap<K, T>());
     }
 
     @Override
-    public synchronized void put(K key, T value) {
+    public void put(K key, T value) {
         storage.put(key, value);
     }
 
     @Override
-    public synchronized T get(K key) {
+    public T get(K key) {
         return storage.get(key);
     }
 

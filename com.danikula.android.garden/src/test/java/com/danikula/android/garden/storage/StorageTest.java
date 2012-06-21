@@ -8,27 +8,32 @@ import java.io.File;
 
 import org.junit.Test;
 
+import com.danikula.android.garden.cache.DiscCache;
+import com.danikula.android.garden.cache.SoftMemoryCache;
+import com.danikula.android.garden.cache.Cache;
+import com.danikula.android.garden.cache.CacheMemoryStorage;
+
 import android.os.Environment;
 
 public class StorageTest {
 
     @Test
     public void testWeakMemoryStorage() {
-        runTestStorage(new SoftMemoryStorage<String, String>());
+        runTestStorage(new SoftMemoryCache<String, String>());
     }
 
     @Test
     public void testStrongMemoryStorage() {
-        runTestStorage(new StrongMemoryStorage<String, String>());
+        runTestStorage(new CacheMemoryStorage<String, String>());
     }
 
     @Test
     public void testDiscStorage() {
         String storagePath = new File(Environment.getExternalStorageDirectory(), "cache").getAbsolutePath();
-        runTestStorage(new DiscStorage(storagePath));
+        runTestStorage(new DiscCache(storagePath));
     }
 
-    private void runTestStorage(Storage storage) {
+    private void runTestStorage(Cache storage) {
         assertFalse(storage.contains("first"));
 
         storage.put("first", "one");

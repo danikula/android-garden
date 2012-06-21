@@ -18,6 +18,7 @@ import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -62,7 +63,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
 
     private Map<Integer, Item> contentTypeRegister = Maps.newHashMap();
 
-    private DatabaseHelper dbHelper;
+    private SQLiteOpenHelper dbHelper;
 
     private UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -199,7 +200,7 @@ public abstract class DatabaseContentProvider extends ContentProvider {
         return builder;
     }
 
-    protected abstract DatabaseHelper getDatabaseHelper();
+    protected abstract SQLiteOpenHelper getDatabaseHelper();
 
     protected SQLiteDatabase getDb() {
         checkDatabaseHelperExist();

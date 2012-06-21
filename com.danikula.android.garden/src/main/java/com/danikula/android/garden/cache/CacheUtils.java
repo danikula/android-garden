@@ -1,4 +1,4 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import java.io.File;
 
@@ -7,7 +7,7 @@ import com.google.common.base.Strings;
 import android.content.Context;
 import android.os.Environment;
 
-public class StorageUtils {
+public class CacheUtils {
 
     private static final String RECOMENDED_APPLICATION_FOLDER = "%s/Android/data/%s/files";
 

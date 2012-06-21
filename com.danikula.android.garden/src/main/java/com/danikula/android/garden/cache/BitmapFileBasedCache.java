@@ -1,4 +1,4 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -12,7 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
 
-public class BitmapFileBasedStorage extends FileBasedStorage<Bitmap> {
+public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
     
     private static final String NO_MEDIA_FILE_NAME = ".nomedia";
 
@@ -24,7 +24,7 @@ public class BitmapFileBasedStorage extends FileBasedStorage<Bitmap> {
 
     private int quality;
 
-    public BitmapFileBasedStorage(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
+    public BitmapFileBasedCache(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
         super(storagePath, compressFormat.toString().toLowerCase());
         this.compressFormat = compressFormat;
         this.quality = quality;
@@ -34,11 +34,11 @@ public class BitmapFileBasedStorage extends FileBasedStorage<Bitmap> {
         }
     }
 
-    public BitmapFileBasedStorage(String storagePath, boolean scannable) {
+    public BitmapFileBasedCache(String storagePath, boolean scannable) {
         this(storagePath, scannable, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
     }
 
-    public BitmapFileBasedStorage(String storagePath) {
+    public BitmapFileBasedCache(String storagePath) {
         this(storagePath, false, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
     }
     

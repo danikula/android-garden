@@ -1,6 +1,6 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
-public class EmptyStorage<K, T> implements Storage<K, T>{
+public class EmptyCache<K, T> implements Cache<K, T>{
 
     @Override
     public void put(K key, T value) {

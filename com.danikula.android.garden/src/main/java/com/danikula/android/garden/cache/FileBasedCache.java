@@ -1,4 +1,4 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,9 +12,9 @@ import com.google.common.collect.Lists;
 import android.graphics.Paint.Join;
 import android.os.Environment;
 
-public abstract class FileBasedStorage<T> implements Storage<String, T> {
+public abstract class FileBasedCache<T> implements Cache<String, T> {
 
-    private static final String LOG_TAG = FileBasedStorage.class.getSimpleName();
+    private static final String LOG_TAG = FileBasedCache.class.getSimpleName();
 
     private static final String DEFAULT_EXTENSION = "bin";
 
@@ -22,17 +22,17 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
 
     private String fileExtension;
 
-    public FileBasedStorage(String storagePath) {
+    public FileBasedCache(String storagePath) {
         this(storagePath, DEFAULT_EXTENSION);
     }
 
-    public FileBasedStorage(String storagePath, String fileExtension) {
+    public FileBasedCache(String storagePath, String fileExtension) {
         this.storageDir = new File(checkNotNull(storagePath));
         this.fileExtension = checkNotNull(fileExtension, "File extension must be not null!");
     }
 
     @Override
-    public void put(String key, T value) throws StorageException {
+    public void put(String key, T value) throws CacheException {
         checkNotNull(key, "Key must be not null!");
         checkNotNull(key, "Value must be not null!");
 
@@ -41,7 +41,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             if (!created) {
                 String errorMsgFormat = "Error creating cache directory '%s'. External storage state: %s";
                 String error = String.format(errorMsgFormat, storageDir.getAbsolutePath(), Environment.getExternalStorageState());
-                throw new StorageException(error);
+                throw new CacheException(error);
             }
         }
 
@@ -50,15 +50,15 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             write(storageFile, value);
         }
         catch (IOException e) {
-            throw new StorageException("Error saving item to cache storage");
+            throw new CacheException("Error saving item to cache storage");
         }
     }
 
     @Override
-    public T get(String key) throws StorageException {
+    public T get(String key) throws CacheException {
         if (!contains(key)) {
             String errorMessageFormat = "Error reading cache item '%s'. Use method contains(String) to check exisiting cache item";
-            throw new StorageException(String.format(errorMessageFormat, key));
+            throw new CacheException(String.format(errorMessageFormat, key));
         }
 
         File storageFile = getStorageFile(key);
@@ -68,7 +68,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         }
         catch (Exception e) {
             String errorMessageFormat = "Error reading cache item with key '%s' and path '%s' from cache storage";
-            throw new StorageException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
+            throw new CacheException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
         }
         return result;
     }
@@ -79,7 +79,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
     }
 
     @Override
-    public void clear() throws StorageException {
+    public void clear() throws CacheException {
         if (!storageDir.exists()) {
             return;
         }
@@ -87,7 +87,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
             boolean isDeleted = storageFile.delete();
             if (!isDeleted) {
                 String errorMessageFormat = "Error deleting cache item '%s' from cache storage";
-                throw new StorageException(String.format(errorMessageFormat, storageFile.getAbsolutePath()));
+                throw new CacheException(String.format(errorMessageFormat, storageFile.getAbsolutePath()));
             }
         }
         storageDir.delete();
@@ -99,7 +99,7 @@ public abstract class FileBasedStorage<T> implements Storage<String, T> {
         boolean isDeleted = storageFile.delete();
         if (!isDeleted) {
             String errorMessageFormat = "Error deleting cache item with key '%s' and path '%s' from cache storage";
-            throw new StorageException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
+            throw new CacheException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
         }
     }
 

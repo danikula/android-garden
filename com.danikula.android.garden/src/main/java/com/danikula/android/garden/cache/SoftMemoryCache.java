@@ -1,24 +1,25 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import java.lang.ref.SoftReference;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SoftMemoryStorage<K, T> implements Storage<K, T> {
+public class SoftMemoryCache<K, T> implements Cache<K, T> {
 
-    private Map<K, SoftReference<T> > storage;
+    private Map<K, SoftReference<T>> storage;
 
-    public SoftMemoryStorage() {
-        this.storage = new HashMap<K, SoftReference<T> >();
+    public SoftMemoryCache() {
+        this.storage = Collections.synchronizedMap(new HashMap<K, SoftReference<T>>());
     }
 
     @Override
-    public synchronized void put(K key, T value) {
+    public void put(K key, T value) {
         storage.put(key, new SoftReference<T>(value));
     }
 
     @Override
-    public synchronized T get(K key) {
+    public T get(K key) {
         return contains(key) ? storage.get(key).get() : null;
     }
 

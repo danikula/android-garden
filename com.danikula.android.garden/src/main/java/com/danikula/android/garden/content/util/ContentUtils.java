@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -47,6 +49,34 @@ public class ContentUtils {
         return result;
     }
 
+    /**
+     * Returns first single entity from storage or throw exception if there is no any entity in storage.
+     * 
+     * @param content content resolver, must be not {@code null}
+     * @param uri uri to be used for retrieving entity, must be not {@code null}
+     * @param where condition to be used for retrieving, must be not {@code null}
+     * @param mapper mapper for converting cursor result to entity, must be not {@code null}
+     * @return first result of retrieving
+     * @throws IllegalArgumentException if any parameter is {@code null} or if there is no any row in storage
+     */
+    public static <T> T getFirstRequired(ContentResolver content, Uri uri, String where, EntityMapper<T> mapper) {
+        checkNotNull(content, "Content resolver must be not null!");
+        checkNotNull(uri, "Uri must be not null!");
+        checkNotNull(where, "Condition must be not null!");
+        checkNotNull(mapper, "Mapper must be not null!");
+
+        Cursor сursor = content.query(uri, null, where, null, null);
+        Optional<T> optionalScelet = getFirst(сursor, mapper);
+        Preconditions.checkState(optionalScelet.isPresent(), String.format("There is no any entity with condition '%s'", where));
+        return optionalScelet.get();
+    }
+
+    /**
+     * Converts cursor to list with specified mapper. 
+     * @param cursor cursor to be converted to list, can be {@code null}
+     * @param converter converter to be used for converting cursor, can't be {@code null}
+     * @return cursor converted to list
+     */
     public static <T> List<T> convertToListAndClose(Cursor cursor, EntityMapper<T> converter) {
         checkNotNull(converter, "Converter must be not null!");
 
@@ -60,7 +90,7 @@ public class ContentUtils {
         iterateAndClose(cursor, new IntValuesCollector(columnName, ids));
         return ids;
     }
-    
+
     private static void iterateAndClose(Cursor cursor, IterateCursorHandler handler) {
         if (cursor == null) {
             return;
@@ -98,7 +128,7 @@ public class ContentUtils {
         int value = getInt(cursor, columnName);
         return value != 0;
     }
-    
+
     public static ContentProviderOperation newInsert(Uri uri, ContentValues contentValues) {
         return ContentProviderOperation.newInsert(uri).withValues(contentValues).build();
     }
@@ -146,7 +176,7 @@ public class ContentUtils {
         private IntValuesCollector(final String columnName, Set<Integer> values) {
             this.values = values;
             this.converter = new EntityMapper<Integer>() {
-                
+
                 @Override
                 public Integer toEntity(Cursor cursor) {
                     return getInt(cursor, columnName);
@@ -165,7 +195,7 @@ public class ContentUtils {
             values.add(value);
         }
     }
-    
+
     private interface IterateCursorHandler {
 
         void onRow(Cursor cursor);

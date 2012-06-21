@@ -1,4 +1,4 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,15 +16,15 @@ import android.util.Log;
 
 import com.danikula.android.garden.io.IoUtils;
 
-public class DiscStorage extends FileBasedStorage <Serializable> {
+public class DiscCache extends FileBasedCache <Serializable> {
     
-    private static final String LOG_TAG = DiscStorage.class.getSimpleName();
+    private static final String LOG_TAG = DiscCache.class.getSimpleName();
 
-    public DiscStorage(String storagePath) {
+    public DiscCache(String storagePath) {
         super(storagePath);
     }
     
-    public DiscStorage(String storagePath, String fileExtension) {
+    public DiscCache(String storagePath, String fileExtension) {
         super(storagePath, fileExtension);
     }
 

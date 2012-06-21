@@ -1,21 +1,21 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 
-public class TwoLevelBitmapStorage extends BitmapFileBasedStorage {
+public class TwoLevelBitmapCache extends BitmapFileBasedCache {
 
-    private SoftMemoryStorage<String, Bitmap> inMemoryStorage = new SoftMemoryStorage<String, Bitmap>();
+    private SoftMemoryCache<String, Bitmap> inMemoryStorage = new SoftMemoryCache<String, Bitmap>();
 
-    public TwoLevelBitmapStorage(String storagePath) {
+    public TwoLevelBitmapCache(String storagePath) {
         super(storagePath);
     }
 
-    public TwoLevelBitmapStorage(String storagePath, boolean scannable) {
+    public TwoLevelBitmapCache(String storagePath, boolean scannable) {
         super(storagePath, scannable);
     }
 
-    public TwoLevelBitmapStorage(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
+    public TwoLevelBitmapCache(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
         super(storagePath, scannable, compressFormat, quality);
     }
 

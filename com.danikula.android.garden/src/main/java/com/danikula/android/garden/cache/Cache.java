@@ -1,6 +1,6 @@
-package com.danikula.android.garden.storage;
+package com.danikula.android.garden.cache;
 
-public interface Storage<K, T> {
+public interface Cache<K, T> {
     
     void put(K key, T value);
     

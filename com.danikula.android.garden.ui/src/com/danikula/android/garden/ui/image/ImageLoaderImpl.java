@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.danikula.android.garden.cache.EmptyCache;
+import com.danikula.android.garden.cache.Cache;
+import com.danikula.android.garden.cache.CacheException;
 import com.danikula.android.garden.io.FlushedInputStream;
 import com.danikula.android.garden.io.IoUtils;
-import com.danikula.android.garden.storage.EmptyStorage;
-import com.danikula.android.garden.storage.Storage;
-import com.danikula.android.garden.storage.StorageException;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,13 +22,13 @@ public class ImageLoaderImpl implements ImageLoader {
 
     private static final String LOG_TAG = ImageLoaderImpl.class.getName();
 
-    private Storage<String, Bitmap> cacheStorage;
+    private Cache<String, Bitmap> cacheStorage;
 
     public ImageLoaderImpl() {
-        this(new EmptyStorage<String, Bitmap>());
+        this(new EmptyCache<String, Bitmap>());
     }
 
-    public ImageLoaderImpl(Storage<String, Bitmap> cacheStorage) {
+    public ImageLoaderImpl(Cache<String, Bitmap> cacheStorage) {
         this.cacheStorage = checkNotNull(cacheStorage, "Cache storage must be not null!");
     }
 
@@ -68,7 +68,7 @@ public class ImageLoaderImpl implements ImageLoader {
     private synchronized void cache(String url, Bitmap bitmap) {
         try {
             cacheStorage.put(url, bitmap);
-        } catch (StorageException e) {
+        } catch (CacheException e) {
             // just log & ignore this error
             Log.e(LOG_TAG, "Error saving bitmap in cache", e);
         }
