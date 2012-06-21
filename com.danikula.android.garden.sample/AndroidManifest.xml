@@ -25,7 +25,7 @@
         <activity android:name=".ui.RemoteImageSampleActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Black.CustomRemoteImageView"/>
         <activity android:name=".ui.task.TaskDemoActivity"  android:screenOrientation="portrait" android:theme="@style/Theme.Black.CustomRemoteImageView"/>
         
-        <service android:name=".ui.task.DemoTaskService" />
+        <service android:name="com.danikula.android.garden.task.TaskService" />
         
     </application>
 

@@ -1,6 +1,5 @@
 package com.danikula.android.garden.sample;
 
-import com.danikula.android.garden.sample.ui.task.DemoTaskService;
 import com.danikula.android.garden.sample.ui.task.DemoTaskServiceHelper;
 
 import android.app.Application;
@@ -15,7 +14,7 @@ public class GardenDemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         
-        serviceHelper = new DemoTaskServiceHelper(this, DemoTaskService.class);
+        serviceHelper = new DemoTaskServiceHelper(this);
     }
 
     public DemoTaskServiceHelper getServiceHelper() {

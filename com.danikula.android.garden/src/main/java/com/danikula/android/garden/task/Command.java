@@ -1,21 +1,27 @@
 package com.danikula.android.garden.task;
 
+import java.io.Serializable;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
-public abstract class TaskHandler {
+public abstract class Command implements Serializable {
 
     public static final String RESULT_ARG_ERROR = "com.danikula.android.garden.ArgumentError";
 
-    public static final int RESPONSE_SUCCESS = 0;
-
-    public static final int RESPONSE_FAILURE = 1;
-
     public abstract void execute(Context context, Bundle args, ResultReceiver callback);
 
+    public Object unpackResult(Bundle packedResult) {
+        return null;
+    }
+    
+    public Object unpackErrorData(Bundle packedErrorData) {
+        return null;
+    }
+
     protected void onSuccess(ResultReceiver callback, Bundle result) {
-        callback.send(RESPONSE_SUCCESS, result);
+        callback.send(ResultStatus.SUCCESS.ordinal(), result);
     }
 
     protected void onSuccess(ResultReceiver callback) {
@@ -24,7 +30,7 @@ public abstract class TaskHandler {
 
     protected void onError(ResultReceiver callback, Bundle result, Exception error) {
         result.putSerializable(RESULT_ARG_ERROR, error);
-        callback.send(RESPONSE_FAILURE, result);
+        callback.send(ResultStatus.FAIL.ordinal(), result);
     }
 
     public void onError(ResultReceiver callback, Exception error) {

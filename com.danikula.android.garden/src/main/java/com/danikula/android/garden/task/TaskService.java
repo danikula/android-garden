@@ -1,11 +1,7 @@
 package com.danikula.android.garden.task;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,48 +16,44 @@ public class TaskService extends Service {
 
     public static final String LOG_TAG = TaskService.class.getName();
 
-    public static final String EXTRA_RESULT_RECEIVER = "ExtraResultReceiver";
+    public static final String EXTRA_COMMAND = "com.danikula.android.garden.task.ExtraCommand";
+
+    public static final String EXTRA_RESULT_RECEIVER = "com.danikula.android.garden.task.ExtraResultReceiver";
 
     private ExecutorService executor = Executors.newFixedThreadPool(3);
-
-    private Map<String, TaskHandler> taskHandlers = new HashMap<String, TaskHandler>();
-
-    protected void registerTaskHandler(String action, TaskHandler taskHandler) {
-        checkNotNull(action, "Action must be not null!");
-        checkNotNull(taskHandler, "Task handler must be not null!");
-
-        taskHandlers.put(action, taskHandler);
-    }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "TaskService.onStartCommand");
 
-        String action = intent.getAction();
+        checkArgument(intent.hasExtra(EXTRA_COMMAND), "There is no command in extras");
         checkArgument(intent.hasExtra(EXTRA_RESULT_RECEIVER), "There is no result receiver in extras");
-        checkArgument(taskHandlers.containsKey(action), "There is no registered task handler for action '%s'", action);
 
-        TaskHandler taskHandler = taskHandlers.get(action);
+        Command command = (Command) intent.getSerializableExtra(EXTRA_COMMAND);
         ResultReceiver receiver = intent.getParcelableExtra(EXTRA_RESULT_RECEIVER);
-        submitTask(taskHandler, intent.getExtras(), receiver);
+        submitTask(command, intent.getExtras(), receiver);
 
         return START_STICKY;
     }
 
-    private void submitTask(final TaskHandler taskHandler, final Bundle args, final ResultReceiver receiver) {
+    private void submitTask(final Command command, final Bundle args, final ResultReceiver receiver) {
         executor.submit(new Runnable() {
 
             @Override
             public void run() {
-                try {
-                    taskHandler.execute(getApplicationContext(), args, receiver);
-                }
-                catch (Exception e) {
-                    // deliver any exception to TaskServiceHelper
-                    taskHandler.onError(receiver, e);
-                }
+                runTask(command, args, receiver);
             }
         });
+    }
+
+    private void runTask(Command command, Bundle args, ResultReceiver receiver) {
+        try {
+            command.execute(getApplicationContext(), args, receiver);
+        }
+        catch (Exception e) {
+            // deliver any exception to TaskServiceHelper
+            command.onError(receiver, e);
+        }
     }
 
     @Override
@@ -80,5 +72,7 @@ public class TaskService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG, "TaskService.onDestroy");
+        
+        executor.shutdown();
     }
 }

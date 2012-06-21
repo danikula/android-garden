@@ -149,11 +149,12 @@ containing a value of this type.
     public static final class id {
         public static final int alignBounds=0x7f040000;
         public static final int alignMargins=0x7f040001;
-        public static final int button_button=0x7f040006;
+        public static final int cancelTest=0x7f040007;
         public static final int editText1=0x7f040004;
         public static final int editText2=0x7f040005;
         public static final int loadButton=0x7f040003;
         public static final int remoteImageView=0x7f040002;
+        public static final int runRunTest=0x7f040006;
     }
     public static final class layout {
         public static final int main=0x7f030000;

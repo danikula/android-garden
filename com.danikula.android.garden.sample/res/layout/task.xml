@@ -10,10 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
-        android:inputType="text" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/editText2"
@@ -23,9 +20,15 @@
         android:inputType="text" />
 
     <Button
-        android:id="@+id/button_button"
+        android:id="@+id/runRunTest"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Test" />
+
+    <Button
+        android:id="@+id/cancelTest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
 
 </LinearLayout>

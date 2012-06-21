@@ -1,27 +1,28 @@
 package com.danikula.android.garden.sample.ui.task;
 
+import com.danikula.android.garden.task.LaunchMode;
 import com.danikula.android.garden.task.TaskResultListener;
 import com.danikula.android.garden.task.TaskServiceHelper;
 
 import android.app.Application;
-import android.app.Service;
 import android.os.Bundle;
 
 public class DemoTaskServiceHelper {
 
-    public static final int TEST_TASK_ID = 12;
+    public static final int TEST_TASK_ACTION = 12;
 
     private TaskServiceHelper taskServiceHelper;
 
-    public DemoTaskServiceHelper(Application app, Class<? extends Service> serviceClass) {
-        this.taskServiceHelper = new TaskServiceHelper(app, serviceClass);
+    public DemoTaskServiceHelper(Application app) {
+        this.taskServiceHelper = new TaskServiceHelper(app);
+        taskServiceHelper.registerCommand(TEST_TASK_ACTION, new DemoCommand());
     }
 
-    public void executeTestTask(String argumentA, String argumentB) {
+    public int executeTestTask(String argumentA, String argumentB) {
         Bundle args = new Bundle();
-        args.putString(DemoTaskHandler.EXTRA_PARAM_1, argumentA);
-        args.putString(DemoTaskHandler.EXTRA_PARAM_2, argumentB);
-        taskServiceHelper.submitTask(TEST_TASK_ID, DemoTaskHandler.ACTION_EXAMPLE_ACTION, args);
+        args.putString(DemoCommand.EXTRA_PARAM_1, argumentA);
+        args.putString(DemoCommand.EXTRA_PARAM_2, argumentB);
+        return taskServiceHelper.submitTask(TEST_TASK_ACTION, args, LaunchMode.CANCEL_PREVIOUS);
     }
 
     // --- simple delegating --- //
@@ -36,4 +37,9 @@ public class DemoTaskServiceHelper {
     public boolean isPending(int requestId) {
         return taskServiceHelper.isPending(requestId);
     }
+
+    public void cancel(int taskId) {
+        taskServiceHelper.cancel(taskId);
+    }
+    
 }
