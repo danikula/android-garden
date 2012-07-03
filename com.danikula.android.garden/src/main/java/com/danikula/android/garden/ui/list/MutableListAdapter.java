@@ -1,9 +1,7 @@
 package com.danikula.android.garden.ui.list;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,34 +15,93 @@ import android.widget.BaseAdapter;
 
 public abstract class MutableListAdapter<T> extends BaseAdapter {
 
-    private static final int UNDEFINED_LAYOUT_ID = -1;
-
     private Context context;
-
-    private int layoutId;
 
     private List<T> objects = Lists.newArrayList();
 
-    public MutableListAdapter(Context context, int layoutId) {
-        this.context = checkNotNull(context, "Context should be not null");
-        this.layoutId = layoutId;
+    private int viewLayoutId;
+
+    private int[] subviewIds;
+
+    public MutableListAdapter(Context context, int viewLayoutId) {
+        this(context, viewLayoutId, new int[0]);
+    }
+
+    public MutableListAdapter(Context context, int viewLayoutId, int[] subviewIds) {
+        this.context = checkNotNull(context, "Context must be not null!");
+        this.subviewIds = checkNotNull(subviewIds, "Subview ids must be not null!");
+        this.viewLayoutId = viewLayoutId;
+    }
+
+    public void setObjects(List<T> objects) {
+        this.objects = checkNotNull(objects, "Data must be not null!");
+        super.notifyDataSetChanged();
+    }
+
+    public List<T> getObjects() {
+        return objects;
+    }
+
+    public void addAll(List<T> newItems) {
+        checkNotNull(newItems, "New data must be not null!");
+
+        objects.addAll(newItems);
+        setObjects(objects);
+    }
+
+    public T getObject(int position) {
+        return objects.get(position);
+    }
+
+    public void clear() {
+        setObjects(Collections.<T> emptyList());
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView == null ? createView(context, position) : convertView;
+        View view = convertView == null ? createView(position) : convertView;
 
         if (isViewBindable(position)) {
-            T object = getObject(position);
-            bind(object, view, position);
+            bind(view, position);
         }
 
         return view;
     }
 
+    protected View createView(int position) {
+        return createViewWithViewHolder(viewLayoutId, subviewIds);
+    }
+
+    protected View createViewWithViewHolder(int layoutId, int[] subviewIds) {
+        View view = inflateView(layoutId);
+        view.setTag(new ViewHolder(view, subviewIds));
+        return view;
+    }
+
+    protected View inflateView(int layoutId) {
+        return LayoutInflater.from(context).inflate(layoutId, null);
+    }
+
     @Override
     public int getCount() {
         return objects.size();
+    }
+
+    protected void bind(View view, int position) {
+        T object = getObject(position);
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+        bind(viewHolder, object, position);
+    }
+
+    protected void bind(ViewHolder viewHolder, T object, int position) {
+    }
+
+    protected boolean isViewBindable(int position) {
+        return true;
+    }
+
+    protected Context getContext() {
+        return context;
     }
 
     @Override
@@ -54,59 +111,6 @@ public abstract class MutableListAdapter<T> extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
-    }
-
-    public void setObjects(List<T> objects) {
-        this.objects = new ArrayList<T>(objects == null ? Collections.<T> emptyList() : objects);
-        super.notifyDataSetChanged();
-    }
-
-    public void resetData() {
-        setObjects(new ArrayList<T>());
-    }
-
-    public void addAll(List<T> newItems) {
-        objects.addAll(newItems);
-        super.notifyDataSetChanged();
-    }
-
-    public void add(T newItems) {
-        objects.add(newItems);
-        super.notifyDataSetChanged();
-    }
-
-    public void addTo(T newItems, int index) {
-        objects.add(index, newItems);
-        super.notifyDataSetChanged();
-    }
-
-    public T getObject(int position) {
-        return objects.get(position);
-    }
-
-    public List<T> getObjects() {
-        return objects;
-    }
-
-    public void clear() {
-        setObjects(new ArrayList<T>());
-        super.notifyDataSetChanged();
-    }
-
-    protected Context getContext() {
-        return context;
-    }
-
-    protected View createView(Context context, int position) {
-        checkState(layoutId != UNDEFINED_LAYOUT_ID, "Layout identifier for row view is not specified!");
-
-        return LayoutInflater.from(context).inflate(layoutId, null);
-    }
-
-    protected abstract void bind(T object, View view, int position);
-
-    protected boolean isViewBindable(int position) {
-        return true;
+        return 0;
     }
 }

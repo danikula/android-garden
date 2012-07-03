@@ -4,8 +4,6 @@ import com.danikula.aibolit.Aibolit;
 import com.danikula.aibolit.annotation.OnClick;
 import com.danikula.aibolit.annotation.ViewById;
 import com.danikula.android.garden.sample.R;
-import com.danikula.android.garden.sample.R.id;
-import com.danikula.android.garden.sample.R.layout;
 import com.danikula.android.garden.ui.image.ImageLoader;
 import com.danikula.android.garden.ui.image.ImageLoaderImpl;
 import com.danikula.android.garden.ui.image.RemoteImageView;

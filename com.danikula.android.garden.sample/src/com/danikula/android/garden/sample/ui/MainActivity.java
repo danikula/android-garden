@@ -7,6 +7,7 @@ import com.danikula.aibolit.Aibolit;
 import com.danikula.android.garden.sample.R;
 import com.danikula.android.garden.sample.ui.task.TaskDemoActivity;
 import com.danikula.android.garden.ui.list.MutableListAdapter;
+import com.danikula.android.garden.ui.list.ViewHolder;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -15,7 +16,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends ListActivity {
 
@@ -28,8 +28,9 @@ public class MainActivity extends ListActivity {
         List<ActivityItem> items = new LinkedList<MainActivity.ActivityItem>();
         items.add(new ActivityItem(RemoteImageSampleActivity.class, "RemoteImageView"));
         items.add(new ActivityItem(TaskDemoActivity.class, "Long running task"));
+        items.add(new ActivityItem(SectionedAdapterActivity.class, "Sectioned adapter"));
 
-        ActivitiesAdapter adapter = new ActivitiesAdapter(this, android.R.layout.simple_list_item_1);
+        ActivitiesAdapter adapter = new ActivitiesAdapter(this);
         adapter.setObjects(items);
         setListAdapter(adapter);
     }
@@ -43,13 +44,13 @@ public class MainActivity extends ListActivity {
 
     private static final class ActivitiesAdapter extends MutableListAdapter<ActivityItem> {
 
-        public ActivitiesAdapter(Context context, int layoutId) {
-            super(context, layoutId);
+        public ActivitiesAdapter(Context context) {
+            super(context, android.R.layout.simple_list_item_1, new int[] { android.R.id.text1 });
         }
 
         @Override
-        protected void bind(ActivityItem item, View view, int position) {
-            ((TextView) view).setText(item.getName());
+        protected void bind(ViewHolder viewHolder, ActivityItem item, int position) {
+            viewHolder.setText(android.R.id.text1, item.getName());
         }
     }
 

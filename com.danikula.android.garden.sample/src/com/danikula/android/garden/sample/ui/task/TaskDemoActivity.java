@@ -5,7 +5,7 @@ import com.danikula.aibolit.annotation.OnClick;
 import com.danikula.aibolit.annotation.ViewById;
 import com.danikula.android.garden.sample.GardenDemoApplication;
 import com.danikula.android.garden.sample.R;
-import com.danikula.android.garden.task.TaskResultListener;
+import com.danikula.android.garden.task.OnTaskResultListener;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class TaskDemoActivity extends Activity implements TaskResultListener {
+public class TaskDemoActivity extends Activity implements OnTaskResultListener {
 
     private static final String LOG_TAG = TaskDemoActivity.class.getSimpleName();
     
@@ -60,21 +60,21 @@ public class TaskDemoActivity extends Activity implements TaskResultListener {
     }
 
     @Override
-    public void onTaskSuccess(int taskId, Object result) {
+    public void onTaskSuccess(int taskId, int action, Object result) {
         Toast.makeText(this, result + "", Toast.LENGTH_LONG).show();
         
         Log.d(LOG_TAG, String.format("onTaskSuccess. taskId: %s, result: %s", taskId, result));
     }
 
     @Override
-    public void onTaskError(int taskId, Object result, Exception error) {
+    public void onTaskError(int taskId, int action, Object result, Exception error) {
         Toast.makeText(this, result + "", Toast.LENGTH_LONG).show();
         
         Log.d(LOG_TAG, String.format("onTaskError. taskId: %s, result: %s", taskId, result));
     }
 
     @Override
-    public void onTaskCancel(int taskId) {
+    public void onTaskCancel(int taskId, int action) {
         Log.d(LOG_TAG, String.format("onTaskCancel. taskId: %s", taskId));
     }
 

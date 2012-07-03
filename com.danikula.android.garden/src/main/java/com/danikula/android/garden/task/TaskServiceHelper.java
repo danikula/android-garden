@@ -26,7 +26,7 @@ public class TaskServiceHelper {
 
     private static final long LIFE_TIME_SERVICE_MILLIS = TimeUnit.SECONDS.toMillis(5 * 60);
 
-    private ArrayList<TaskResultListener> taskResultListeners = Lists.newArrayList();
+    private ArrayList<OnTaskResultListener> taskResultListeners = Lists.newArrayList();
 
     private List<TaskInfo> pendingTasks = Lists.newArrayList();
 
@@ -51,13 +51,13 @@ public class TaskServiceHelper {
         commands.put(action, command);
     }
 
-    public void addListener(TaskResultListener listener) {
+    public void addOnTaskResultListener(OnTaskResultListener listener) {
         checkNotNull(listener, "Listener must be not null!");
 
         taskResultListeners.add(listener);
     }
 
-    public void removeListener(TaskResultListener listener) {
+    public void removeOnTaskResultListener(OnTaskResultListener listener) {
         checkNotNull(listener, "Listener must be not null!");
 
         taskResultListeners.remove(listener);
@@ -65,6 +65,10 @@ public class TaskServiceHelper {
 
     public boolean isPending(int taskId) {
         return findTask(taskId).isPresent();
+    }
+
+    public boolean isAnyTaskWithActionPending(int action) {
+        return !findTasksWithAction(action).isEmpty();
     }
 
     public int submitTask(int action) {
@@ -84,7 +88,7 @@ public class TaskServiceHelper {
         checkNotNull(launchMode, "Launch mode must be not null!");
 
         if (launchMode == LaunchMode.SKIP_IF_RUNNING || launchMode == LaunchMode.CANCEL_PREVIOUS) {
-            List<TaskInfo> pendingActionTasks = findTaskWithAction(action);
+            List<TaskInfo> pendingActionTasks = findTasksWithAction(action);
             if (!pendingActionTasks.isEmpty() && launchMode == LaunchMode.SKIP_IF_RUNNING) {
                 TaskInfo lastPendingTask = pendingActionTasks.get(pendingActionTasks.size() - 1);
                 return lastPendingTask.taskId;
@@ -127,7 +131,7 @@ public class TaskServiceHelper {
         return intent;
     }
 
-    private List<TaskInfo> findTaskWithAction(int action) {
+    private List<TaskInfo> findTasksWithAction(int action) {
         Predicate<TaskInfo> predicate = new ActionTaskPredicate(action);
         return new ArrayList<TaskInfo>(Collections2.filter(pendingTasks, predicate));
     }
@@ -150,7 +154,7 @@ public class TaskServiceHelper {
     private void handleTaskResult(TaskInfo taskInfo, ResultStatus result, Bundle resultData) {
         if (pendingTasks.contains(taskInfo)) {
             pendingTasks.remove(taskInfo);
-            for (TaskResultListener listener : taskResultListeners) {
+            for (OnTaskResultListener listener : taskResultListeners) {
                 notifyListener(listener, taskInfo, result, resultData);
             }
 
@@ -160,19 +164,19 @@ public class TaskServiceHelper {
         }
     }
 
-    private void notifyListener(TaskResultListener listener, TaskInfo taskInfo, ResultStatus resultStatus, Bundle data) {
+    private void notifyListener(OnTaskResultListener listener, TaskInfo taskInfo, ResultStatus resultStatus, Bundle data) {
         Command command = getCommand(taskInfo.action);
         if (resultStatus == ResultStatus.SUCCESS) {
             Object result = command.unpackResult(data);
-            listener.onTaskSuccess(taskInfo.taskId, result);
+            listener.onTaskSuccess(taskInfo.taskId, taskInfo.action, result);
         }
         else if (resultStatus == ResultStatus.FAIL) {
             Exception error = (Exception) data.getSerializable(Command.RESULT_ARG_ERROR);
             Object errorData = command.unpackErrorData(data);
-            listener.onTaskError(taskInfo.taskId, errorData, error);
+            listener.onTaskError(taskInfo.taskId, taskInfo.action, errorData, error);
         }
         else if (resultStatus == ResultStatus.CANCEL) {
-            listener.onTaskCancel(taskInfo.taskId);
+            listener.onTaskCancel(taskInfo.taskId, taskInfo.action);
         }
     }
 

@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.util.Log;
@@ -21,6 +22,8 @@ public class TaskService extends Service {
     public static final String EXTRA_RESULT_RECEIVER = "com.danikula.android.garden.task.ExtraResultReceiver";
 
     private ExecutorService executor = Executors.newFixedThreadPool(3);
+    
+    private Handler uiThreadHandler = new Handler();
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -48,7 +51,7 @@ public class TaskService extends Service {
 
     private void runTask(Command command, Bundle args, ResultReceiver receiver) {
         try {
-            command.execute(getApplicationContext(), args, receiver);
+            command.execute(getApplicationContext(), args, receiver, uiThreadHandler);
         }
         catch (Exception e) {
             // deliver any exception to TaskServiceHelper

@@ -1,7 +1,7 @@
 package com.danikula.android.garden.sample.ui.task;
 
 import com.danikula.android.garden.task.LaunchMode;
-import com.danikula.android.garden.task.TaskResultListener;
+import com.danikula.android.garden.task.OnTaskResultListener;
 import com.danikula.android.garden.task.TaskServiceHelper;
 
 import android.app.Application;
@@ -26,12 +26,12 @@ public class DemoTaskServiceHelper {
     }
 
     // --- simple delegating --- //
-    public void addListener(TaskResultListener currentListener) {
-        taskServiceHelper.addListener(currentListener);
+    public void addListener(OnTaskResultListener currentListener) {
+        taskServiceHelper.addOnTaskResultListener(currentListener);
     }
 
-    public void removeListener(TaskResultListener currentListener) {
-        taskServiceHelper.removeListener(currentListener);
+    public void removeListener(OnTaskResultListener currentListener) {
+        taskServiceHelper.removeOnTaskResultListener(currentListener);
     }
 
     public boolean isPending(int requestId) {

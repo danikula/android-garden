@@ -1,15 +1,14 @@
 package com.danikula.android.garden.sample.ui.task;
 
-import java.util.concurrent.TimeUnit;
-
 import com.danikula.android.garden.sample.GardenDemoApplication;
 import com.danikula.android.garden.task.Command;
+import com.danikula.android.garden.utils.Utils;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
-import android.util.Log;
 
 public class DemoCommand extends Command {
 
@@ -24,7 +23,7 @@ public class DemoCommand extends Command {
     public static String EXTRA_PARAM_2 = GardenDemoApplication.PACKAGE.concat(".EXTRA_PARAM_2");
 
     @Override
-    public void execute(Context context, Bundle args, ResultReceiver callback) {
+    public void execute(Context context, Bundle args, ResultReceiver callback, Handler handler) {
         String arg1 = args.getString(EXTRA_PARAM_1);
         String arg2 = args.getString(EXTRA_PARAM_2);
         Bundle data = new Bundle();
@@ -52,12 +51,7 @@ public class DemoCommand extends Command {
     }
 
     private void doWork() {
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        }
-        catch (InterruptedException e) {
-            Log.wtf(TAG, "WTF");
-        }
+        Utils.sleepOnMs(2000);
     }
 
 }

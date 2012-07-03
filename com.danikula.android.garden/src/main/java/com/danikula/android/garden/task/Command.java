@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ResultReceiver;
 
 public abstract class Command implements Serializable {
 
     public static final String RESULT_ARG_ERROR = "com.danikula.android.garden.ArgumentError";
 
-    public abstract void execute(Context context, Bundle args, ResultReceiver callback);
-
+    public abstract void execute(Context context, Bundle args, ResultReceiver callback, Handler uiThreadHandler);
+    
     public Object unpackResult(Bundle packedResult) {
         return null;
     }
