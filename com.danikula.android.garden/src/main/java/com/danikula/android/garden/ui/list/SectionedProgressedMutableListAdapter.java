@@ -11,13 +11,10 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 public abstract class SectionedProgressedMutableListAdapter<G, T> extends ProgressedMutableListAdapter<T> {
     
-    private static final String LOG_TAG = SectionedProgressedMutableListAdapter.class.getSimpleName();
-
     private static final int ROW_TYPE_GROUP = 2;
 
     private static final int ROW_TYPES_COUNT = 3;
@@ -42,9 +39,6 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     @Override
     public void setObjects(List<T> plainList) {
         super.setObjects(plainList);
-        
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.setObjects. objects: " + plainList);
-
         groups = group(plainList);
         checkNotNull(groups, "Groups must be not null!");
         calculateGroupPositions();
@@ -54,8 +48,6 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     }
 
     private Map<G, List<T>> group(List<T> objects) {
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.group. objects: " + objects);
-        
         Map<G, List<T>> groupedObjects = Maps.newLinkedHashMap();
         for (T object : objects) {
             G key = getGroupKey(object);
@@ -70,8 +62,6 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     }
 
     private void calculateGroupPositions() {
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.calculateGroupPositions");
-        
         groupPositions.clear();
         int offset = 0;
         int previousItemsCount = 0;
@@ -84,15 +74,11 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
 
     @Override
     public T getObject(int position) {
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.getObject. position " + position);
-        
         int objectIndex = getObjectIndex(position);
         return getObjects().get(objectIndex);
     }
 
     private int getObjectIndex(int rowPosition) {
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.getObjectIndex. position " + rowPosition);
-        
         int groupIndex = 0;
         for (Integer groupPosition : groupPositions) {
             if (rowPosition < groupPosition) {
@@ -111,7 +97,7 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
         for (G group : groups.keySet()) {
             List<T> groupItem = groups.get(group);
             prevRowsCount += groupItem.size() + 1;
-            if (rowPosition <= prevRowsCount) {
+            if (rowPosition < prevRowsCount) {
                 return group;
             }
         }
@@ -124,16 +110,13 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
 
     @Override
     public int getCount() {
-        int count = isProgressShown() ? viewCount + 1 : viewCount;
-        Log.d(LOG_TAG, "SectionedProgressedMutableListAdapter.getCount. count " + count);
-        return count;
+        return isProgressShown() ? viewCount + 1 : viewCount;
     }
 
     @Override
     public boolean isEnabled(int position) {
         return !isGroup(position) && super.isEnabled(position);
     }
-    
     
     @Override
     public int getViewTypeCount() {

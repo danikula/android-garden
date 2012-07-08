@@ -20,7 +20,7 @@ public class TwoLevelBitmapCache extends BitmapFileBasedCache {
     }
 
     @Override
-    public synchronized Bitmap get(String key) {
+    public Bitmap get(String key) {
         boolean memCacheContains = inMemoryStorage.contains(key);
         Bitmap cacheItem = memCacheContains ? inMemoryStorage.get(key) : super.get(key);
         if (!memCacheContains) {
@@ -29,7 +29,7 @@ public class TwoLevelBitmapCache extends BitmapFileBasedCache {
         return cacheItem;
     }
 
-    public synchronized void put(String key, Bitmap value) {
+    public void put(String key, Bitmap value) {
         inMemoryStorage.put(key, value);
         super.put(key, value);
     }

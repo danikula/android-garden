@@ -4,8 +4,14 @@
     <attr name="remoteImageViewStyle" format="reference" />
 
     <declare-styleable name="RemoteImageView">
-        <attr name="riLoadingImage" format="reference" />
-        <attr name="riErrorImage" format="reference" />
+        <attr name="loadingImage" format="reference" />
+        <attr name="errorImage" format="reference" />
+        <attr name="density" format="reference">
+            <enum name="ldpi" value="120" />
+            <enum name="mdpi" value="160" />
+            <enum name="hdpi" value="240" />
+            <enum name="xhdpi" value="320" />
+        </attr>
     </declare-styleable>
 
 </resources>

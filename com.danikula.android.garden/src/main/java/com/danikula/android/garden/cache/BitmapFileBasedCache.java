@@ -9,11 +9,11 @@ import java.io.OutputStream;
 import com.danikula.android.garden.io.IoUtils;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 
 public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
-    
+
     private static final String NO_MEDIA_FILE_NAME = ".nomedia";
 
     private static final int DEFAULT_QUALITY = 100;
@@ -28,7 +28,7 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
         super(storagePath, compressFormat.toString().toLowerCase());
         this.compressFormat = compressFormat;
         this.quality = quality;
-        
+
         if (!scannable) {
             createNoMediaMarkerFile(storagePath);
         }
@@ -41,8 +41,8 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
     public BitmapFileBasedCache(String storagePath) {
         this(storagePath, false, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
     }
-    
-    private void createNoMediaMarkerFile(String storagePath){
+
+    private synchronized void createNoMediaMarkerFile(String storagePath) {
         try {
             // see details here http://stackoverflow.com/questions/2556065/stop-mediascanner-scanning-of-certain-directory
             new File(storagePath).mkdirs();
@@ -55,11 +55,14 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
 
     @Override
     protected void write(File file, Bitmap bitmap) throws IOException {
+        File tempFile = new File(file.getAbsoluteFile() + ".temp");
         OutputStream outputStream = null;
         try {
-            outputStream = new FileOutputStream(file);
+            outputStream = new FileOutputStream(tempFile);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
             bitmap.compress(compressFormat, quality, bufferedOutputStream);
+            bufferedOutputStream.flush();
+            tempFile.renameTo(file);
         }
         finally {
             IoUtils.closeSilently(outputStream);
@@ -68,7 +71,10 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
 
     @Override
     protected Bitmap read(File file) throws IOException {
-        return BitmapFactory.decodeFile(file.getAbsolutePath());
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        if (bitmap == null) {
+            throw new IOException("Error decoding image " + file.getAbsolutePath());
+        }
+        return bitmap;
     }
-
 }

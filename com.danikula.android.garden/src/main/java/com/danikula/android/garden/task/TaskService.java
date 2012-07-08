@@ -36,7 +36,7 @@ public class TaskService extends Service {
         ResultReceiver receiver = intent.getParcelableExtra(EXTRA_RESULT_RECEIVER);
         submitTask(command, intent.getExtras(), receiver);
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     private void submitTask(final Command command, final Bundle args, final ResultReceiver receiver) {

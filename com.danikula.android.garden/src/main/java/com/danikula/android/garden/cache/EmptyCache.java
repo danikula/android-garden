@@ -4,6 +4,7 @@ public class EmptyCache<K, T> implements Cache<K, T>{
 
     @Override
     public void put(K key, T value) {
+        // empty implementation
     }
 
     @Override
@@ -18,10 +19,12 @@ public class EmptyCache<K, T> implements Cache<K, T>{
 
     @Override
     public void clear() {
+        // empty implementation
     }
 
     @Override
     public void remove(K key) {
+        // empty implementation
     }
 
 }

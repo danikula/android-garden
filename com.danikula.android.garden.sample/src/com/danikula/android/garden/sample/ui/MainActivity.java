@@ -23,10 +23,11 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Aibolit.setInjectedContentView(this, R.layout.main);
+        Aibolit.setInjectedContentView(this, R.layout.simple_list);
 
         List<ActivityItem> items = new LinkedList<MainActivity.ActivityItem>();
         items.add(new ActivityItem(RemoteImageSampleActivity.class, "RemoteImageView"));
+        items.add(new ActivityItem(RemoteImageListSampleActivity.class, "RemoteImageView List"));
         items.add(new ActivityItem(TaskDemoActivity.class, "Long running task"));
         items.add(new ActivityItem(SectionedAdapterActivity.class, "Sectioned adapter"));
 
@@ -45,7 +46,7 @@ public class MainActivity extends ListActivity {
     private static final class ActivitiesAdapter extends MutableListAdapter<ActivityItem> {
 
         public ActivitiesAdapter(Context context) {
-            super(context, android.R.layout.simple_list_item_1, new int[] { android.R.id.text1 });
+            super(context, R.layout.simple_list_item, new int[] { android.R.id.text1 });
         }
 
         @Override

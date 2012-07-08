@@ -26,6 +26,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.RemoteImageListSampleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Black.CustomRemoteImageView" />
+        <activity
             android:name=".ui.RemoteImageSampleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Black.CustomRemoteImageView" />

@@ -36,14 +36,7 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
         checkNotNull(key, "Key must be not null!");
         checkNotNull(key, "Value must be not null!");
 
-        if (!storageDir.canWrite()) {
-            boolean created = storageDir.mkdirs();
-            if (!created) {
-                String errorMsgFormat = "Error creating cache directory '%s'. External storage state: %s";
-                String error = String.format(errorMsgFormat, storageDir.getAbsolutePath(), Environment.getExternalStorageState());
-                throw new CacheException(error);
-            }
-        }
+        createDirectoryIfNeeded();
 
         File storageFile = getStorageFile(key);
         try {
@@ -51,6 +44,17 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
         }
         catch (IOException e) {
             throw new CacheException("Error saving item to cache storage");
+        }
+    }
+
+    private void createDirectoryIfNeeded() {
+        if (!storageDir.canWrite()) {
+            boolean created = storageDir.mkdirs();
+            if (!created) {
+                String errorMsgFormat = "Error creating cache directory '%s'. External storage state: %s";
+                String error = String.format(errorMsgFormat, storageDir.getAbsolutePath(), Environment.getExternalStorageState());
+                throw new CacheException(error);
+            }
         }
     }
 
@@ -68,7 +72,7 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
         }
         catch (Exception e) {
             String errorMessageFormat = "Error reading cache item with key '%s' and path '%s' from cache storage";
-            throw new CacheException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()));
+            throw new CacheException(String.format(errorMessageFormat, key, storageFile.getAbsolutePath()), e);
         }
         return result;
     }
@@ -79,7 +83,7 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
     }
 
     @Override
-    public void clear() throws CacheException {
+    public synchronized void clear() throws CacheException {
         if (!storageDir.exists()) {
             return;
         }
@@ -94,7 +98,7 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
     }
 
     @Override
-    public void remove(String key) {
+    public synchronized void remove(String key) {
         File storageFile = getStorageFile(key);
         boolean isDeleted = storageFile.delete();
         if (!isDeleted) {

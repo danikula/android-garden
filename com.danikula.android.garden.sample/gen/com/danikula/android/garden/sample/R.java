@@ -51,7 +51,26 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int customTypeface=0x7f01000d;
+        public static final int customTypeface=0x7f01000e;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>ldpi</code></td><td>120</td><td></td></tr>
+<tr><td><code>mdpi</code></td><td>160</td><td></td></tr>
+<tr><td><code>hdpi</code></td><td>240</td><td></td></tr>
+<tr><td><code>xhdpi</code></td><td>320</td><td></td></tr>
+</table>
+         */
+        public static final int density=0x7f01000c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int errorImage=0x7f01000b;
         /**  The column span: the difference between the right and left
         boundaries delimiting the group of cells occupied by this view.
         The default is one.
@@ -89,15 +108,11 @@ containing a value of this type.
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
+        public static final int loadingImage=0x7f01000a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
         public static final int remoteImageViewStyle=0x7f010009;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int riErrorImage=0x7f01000b;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int riLoadingImage=0x7f01000a;
         /**  The maxmimum number of rows to create when automatically positioning children. 
          <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
@@ -122,7 +137,7 @@ containing a value of this type.
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int typefacedTextViewStyle=0x7f01000c;
+        public static final int typefacedTextViewStyle=0x7f01000d;
         /**  When set to true, tells GridLayout to use default margins when none are specified
         in a view's layout parameters.
         The default value is false.
@@ -145,24 +160,32 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
         public static final int remote_image_error=0x7f020001;
         public static final int remote_image_loading=0x7f020002;
+        public static final int snow=0x7f020003;
     }
     public static final class id {
         public static final int alignBounds=0x7f040000;
         public static final int alignMargins=0x7f040001;
-        public static final int cancelTest=0x7f040007;
-        public static final int editText1=0x7f040004;
-        public static final int editText2=0x7f040005;
-        public static final int loadButton=0x7f040003;
-        public static final int remoteImageView=0x7f040002;
-        public static final int runRunTest=0x7f040006;
+        public static final int cancelTest=0x7f04000c;
+        public static final int editText1=0x7f040009;
+        public static final int editText2=0x7f04000a;
+        public static final int hdpi=0x7f040004;
+        public static final int image=0x7f040006;
+        public static final int ldpi=0x7f040002;
+        public static final int load=0x7f040007;
+        public static final int loadButton=0x7f040008;
+        public static final int mdpi=0x7f040003;
+        public static final int runRunTest=0x7f04000b;
+        public static final int xhdpi=0x7f040005;
     }
     public static final class layout {
         public static final int group_list_item=0x7f030000;
-        public static final int loading_list_item=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int remote_image_sample=0x7f030003;
+        public static final int image_list_item=0x7f030001;
+        public static final int loading_list_item=0x7f030002;
+        public static final int remote_image_activity=0x7f030003;
         public static final int sectioned_adapter_activity=0x7f030004;
-        public static final int task=0x7f030005;
+        public static final int simple_list=0x7f030005;
+        public static final int simple_list_item=0x7f030006;
+        public static final int task=0x7f030007;
     }
     public static final class string {
         public static final int app_name=0x7f070000;
@@ -439,35 +462,58 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #RemoteImageView_riErrorImage com.danikula.android.garden.sample:riErrorImage}</code></td><td></td></tr>
-           <tr><td><code>{@link #RemoteImageView_riLoadingImage com.danikula.android.garden.sample:riLoadingImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_density com.danikula.android.garden.sample:density}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_errorImage com.danikula.android.garden.sample:errorImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_loadingImage com.danikula.android.garden.sample:loadingImage}</code></td><td></td></tr>
            </table>
-           @see #RemoteImageView_riErrorImage
-           @see #RemoteImageView_riLoadingImage
+           @see #RemoteImageView_density
+           @see #RemoteImageView_errorImage
+           @see #RemoteImageView_loadingImage
          */
         public static final int[] RemoteImageView = {
-            0x7f01000a, 0x7f01000b
+            0x7f01000a, 0x7f01000b, 0x7f01000c
         };
         /**
-          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#riErrorImage}
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#density}
           attribute's value can be found in the {@link #RemoteImageView} array.
 
 
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:riErrorImage
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>ldpi</code></td><td>120</td><td></td></tr>
+<tr><td><code>mdpi</code></td><td>160</td><td></td></tr>
+<tr><td><code>hdpi</code></td><td>240</td><td></td></tr>
+<tr><td><code>xhdpi</code></td><td>320</td><td></td></tr>
+</table>
+          @attr name android:density
         */
-        public static final int RemoteImageView_riErrorImage = 1;
+        public static final int RemoteImageView_density = 2;
         /**
-          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#riLoadingImage}
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#errorImage}
           attribute's value can be found in the {@link #RemoteImageView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:riLoadingImage
+          @attr name android:errorImage
         */
-        public static final int RemoteImageView_riLoadingImage = 0;
+        public static final int RemoteImageView_errorImage = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#loadingImage}
+          attribute's value can be found in the {@link #RemoteImageView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:loadingImage
+        */
+        public static final int RemoteImageView_loadingImage = 0;
         /** Attributes that can be used with a TypefacedTextView.
            <p>Includes the following attributes:</p>
            <table>
@@ -479,7 +525,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #TypefacedTextView_customTypeface
          */
         public static final int[] TypefacedTextView = {
-            0x7f01000d
+            0x7f01000e
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#customTypeface}
