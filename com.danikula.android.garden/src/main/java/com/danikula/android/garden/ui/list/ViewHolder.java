@@ -21,7 +21,7 @@ public class ViewHolder {
 
         for (int id : ids) {
             View view = parent.findViewById(id);
-            checkNotNull(view, "View vith id '%s' must be not null!", id);
+            checkNotNull(view, "View vith id '0x%s' must be not null!", Integer.toHexString(id));
             views.put(id, view);
         }
     }

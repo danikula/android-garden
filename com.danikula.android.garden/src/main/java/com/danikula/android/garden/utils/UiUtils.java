@@ -41,9 +41,11 @@ public class UiUtils {
      * Скрывает TextView, если метод {@link TextView#getText()} возвращает <code>null</code> или пустую строку.
      * @param textView TextView компонент, который должен скрыться, если содержит пустой текст
      */
-    public static void hideIfEmpty(TextView textView) {
-        String textContent = textView.getText().toString();
-        setVisibility(!Strings.isNullOrEmpty(textContent), textView);
+    public static void hideIfEmpty(TextView... textViews) {
+        for (TextView textView : textViews) {
+            String textContent = textView.getText().toString();
+            setVisibility(!Strings.isNullOrEmpty(textContent), textView);
+        }
     }
     
     public static int dipToPixels(Context context, int dip) {

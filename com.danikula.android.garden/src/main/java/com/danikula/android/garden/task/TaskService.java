@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.ResultReceiver;
 import android.util.Log;
 
@@ -51,6 +52,8 @@ public class TaskService extends Service {
 
     private void runTask(Command command, Bundle args, ResultReceiver receiver) {
         try {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            
             command.execute(getApplicationContext(), args, receiver, uiThreadHandler);
         }
         catch (Exception e) {
