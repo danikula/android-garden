@@ -119,7 +119,7 @@ public class TaskServiceHelper {
         handleTaskResult(taskInfo, ResultStatus.CANCEL, new Bundle());
     }
 
-    private Optional<TaskInfo> findTask(final int taskId) {
+    private Optional<TaskInfo> findTask(int taskId) {
         return Iterables.tryFind(pendingTasks, new ConcreteTaskPredicate(taskId));
     }
 
@@ -182,7 +182,7 @@ public class TaskServiceHelper {
 
     private final class ConcreteTaskPredicate implements Predicate<TaskInfo> {
 
-        private final int taskId;
+        private int taskId;
 
         private ConcreteTaskPredicate(int taskId) {
             this.taskId = taskId;

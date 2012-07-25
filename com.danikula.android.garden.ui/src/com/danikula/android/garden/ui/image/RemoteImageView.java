@@ -1,6 +1,7 @@
 package com.danikula.android.garden.ui.image;
 
 import com.danikula.android.garden.ui.R;
+import com.danikula.android.garden.utils.ReflectUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +14,8 @@ import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 public class RemoteImageView extends ImageView {
+    
+    private static final LoadImageCallback EMPTY_LISTENER = ReflectUtils.newInstance(LoadImageCallback.class);
 
     private Drawable loadingImage;
 
@@ -21,6 +24,8 @@ public class RemoteImageView extends ImageView {
     private String currentlyLoadedUrl;
 
     private static BitmapFactory.Options bitmapOptions;
+    
+    private LoadImageCallback listener = EMPTY_LISTENER;
 
     public RemoteImageView(Context context) {
         this(context, null);
@@ -47,6 +52,10 @@ public class RemoteImageView extends ImageView {
         }
 
         attributes.recycle();
+    }
+    
+    public void setLoadingListener (LoadImageCallback listener) {
+        this.listener = listener == null ? EMPTY_LISTENER : listener;
     }
 
     private BitmapFactory.Options createDefaultBitmapOptions() {
@@ -94,6 +103,7 @@ public class RemoteImageView extends ImageView {
             if (url.equals(currentlyLoadedUrl)) {
                 showRealImage();
                 setImageBitmap(bitmap);
+                listener.onLoaded(url, bitmap);
             }
         }
 
@@ -102,6 +112,7 @@ public class RemoteImageView extends ImageView {
             if (url.equals(currentlyLoadedUrl)) {
                 showErrorStub();
                 setImageDrawable(errorImage);
+                listener.onError(url);
             }
         }
     }

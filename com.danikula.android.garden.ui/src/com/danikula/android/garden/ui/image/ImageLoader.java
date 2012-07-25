@@ -77,7 +77,8 @@ public class ImageLoader {
         }
         catch (CacheException e) {
             Log.e(LOG_TAG, "Error restoring image", e);
-            callback.onError(url);
+            
+            executor.execute(new LoadImageRunnable(url, options, callback));
         }
     }
 

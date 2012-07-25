@@ -18,15 +18,10 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
 
     private static final int DEFAULT_QUALITY = 100;
 
-    private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
-
-    private CompressFormat compressFormat = DEFAULT_COMPRESS_FORMAT;
-
     private int quality;
 
-    public BitmapFileBasedCache(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
-        super(storagePath, compressFormat.toString().toLowerCase());
-        this.compressFormat = compressFormat;
+    public BitmapFileBasedCache(String storagePath, boolean scannable, int quality) {
+        super(storagePath);
         this.quality = quality;
 
         if (!scannable) {
@@ -35,11 +30,11 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
     }
 
     public BitmapFileBasedCache(String storagePath, boolean scannable) {
-        this(storagePath, scannable, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
+        this(storagePath, scannable, DEFAULT_QUALITY);
     }
 
     public BitmapFileBasedCache(String storagePath) {
-        this(storagePath, false, DEFAULT_COMPRESS_FORMAT, DEFAULT_QUALITY);
+        this(storagePath, false, DEFAULT_QUALITY);
     }
 
     private synchronized void createNoMediaMarkerFile(String storagePath) {
@@ -55,14 +50,16 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
 
     @Override
     protected void write(File file, Bitmap bitmap) throws IOException {
-        File tempFile = new File(file.getAbsoluteFile() + ".temp");
+        CompressFormat compressFormat = bitmap.hasAlpha() ? CompressFormat.PNG : CompressFormat.JPEG;
+        File bitmapFile = new File(file.getAbsolutePath() + "." + compressFormat.toString());
+        File tempFile = new File(bitmapFile.getAbsoluteFile() + ".temp");
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(tempFile);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
             bitmap.compress(compressFormat, quality, bufferedOutputStream);
             bufferedOutputStream.flush();
-            tempFile.renameTo(file);
+            tempFile.renameTo(bitmapFile);
         }
         finally {
             IoUtils.closeSilently(outputStream);
@@ -73,6 +70,7 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
     protected Bitmap read(File file) throws IOException {
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
         if (bitmap == null) {
+            file.delete();
             throw new IOException("Error decoding image " + file.getAbsolutePath());
         }
         return bitmap;

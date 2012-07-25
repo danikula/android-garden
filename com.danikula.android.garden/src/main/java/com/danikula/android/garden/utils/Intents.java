@@ -1,10 +1,13 @@
 package com.danikula.android.garden.utils;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.webkit.MimeTypeMap;
 
 /**
  * Содержит функциональность для удобного запуска активити и внешних приложений, таких как Market или звонилки
@@ -123,5 +126,16 @@ public class Intents {
     
     public static void shareText(Context context, int textIdToShare) {
         shareText(context, context.getString(textIdToShare));
+    }
+
+    public static void viewFile(Context context, File file) {
+        String extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
+        String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), mime);
+        Intent chooser = Intent.createChooser(intent, null);
+        context.startActivity(chooser);
     }
 }

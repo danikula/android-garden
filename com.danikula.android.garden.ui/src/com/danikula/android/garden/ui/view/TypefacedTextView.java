@@ -33,11 +33,12 @@ public class TypefacedTextView extends TextView {
 
         TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.TypefacedTextView, defStyle, 0);
         String fontName = styledAttrs.getString(R.styleable.TypefacedTextView_customTypeface);
+        int styleIndex = styledAttrs.getInt(R.styleable.TypefacedTextView_textStyle, 0);
         styledAttrs.recycle();
 
         if (fontName != null) {
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), fontName);
-            setTypeface(typeface);
+            setTypeface(typeface, styleIndex); 
         }
     }
 }

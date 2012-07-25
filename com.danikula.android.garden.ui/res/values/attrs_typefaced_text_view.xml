@@ -5,6 +5,12 @@
 
     <declare-styleable name="TypefacedTextView">
         <attr name="customTypeface" format="string" />
+        <!-- Duplicate android attribute -->
+        <attr name="textStyle">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
     </declare-styleable>
 
 </resources>

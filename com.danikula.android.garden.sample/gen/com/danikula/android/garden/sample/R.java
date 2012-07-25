@@ -22,7 +22,7 @@ public final class R {
         See {@link android.widget.GridLayout#ALIGN_MARGINS}. </td></tr>
 </table>
          */
-        public static final int alignmentMode=0x7f010000;
+        public static final int alignmentMode=0x7f010007;
         /**  The maxmimum number of columns to create when automatically positioning children. 
          <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
@@ -31,7 +31,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int columnCount=0x7f010002;
+        public static final int columnCount=0x7f010009;
         /**  When set to true, forces column boundaries to appear in the same order
         as column indices.
         The default is true.
@@ -43,7 +43,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int columnOrderPreserved=0x7f010005;
+        public static final int columnOrderPreserved=0x7f01000c;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -51,7 +51,15 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int customTypeface=0x7f01000e;
+        public static final int customTypeface=0x7f010015;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int debugDraw=0x7f010003;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be one of the following constant values.</p>
@@ -66,11 +74,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>xhdpi</code></td><td>320</td><td></td></tr>
 </table>
          */
-        public static final int density=0x7f01000c;
+        public static final int density=0x7f010013;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int errorImage=0x7f01000b;
+        public static final int errorImage=0x7f010012;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int horizontalSpacing=0x7f010000;
         /**  The column span: the difference between the right and left
         boundaries delimiting the group of cells occupied by this view.
         The default is one.
@@ -82,7 +100,25 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int layout_columnSpan=0x7f010008;
+        public static final int layout_columnSpan=0x7f01000f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int layout_horizontalSpacing=0x7f010005;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int layout_newLine=0x7f010004;
         /**  The row boundary delimiting the top of the group of cells
         occupied by this view. 
          <p>Must be an integer value, such as "<code>100</code>".
@@ -92,7 +128,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int layout_row=0x7f010006;
+        public static final int layout_row=0x7f01000d;
         /**  The row span: the difference between the bottom and top
         boundaries delimiting the group of cells occupied by this view.
         The default is one.
@@ -104,15 +140,36 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int layout_rowSpan=0x7f010007;
+        public static final int layout_rowSpan=0x7f01000e;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int layout_verticalSpacing=0x7f010006;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int loadingImage=0x7f01000a;
+        public static final int loadingImage=0x7f010011;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>horizontal</code></td><td>0</td><td></td></tr>
+<tr><td><code>vertical</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int orientation=0x7f010002;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int remoteImageViewStyle=0x7f010009;
+        public static final int remoteImageViewStyle=0x7f010010;
         /**  The maxmimum number of rows to create when automatically positioning children. 
          <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
@@ -121,7 +178,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int rowCount=0x7f010001;
+        public static final int rowCount=0x7f010008;
         /**  When set to true, forces row boundaries to appear in the same order
         as row indices.
         The default is true.
@@ -133,11 +190,24 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int rowOrderPreserved=0x7f010004;
+        public static final int rowOrderPreserved=0x7f01000b;
+        /**  Duplicate android attribute 
+         <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td></td></tr>
+<tr><td><code>bold</code></td><td>1</td><td></td></tr>
+<tr><td><code>italic</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int textStyle=0x7f010016;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int typefacedTextViewStyle=0x7f01000d;
+        public static final int typefacedTextViewStyle=0x7f010014;
         /**  When set to true, tells GridLayout to use default margins when none are specified
         in a view's layout parameters.
         The default value is false.
@@ -149,7 +219,17 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int useDefaultMargins=0x7f010003;
+        public static final int useDefaultMargins=0x7f01000a;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int verticalSpacing=0x7f010001;
     }
     public static final class dimen {
         /**  The default gap between components in a layout. 
@@ -163,19 +243,24 @@ containing a value of this type.
         public static final int snow=0x7f020003;
     }
     public static final class id {
-        public static final int alignBounds=0x7f040000;
-        public static final int alignMargins=0x7f040001;
-        public static final int cancelTest=0x7f04000c;
-        public static final int editText1=0x7f040009;
-        public static final int editText2=0x7f04000a;
-        public static final int hdpi=0x7f040004;
-        public static final int image=0x7f040006;
-        public static final int ldpi=0x7f040002;
-        public static final int load=0x7f040007;
-        public static final int loadButton=0x7f040008;
-        public static final int mdpi=0x7f040003;
-        public static final int runRunTest=0x7f04000b;
-        public static final int xhdpi=0x7f040005;
+        public static final int alignBounds=0x7f040002;
+        public static final int alignMargins=0x7f040003;
+        public static final int bold=0x7f040009;
+        public static final int cancelTest=0x7f040011;
+        public static final int editText1=0x7f04000e;
+        public static final int editText2=0x7f04000f;
+        public static final int hdpi=0x7f040006;
+        public static final int horizontal=0x7f040000;
+        public static final int image=0x7f04000b;
+        public static final int italic=0x7f04000a;
+        public static final int ldpi=0x7f040004;
+        public static final int load=0x7f04000c;
+        public static final int loadButton=0x7f04000d;
+        public static final int mdpi=0x7f040005;
+        public static final int normal=0x7f040008;
+        public static final int runRunTest=0x7f040010;
+        public static final int vertical=0x7f040001;
+        public static final int xhdpi=0x7f040007;
     }
     public static final class layout {
         public static final int group_list_item=0x7f030000;
@@ -197,6 +282,151 @@ containing a value of this type.
         public static final int Widget_RemoteImageView_Custom=0x7f060003;
     }
     public static final class styleable {
+        /** Attributes that can be used with a FlowLayout.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #FlowLayout_debugDraw com.danikula.android.garden.sample:debugDraw}</code></td><td></td></tr>
+           <tr><td><code>{@link #FlowLayout_horizontalSpacing com.danikula.android.garden.sample:horizontalSpacing}</code></td><td></td></tr>
+           <tr><td><code>{@link #FlowLayout_orientation com.danikula.android.garden.sample:orientation}</code></td><td></td></tr>
+           <tr><td><code>{@link #FlowLayout_verticalSpacing com.danikula.android.garden.sample:verticalSpacing}</code></td><td></td></tr>
+           </table>
+           @see #FlowLayout_debugDraw
+           @see #FlowLayout_horizontalSpacing
+           @see #FlowLayout_orientation
+           @see #FlowLayout_verticalSpacing
+         */
+        public static final int[] FlowLayout = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#debugDraw}
+          attribute's value can be found in the {@link #FlowLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:debugDraw
+        */
+        public static final int FlowLayout_debugDraw = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#horizontalSpacing}
+          attribute's value can be found in the {@link #FlowLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:horizontalSpacing
+        */
+        public static final int FlowLayout_horizontalSpacing = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#orientation}
+          attribute's value can be found in the {@link #FlowLayout} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>horizontal</code></td><td>0</td><td></td></tr>
+<tr><td><code>vertical</code></td><td>1</td><td></td></tr>
+</table>
+          @attr name android:orientation
+        */
+        public static final int FlowLayout_orientation = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#verticalSpacing}
+          attribute's value can be found in the {@link #FlowLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:verticalSpacing
+        */
+        public static final int FlowLayout_verticalSpacing = 1;
+        /** Attributes that can be used with a FlowLayout_LayoutParams.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #FlowLayout_LayoutParams_layout_horizontalSpacing com.danikula.android.garden.sample:layout_horizontalSpacing}</code></td><td></td></tr>
+           <tr><td><code>{@link #FlowLayout_LayoutParams_layout_newLine com.danikula.android.garden.sample:layout_newLine}</code></td><td></td></tr>
+           <tr><td><code>{@link #FlowLayout_LayoutParams_layout_verticalSpacing com.danikula.android.garden.sample:layout_verticalSpacing}</code></td><td></td></tr>
+           </table>
+           @see #FlowLayout_LayoutParams_layout_horizontalSpacing
+           @see #FlowLayout_LayoutParams_layout_newLine
+           @see #FlowLayout_LayoutParams_layout_verticalSpacing
+         */
+        public static final int[] FlowLayout_LayoutParams = {
+            0x7f010004, 0x7f010005, 0x7f010006
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#layout_horizontalSpacing}
+          attribute's value can be found in the {@link #FlowLayout_LayoutParams} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:layout_horizontalSpacing
+        */
+        public static final int FlowLayout_LayoutParams_layout_horizontalSpacing = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#layout_newLine}
+          attribute's value can be found in the {@link #FlowLayout_LayoutParams} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:layout_newLine
+        */
+        public static final int FlowLayout_LayoutParams_layout_newLine = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#layout_verticalSpacing}
+          attribute's value can be found in the {@link #FlowLayout_LayoutParams} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:layout_verticalSpacing
+        */
+        public static final int FlowLayout_LayoutParams_layout_verticalSpacing = 2;
         /** Attributes that can be used with a GridLayout.
            <p>Includes the following attributes:</p>
            <table>
@@ -224,8 +454,8 @@ containing a value of this type.
            @see #GridLayout_useDefaultMargins
          */
         public static final int[] GridLayout = {
-            0x010100c4, 0x7f010000, 0x7f010001, 0x7f010002,
-            0x7f010003, 0x7f010004, 0x7f010005
+            0x010100c4, 0x7f010007, 0x7f010008, 0x7f010009,
+            0x7f01000a, 0x7f01000b, 0x7f01000c
         };
         /**
           <p>
@@ -379,8 +609,8 @@ containing a value of this type.
            @see #GridLayout_Layout_layout_rowSpan
          */
         public static final int[] GridLayout_Layout = {
-            0x010100b3, 0x0101014c, 0x7f010006, 0x7f010007,
-            0x7f010008
+            0x010100b3, 0x0101014c, 0x7f01000d, 0x7f01000e,
+            0x7f01000f
         };
         /**
           <p>
@@ -471,7 +701,7 @@ containing a value of this type.
            @see #RemoteImageView_loadingImage
          */
         public static final int[] RemoteImageView = {
-            0x7f01000a, 0x7f01000b, 0x7f01000c
+            0x7f010011, 0x7f010012, 0x7f010013
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#density}
@@ -521,11 +751,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #TypefacedTextView_customTypeface com.danikula.android.garden.sample:customTypeface}</code></td><td></td></tr>
+           <tr><td><code>{@link #TypefacedTextView_textStyle com.danikula.android.garden.sample:textStyle}</code></td><td> Duplicate android attribute </td></tr>
            </table>
            @see #TypefacedTextView_customTypeface
+           @see #TypefacedTextView_textStyle
          */
         public static final int[] TypefacedTextView = {
-            0x7f01000e
+            0x7f010015, 0x7f010016
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#customTypeface}
@@ -541,6 +773,26 @@ containing a value of this type.
           @attr name android:customTypeface
         */
         public static final int TypefacedTextView_customTypeface = 0;
+        /**
+          <p>
+          @attr description
+           Duplicate android attribute 
+
+
+          <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td></td></tr>
+<tr><td><code>bold</code></td><td>1</td><td></td></tr>
+<tr><td><code>italic</code></td><td>2</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name android:textStyle
+        */
+        public static final int TypefacedTextView_textStyle = 1;
         /**  Give ourselves access to MarginLayout's styleables 
            <p>Includes the following attributes:</p>
            <table>

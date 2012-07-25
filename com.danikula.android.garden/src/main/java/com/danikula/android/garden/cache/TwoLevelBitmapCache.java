@@ -1,7 +1,6 @@
 package com.danikula.android.garden.cache;
 
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 
 public class TwoLevelBitmapCache extends BitmapFileBasedCache {
 
@@ -15,8 +14,8 @@ public class TwoLevelBitmapCache extends BitmapFileBasedCache {
         super(storagePath, scannable);
     }
 
-    public TwoLevelBitmapCache(String storagePath, boolean scannable, CompressFormat compressFormat, int quality) {
-        super(storagePath, scannable, compressFormat, quality);
+    public TwoLevelBitmapCache(String storagePath, boolean scannable, int quality) {
+        super(storagePath, scannable, quality);
     }
 
     @Override
