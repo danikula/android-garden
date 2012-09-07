@@ -33,7 +33,7 @@ public class RemoteImageSampleActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         String path = new File(AndroidUtils.getApplicationExternalStorageDirectory(this), "image").getAbsolutePath();
-        Cache<String, Bitmap> imageCacheStorage = new BitmapFileBasedCache(path, false, CompressFormat.PNG, 100);
+        Cache<String, Bitmap> imageCacheStorage = new BitmapFileBasedCache(path, false);
         imageLoader = new ImageLoader(imageCacheStorage);
 
         Aibolit.setInjectedContentView(this, R.layout.remote_image_activity);

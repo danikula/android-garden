@@ -117,17 +117,14 @@ public class Intents {
         context.startActivity(intent);
     }
 
-    public static void shareText(Context context, String textToShare) {
+    public static void shareText(Context context, String subject, String textToShare, String shareDialogTile) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType(MIME_TYPE_TEXT_PLAIN);
         shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
-        context.startActivity(shareIntent);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        context.startActivity(Intent.createChooser(shareIntent, shareDialogTile));
     }
     
-    public static void shareText(Context context, int textIdToShare) {
-        shareText(context, context.getString(textIdToShare));
-    }
-
     public static void viewFile(Context context, File file) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
         String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);

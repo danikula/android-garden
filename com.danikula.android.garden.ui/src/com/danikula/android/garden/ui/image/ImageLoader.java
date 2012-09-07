@@ -1,7 +1,6 @@
 package com.danikula.android.garden.ui.image;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +12,7 @@ import com.danikula.android.garden.cache.CacheException;
 import com.danikula.android.garden.cache.EmptyCache;
 import com.danikula.android.garden.io.FlushedInputStream;
 import com.danikula.android.garden.io.IoUtils;
-import com.google.api.client.extensions.android2.AndroidHttp;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
