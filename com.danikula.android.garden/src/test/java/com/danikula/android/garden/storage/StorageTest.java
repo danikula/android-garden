@@ -9,10 +9,13 @@ import java.io.File;
 import org.junit.Test;
 
 import com.danikula.android.garden.cache.DiscCache;
+import com.danikula.android.garden.cache.LimitedMemeryAndDiscBitmapCache;
 import com.danikula.android.garden.cache.SoftMemoryCache;
 import com.danikula.android.garden.cache.Cache;
 import com.danikula.android.garden.cache.CacheMemoryStorage;
+import com.danikula.android.garden.utils.AndroidUtils;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 public class StorageTest {
@@ -29,8 +32,8 @@ public class StorageTest {
 
     @Test
     public void testDiscStorage() {
-        String storagePath = new File(Environment.getExternalStorageDirectory(), "cache").getAbsolutePath();
-        runTestStorage(new DiscCache(storagePath));
+        File storageDir = new File(Environment.getExternalStorageDirectory(), "cache");
+        runTestStorage(new DiscCache(storageDir));
     }
 
     private void runTestStorage(Cache storage) {

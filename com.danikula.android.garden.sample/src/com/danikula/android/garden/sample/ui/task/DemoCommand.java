@@ -45,11 +45,6 @@ public class DemoCommand extends Command {
         return packedResult.getString(RESULT_ARG);
     }
     
-    @Override
-    public Object unpackErrorData(Bundle packedErrorData) {
-        return packedErrorData.getString(RESULT_ERROR);
-    }
-
     private void doWork() {
         Utils.sleepOnMs(2000);
     }

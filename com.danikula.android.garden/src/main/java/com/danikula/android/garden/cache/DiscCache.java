@@ -12,20 +12,20 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
-import android.util.Log;
-
 import com.danikula.android.garden.io.IoUtils;
 
-public class DiscCache extends FileBasedCache <Serializable> {
-    
+import android.util.Log;
+
+public class DiscCache extends FileBasedCache<Serializable> {
+
     private static final String LOG_TAG = DiscCache.class.getSimpleName();
 
-    public DiscCache(String storagePath) {
-        super(storagePath);
+    public DiscCache(File storageDir) {
+        super(storageDir);
     }
-    
-    public DiscCache(String storagePath, String fileExtension) {
-        super(storagePath, fileExtension);
+
+    public DiscCache(File storageDir, String fileExtension) {
+        super(storageDir, fileExtension);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DiscCache extends FileBasedCache <Serializable> {
     }
 
     @Override
-    protected Serializable read(File file) throws IOException{
+    protected Serializable read(File file) throws IOException {
         Serializable result = null;
         ObjectInputStream inputStream = null;
         try {

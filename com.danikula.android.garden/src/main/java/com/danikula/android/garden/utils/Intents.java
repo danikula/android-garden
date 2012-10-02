@@ -21,6 +21,8 @@ public class Intents {
 
     private static final String MIME_TYPE_TEXT_PLAIN = "text/plain";
     
+    private static final String MIME_IMAGE = "image/*";
+    
     private static final String TEL_PREFFIX = "tel:";
 
     private static final String TEL_SCHEME = TEL_PREFFIX + "//";
@@ -134,5 +136,11 @@ public class Intents {
         intent.setDataAndType(Uri.fromFile(file), mime);
         Intent chooser = Intent.createChooser(intent, null);
         context.startActivity(chooser);
+    }
+    
+    public static void choosePhotoFromGallery(Activity activity, int requestCode) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        photoPickerIntent.setType(MIME_IMAGE);
+        activity.startActivityForResult(photoPickerIntent, requestCode);
     }
 }

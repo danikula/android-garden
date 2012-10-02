@@ -172,8 +172,7 @@ public class TaskServiceHelper {
         }
         else if (resultStatus == ResultStatus.FAIL) {
             Exception error = (Exception) data.getSerializable(Command.RESULT_ARG_ERROR);
-            Object errorData = command.unpackErrorData(data);
-            listener.onTaskError(taskInfo.taskId, taskInfo.action, errorData, error);
+            listener.onTaskError(taskInfo.taskId, taskInfo.action, error);
         }
         else if (resultStatus == ResultStatus.CANCEL) {
             listener.onTaskCancel(taskInfo.taskId, taskInfo.action);

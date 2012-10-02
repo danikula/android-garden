@@ -12,11 +12,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.ResultReceiver;
-import android.util.Log;
 
 public class TaskService extends Service {
 
-    public static final String LOG_TAG = TaskService.class.getName();
+    private static final String LOG_TAG = TaskService.class.getName();
 
     public static final String EXTRA_COMMAND = "com.danikula.android.garden.task.ExtraCommand";
 
@@ -28,8 +27,6 @@ public class TaskService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        Log.d(LOG_TAG, "TaskService.onStartCommand");
-
         checkArgument(intent.hasExtra(EXTRA_COMMAND), "There is no command in extras");
         checkArgument(intent.hasExtra(EXTRA_RESULT_RECEIVER), "There is no result receiver in extras");
 
@@ -69,15 +66,8 @@ public class TaskService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d(LOG_TAG, "TaskService.onCreate");
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "TaskService.onDestroy");
         
         executor.shutdown();
     }

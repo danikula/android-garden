@@ -67,10 +67,10 @@ public class TaskDemoActivity extends Activity implements OnTaskResultListener {
     }
 
     @Override
-    public void onTaskError(int taskId, int action, Object result, Exception error) {
-        Toast.makeText(this, result + "", Toast.LENGTH_LONG).show();
+    public void onTaskError(int taskId, int action, Exception error) {
+        Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         
-        Log.d(LOG_TAG, String.format("onTaskError. taskId: %s, result: %s", taskId, result));
+        Log.d(LOG_TAG, String.format("onTaskError. taskId: %s", taskId));
     }
 
     @Override

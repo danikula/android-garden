@@ -1,5 +1,7 @@
 package com.danikula.android.garden.cache;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,30 +20,23 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
 
     private static final int DEFAULT_QUALITY = 100;
 
-    private int quality;
+    private int quality = DEFAULT_QUALITY;
 
-    public BitmapFileBasedCache(String storagePath, boolean scannable, int quality) {
-        super(storagePath);
+    public BitmapFileBasedCache(File storageDir) {
+        super(storageDir, "image");
+        createNoMediaMarkerFile(storageDir);
+    }
+
+    private void setBitmapQuality(int quality) {
+        checkArgument(quality > 0 && quality <= 100, "Quality must be > 0 and <=100!");
         this.quality = quality;
-
-        if (!scannable) {
-            createNoMediaMarkerFile(storagePath);
-        }
     }
 
-    public BitmapFileBasedCache(String storagePath, boolean scannable) {
-        this(storagePath, scannable, DEFAULT_QUALITY);
-    }
-
-    public BitmapFileBasedCache(String storagePath) {
-        this(storagePath, false, DEFAULT_QUALITY);
-    }
-
-    private synchronized void createNoMediaMarkerFile(String storagePath) {
+    private void createNoMediaMarkerFile(File storageDir) {
         try {
             // see details here http://stackoverflow.com/questions/2556065/stop-mediascanner-scanning-of-certain-directory
-            new File(storagePath).mkdirs();
-            new File(storagePath, NO_MEDIA_FILE_NAME).createNewFile();
+            storageDir.mkdirs();
+            new File(storageDir, NO_MEDIA_FILE_NAME).createNewFile();
         }
         catch (IOException e) {
             // can't create no media marker, ignore it
@@ -49,9 +44,8 @@ public class BitmapFileBasedCache extends FileBasedCache<Bitmap> {
     }
 
     @Override
-    protected void write(File file, Bitmap bitmap) throws IOException {
+    protected void write(File bitmapFile, Bitmap bitmap) throws IOException {
         CompressFormat compressFormat = bitmap.hasAlpha() ? CompressFormat.PNG : CompressFormat.JPEG;
-        File bitmapFile = new File(file.getAbsolutePath() + "." + compressFormat.toString());
         File tempFile = new File(bitmapFile.getAbsoluteFile() + ".temp");
         OutputStream outputStream = null;
         try {

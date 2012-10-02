@@ -2,11 +2,13 @@ package com.danikula.android.garden.ui.image;
 
 import com.danikula.android.garden.ui.R;
 import com.danikula.android.garden.utils.ReflectUtils;
+import com.google.common.base.Optional;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -14,7 +16,7 @@ import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 public class RemoteImageView extends ImageView {
-    
+
     private static final LoadImageCallback EMPTY_LISTENER = ReflectUtils.newInstance(LoadImageCallback.class);
 
     private Drawable loadingImage;
@@ -22,9 +24,11 @@ public class RemoteImageView extends ImageView {
     private Drawable errorImage;
 
     private String currentlyLoadedUrl;
+    
+    private Optional<Rect> reqiuredSize = Optional.absent();
 
     private static BitmapFactory.Options bitmapOptions;
-    
+
     private LoadImageCallback listener = EMPTY_LISTENER;
 
     public RemoteImageView(Context context) {
@@ -37,24 +41,32 @@ public class RemoteImageView extends ImageView {
 
     public RemoteImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        
+
         bitmapOptions = createDefaultBitmapOptions();
-        
+
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.RemoteImageView, defStyle,
                 R.style.Widget_RemoteImageView);
-        
+
         loadingImage = attributes.getDrawable(R.styleable.RemoteImageView_loadingImage);
         errorImage = attributes.getDrawable(R.styleable.RemoteImageView_errorImage);
-        
+
         int inDensity = attributes.getInt(R.styleable.RemoteImageView_density, -1);
         if (inDensity != -1) {
             setInDensity(inDensity);
         }
 
+        boolean isScaleToScreen = attributes.getBoolean(R.styleable.RemoteImageView_scaleToScreen, false);
+        if (isScaleToScreen) {
+            bitmapOptions.inScaled = false;
+            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+            int maxSide = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
+            reqiuredSize = Optional.of(new Rect(0, 0, maxSide, maxSide));
+        }
+
         attributes.recycle();
     }
-    
-    public void setLoadingListener (LoadImageCallback listener) {
+
+    public void setLoadingListener(LoadImageCallback listener) {
         this.listener = listener == null ? EMPTY_LISTENER : listener;
     }
 
@@ -78,7 +90,7 @@ public class RemoteImageView extends ImageView {
     protected void showRealImage() {
 
     }
-    
+
     public void setInDensity(int inDensity) {
         bitmapOptions.inDensity = inDensity;
     }
@@ -92,7 +104,7 @@ public class RemoteImageView extends ImageView {
             showLoadingStub();
             setImageDrawable(loadingImage);
             currentlyLoadedUrl = url;
-            imageLoader.loadImageAsynk(url, bitmapOptions, new LoadRemoteImageCallback());
+            imageLoader.loadImageAsynk(url, bitmapOptions, reqiuredSize, new LoadRemoteImageCallback());
         }
     }
 

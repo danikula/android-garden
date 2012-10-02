@@ -51,7 +51,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int customTypeface=0x7f010015;
+        public static final int customTypeface=0x7f010016;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -74,7 +74,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>xhdpi</code></td><td>320</td><td></td></tr>
 </table>
          */
-        public static final int density=0x7f010013;
+        public static final int density=0x7f010014;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -191,6 +191,14 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int rowOrderPreserved=0x7f01000b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int scaleToScreen=0x7f010013;
         /**  Duplicate android attribute 
          <p>Must be one or more (separated by '|') of the following constant values.</p>
 <table>
@@ -203,11 +211,11 @@ containing a value of this type.
 <tr><td><code>italic</code></td><td>2</td><td></td></tr>
 </table>
          */
-        public static final int textStyle=0x7f010016;
+        public static final int textStyle=0x7f010017;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int typefacedTextViewStyle=0x7f010014;
+        public static final int typefacedTextViewStyle=0x7f010015;
         /**  When set to true, tells GridLayout to use default margins when none are specified
         in a view's layout parameters.
         The default value is false.
@@ -695,13 +703,15 @@ containing a value of this type.
            <tr><td><code>{@link #RemoteImageView_density com.danikula.android.garden.sample:density}</code></td><td></td></tr>
            <tr><td><code>{@link #RemoteImageView_errorImage com.danikula.android.garden.sample:errorImage}</code></td><td></td></tr>
            <tr><td><code>{@link #RemoteImageView_loadingImage com.danikula.android.garden.sample:loadingImage}</code></td><td></td></tr>
+           <tr><td><code>{@link #RemoteImageView_scaleToScreen com.danikula.android.garden.sample:scaleToScreen}</code></td><td></td></tr>
            </table>
            @see #RemoteImageView_density
            @see #RemoteImageView_errorImage
            @see #RemoteImageView_loadingImage
+           @see #RemoteImageView_scaleToScreen
          */
         public static final int[] RemoteImageView = {
-            0x7f010011, 0x7f010012, 0x7f010013
+            0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#density}
@@ -723,7 +733,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 </table>
           @attr name android:density
         */
-        public static final int RemoteImageView_density = 2;
+        public static final int RemoteImageView_density = 3;
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#errorImage}
           attribute's value can be found in the {@link #RemoteImageView} array.
@@ -744,6 +754,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name android:loadingImage
         */
         public static final int RemoteImageView_loadingImage = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#scaleToScreen}
+          attribute's value can be found in the {@link #RemoteImageView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:scaleToScreen
+        */
+        public static final int RemoteImageView_scaleToScreen = 2;
         /** Attributes that can be used with a TypefacedTextView.
            <p>Includes the following attributes:</p>
            <table>
@@ -757,7 +781,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #TypefacedTextView_textStyle
          */
         public static final int[] TypefacedTextView = {
-            0x7f010015, 0x7f010016
+            0x7f010016, 0x7f010017
         };
         /**
           <p>This symbol is the offset where the {@link com.danikula.android.garden.sample.R.attr#customTypeface}

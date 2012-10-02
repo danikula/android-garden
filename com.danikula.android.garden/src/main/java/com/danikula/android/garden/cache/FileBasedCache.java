@@ -16,12 +16,12 @@ public abstract class FileBasedCache<T> implements Cache<String, T> {
 
     private String fileExtension;
 
-    public FileBasedCache(String storagePath) {
-        this(storagePath, "");
+    public FileBasedCache(File storageDir) {
+        this(storageDir, "");
     }
 
-    public FileBasedCache(String storagePath, String fileExtension) {
-        this.storageDir = new File(checkNotNull(storagePath));
+    public FileBasedCache(File storageDir, String fileExtension) {
+        this.storageDir = checkNotNull(storageDir);
         this.fileExtension = checkNotNull(fileExtension, "File extension must be not null!");
     }
 
