@@ -18,12 +18,14 @@ public class UiUtils {
 
     /**
      * Скрывает виртуальную клавиатуру.
-     * @param context Context контекст выполнения
-     * @param editText EditText компонент {@link EditText}, для которого открыта клавиатура
+     * @param context контекст выполнения
+     * @param editText компоненты {@link EditText}, для которых необходимо скрыть клавиатуру
      */
-    public static void hideKeyboard(Context context, EditText editText) {
+    public static void hideKeyboard(Context context, EditText...editTexts) {
         InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        for (EditText editText : editTexts) {
+            inputManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);    
+        }
     }
     
     /**

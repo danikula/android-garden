@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.HashMap;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,10 @@ public class ViewHolder {
 
     public View getParent() {
         return parent;
+    }
+    
+    public Context getContext() {
+        return parent.getContext();
     }
 
     public <V extends View> V findView(int id) {

@@ -9,7 +9,7 @@ import java.io.File;
 import org.junit.Test;
 
 import com.danikula.android.garden.cache.DiscCache;
-import com.danikula.android.garden.cache.LimitedMemeryAndDiscBitmapCache;
+import com.danikula.android.garden.cache.LimitedMemoryAndDiscBitmapCache;
 import com.danikula.android.garden.cache.SoftMemoryCache;
 import com.danikula.android.garden.cache.Cache;
 import com.danikula.android.garden.cache.CacheMemoryStorage;

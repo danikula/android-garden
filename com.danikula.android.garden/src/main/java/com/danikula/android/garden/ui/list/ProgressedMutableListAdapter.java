@@ -23,6 +23,8 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
 
     private int loadingViewId;
 
+    private boolean isProgressAtBottom = true;
+
     public ProgressedMutableListAdapter(Context context, int layoutId, int[] subviewIds, int loadingViewId) {
         super(context, layoutId, subviewIds);
         this.loadingViewId = loadingViewId;
@@ -32,6 +34,10 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
     public void setOnLoadingProgressShownListener(OnProgressShownListener listener) {
         OnProgressShownListener emptyListener = ReflectUtils.newInstance(OnProgressShownListener.class);
         this.onProgressShownListener = listener == null ? emptyListener : listener;
+    }
+
+    public void setProgressAtBottom(boolean isProgressAtBottom) {
+        this.isProgressAtBottom = isProgressAtBottom;
     }
 
     public void setTotalCount(int totalResults) {
@@ -85,7 +91,8 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
 
     @Override
     protected View createView(int position) {
-        return isLoadingView(position) ? inflateView(loadingViewId) : super.createView(position);
+        int realPosition = isProgressAtBottom ? position : position - 1;
+        return isLoadingView(position) ? inflateView(loadingViewId) : super.createView(realPosition);
     }
 
     @Override
@@ -109,12 +116,12 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
     }
 
     protected boolean isLoadingView(int position) {
-        return showProgress && position == getCount() - 1;
+        return showProgress && (isProgressAtBottom ? position == getCount() - 1 : position == 0);
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return !(showProgress && (position == getCount() - 1));
+        return !isLoadingView(position);
     }
 
     @Override
@@ -124,6 +131,12 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
 
     public boolean isProgressShown() {
         return showProgress;
+    }
+
+    @Override
+    public T getObject(int position) {
+        int realPosition = !isProgressAtBottom && showProgress ? position - 1 : position;
+        return super.getObject(realPosition);
     }
 
     public interface OnProgressShownListener {

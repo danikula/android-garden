@@ -113,7 +113,7 @@ public class ImageLoader {
 
         Bitmap bitmap = decode(url, options);
 
-        if (optionalRequiredSize.isPresent()) {
+        if (optionalRequiredSize.isPresent() && bitmap != null) {
             int bitmapSize = bitmap.getRowBytes() * bitmap.getHeight();
             Log.d(LOG_TAG, String.format("Image loaded: %s*%s, size: %d", bitmap.getWidth(), bitmap.getHeight(), bitmapSize));
         }

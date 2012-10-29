@@ -7,7 +7,7 @@ import com.danikula.aibolit.Aibolit;
 import com.danikula.aibolit.annotation.ViewById;
 import com.danikula.android.garden.cache.BitmapFileBasedCache;
 import com.danikula.android.garden.cache.Cache;
-import com.danikula.android.garden.cache.LimitedMemeryAndDiscBitmapCache;
+import com.danikula.android.garden.cache.LimitedMemoryAndDiscBitmapCache;
 import com.danikula.android.garden.sample.R;
 import com.danikula.android.garden.ui.image.ImageLoader;
 import com.danikula.android.garden.ui.image.RemoteImageView;
@@ -39,7 +39,7 @@ public class RemoteImageListSampleActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         File storageDir = new File(AndroidUtils.getApplicationExternalStorageDirectory(this), "image");
-        Cache<String, Bitmap> imageCacheStorage = new LimitedMemeryAndDiscBitmapCache(storageDir, 2 * 1024 * 1024);
+        Cache<String, Bitmap> imageCacheStorage = new LimitedMemoryAndDiscBitmapCache(storageDir, 2 * 1024 * 1024);
         imageLoader = new ImageLoader(imageCacheStorage);
 
         Aibolit.setInjectedContentView(this, R.layout.simple_list);

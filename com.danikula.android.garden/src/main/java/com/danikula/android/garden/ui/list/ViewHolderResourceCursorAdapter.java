@@ -2,9 +2,9 @@ package com.danikula.android.garden.ui.list;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.widget.ResourceCursorAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ResourceCursorAdapter;
 
 public abstract class ViewHolderResourceCursorAdapter extends ResourceCursorAdapter {
 
@@ -15,8 +15,8 @@ public abstract class ViewHolderResourceCursorAdapter extends ResourceCursorAdap
         this.managedViewIds = managedViewIds;
     }
 
-    public ViewHolderResourceCursorAdapter(Context context, int layout, Cursor c, int... managedViewIds) {
-        super(context, layout, c);
+    public ViewHolderResourceCursorAdapter(Context context, int layout, Cursor c, int flags, int... managedViewIds) {
+        super(context, layout, c, flags);
         this.managedViewIds = managedViewIds;
     }
 
