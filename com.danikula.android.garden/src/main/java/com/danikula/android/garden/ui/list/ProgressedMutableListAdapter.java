@@ -15,7 +15,7 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
 
     private static final int ROW_TYPES_COUNT = 2;
 
-    private boolean showProgress = true;
+    private boolean showProgress = false;
 
     private int totalCount;
 

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.GZIPInputStream;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,25 +17,26 @@ import com.danikula.android.garden.io.IoUtils;
 
 public abstract class RestoreBackupSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    private static final String LOG_TAG = RestoreBackupSQLiteOpenHelper.class.getSimpleName();
-
-    public RestoreBackupSQLiteOpenHelper(Context context, String database, int version, int dbResourceId) {
+    public RestoreBackupSQLiteOpenHelper(Context context, String database, int version, boolean isZipped) {
         super(context, database, null, version);
         File databaseFile = context.getDatabasePath(database);
         boolean dbExist = databaseFile.exists();
         if (!dbExist || isNeedUpdate()) {
-            copyDataBase(context, dbResourceId, databaseFile);
+            copyDataBase(context, database, databaseFile, isZipped);
         }
     }
 
-    private void copyDataBase(Context context, int rawSourceId, File target) {
+    private void copyDataBase(Context context, String database, File target, boolean isZipped) {
         InputStream sourceStream = null;
         OutputStream targetStream = null;
         try {
             createParentDirectory(target);
             target.delete();
 
-            InputStream sourceInputStream = context.getResources().openRawResource(rawSourceId);
+            InputStream sourceInputStream = context.getResources().getAssets().open(database);
+            if (isZipped) {
+                sourceInputStream = new GZIPInputStream(sourceInputStream);
+            }
             sourceStream = new BufferedInputStream(sourceInputStream);
             targetStream = new BufferedOutputStream(new FileOutputStream(target));
             IoUtils.copy(sourceStream, targetStream);
