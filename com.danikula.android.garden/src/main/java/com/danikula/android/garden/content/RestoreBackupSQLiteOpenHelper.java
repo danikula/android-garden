@@ -1,5 +1,7 @@
 package com.danikula.android.garden.content;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,23 +19,46 @@ import com.danikula.android.garden.io.IoUtils;
 
 public abstract class RestoreBackupSQLiteOpenHelper extends SQLiteOpenHelper {
 
+    private Context applicationContext;
+
+    private String databaseName;
+
+    private boolean isZipped;
+
     public RestoreBackupSQLiteOpenHelper(Context context, String database, int version, boolean isZipped) {
         super(context, database, null, version);
-        File databaseFile = context.getDatabasePath(database);
+        this.applicationContext = context.getApplicationContext();
+        this.databaseName = checkNotNull(database, "Database must not be null!");
+        this.isZipped = isZipped;
+        
+        restore(false);
+    }
+    
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        restore(true);
+    }
+
+    private void restore(boolean replaceIfExisted) {
+        File databaseFile = applicationContext.getDatabasePath(databaseName);
         boolean dbExist = databaseFile.exists();
-        if (!dbExist || isNeedUpdate()) {
-            copyDataBase(context, database, databaseFile, isZipped);
+        if (!dbExist || (dbExist && replaceIfExisted)) {
+            restoreTo(databaseFile);
         }
     }
 
-    private void copyDataBase(Context context, String database, File target, boolean isZipped) {
+    private void restoreTo(File target) {
         InputStream sourceStream = null;
         OutputStream targetStream = null;
         try {
-            createParentDirectory(target);
+            createParentDirectoryIfNeeded(target);
             target.delete();
 
-            InputStream sourceInputStream = context.getResources().getAssets().open(database);
+            InputStream sourceInputStream = applicationContext.getResources().getAssets().open(databaseName);
             if (isZipped) {
                 sourceInputStream = new GZIPInputStream(sourceInputStream);
             }
@@ -51,22 +76,13 @@ public abstract class RestoreBackupSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void createParentDirectory(File target) throws IOException {
-        boolean dirCreated = target.getParentFile().mkdirs();
-        if (!dirCreated) {
-            throw new IOException("Error creating directories for file " + target.getAbsolutePath());
+    private void createParentDirectoryIfNeeded(File target) throws IOException {
+        File parentDirectory = target.getParentFile();
+        if (!parentDirectory.exists()) {
+            boolean dirCreated = parentDirectory.mkdirs();
+            if (!dirCreated) {
+                throw new IOException("Error creating directories for file " + target.getAbsolutePath());
+            }
         }
-    }
-
-    protected boolean isNeedUpdate() {
-        return false;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 }

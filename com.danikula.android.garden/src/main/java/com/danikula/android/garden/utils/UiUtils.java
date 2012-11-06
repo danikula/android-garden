@@ -24,7 +24,7 @@ public class UiUtils {
     public static void hideKeyboard(Context context, EditText...editTexts) {
         InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         for (EditText editText : editTexts) {
-            inputManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);    
+            inputManager.hideSoftInputFromWindow(editText.getWindowToken(), 0); 
         }
     }
     
