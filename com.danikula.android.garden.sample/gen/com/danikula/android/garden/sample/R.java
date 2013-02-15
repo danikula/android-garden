@@ -246,9 +246,7 @@ containing a value of this type.
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int remote_image_error=0x7f020001;
-        public static final int remote_image_loading=0x7f020002;
-        public static final int snow=0x7f020003;
+        public static final int snow=0x7f020001;
     }
     public static final class id {
         public static final int alignBounds=0x7f040002;

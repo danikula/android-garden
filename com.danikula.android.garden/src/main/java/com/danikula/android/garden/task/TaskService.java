@@ -53,9 +53,9 @@ public class TaskService extends Service {
             
             command.execute(getApplicationContext(), args, receiver, uiThreadHandler);
         }
-        catch (Exception e) {
-            // deliver any exception to TaskServiceHelper
-            command.onError(receiver, e);
+        catch (Throwable e) {
+            // deliver any uncatched errors to TaskServiceHelper
+            command.onError(receiver, new RuntimeException(e));
         }
     }
 

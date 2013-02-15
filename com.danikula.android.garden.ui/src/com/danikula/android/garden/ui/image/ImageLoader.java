@@ -7,20 +7,6 @@ import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.danikula.android.garden.cache.Cache;
-import com.danikula.android.garden.cache.CacheException;
-import com.danikula.android.garden.cache.EmptyCache;
-import com.danikula.android.garden.io.FlushedInputStream;
-import com.danikula.android.garden.io.IoUtils;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.common.base.Optional;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
@@ -28,6 +14,21 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
+
+import com.danikula.android.garden.cache.Cache;
+import com.danikula.android.garden.cache.CacheException;
+import com.danikula.android.garden.cache.EmptyCache;
+import com.danikula.android.garden.io.FlushedInputStream;
+import com.danikula.android.garden.io.IoUtils;
+import com.danikula.android.garden.utils.AndroidUtils;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.common.base.Optional;
 
 public class ImageLoader {
 
@@ -43,13 +44,21 @@ public class ImageLoader {
 
     private Handler handler = new Handler();
 
+    static {
+        // Per http://android-developers.blogspot.com/2011/09/androids-http-clients.html
+        if (!AndroidUtils.hasFroyo()) {
+            System.setProperty("http.keepAlive", "false");
+        }
+    }
+
     public ImageLoader() {
         this(new EmptyCache<String, Bitmap>());
     }
 
     public ImageLoader(Cache<String, Bitmap> cacheStorage) {
         this.cacheStorage = checkNotNull(cacheStorage, "Cache storage must be not null!");
-        httpTransport = AndroidHttp.newCompatibleTransport();
+        // httpTransport = AndroidHttp.newCompatibleTransport();
+        httpTransport = new NetHttpTransport();
         requestFactory = httpTransport.createRequestFactory();
     }
 
@@ -90,7 +99,6 @@ public class ImageLoader {
     private void loadAndCache(String url, Options options, Optional<Rect> requiredSize, LoadImageCallback loadImageCallback) {
         try {
             Bitmap bitmap = load(url, options, requiredSize);
-            checkBitmapNotNull(bitmap, "Error loading image from url " + url);
             cache(url, bitmap);
             handler.post(new SuccessResultRunnable(loadImageCallback, bitmap, url));
         }
@@ -154,7 +162,11 @@ public class ImageLoader {
         InputStream inputStream = null;
         try {
             inputStream = getInputStream(url);
-            return BitmapFactory.decodeStream(inputStream, null, options);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+            if (bitmap == null) {
+                throw new IOException("Error loading image from url " + url);
+            }
+            return bitmap;
         }
         finally {
             IoUtils.closeSilently(inputStream);
@@ -171,12 +183,6 @@ public class ImageLoader {
         }
         InputStream responseInputStream = response.getContent();
         return new FlushedInputStream(responseInputStream);
-    }
-
-    private void checkBitmapNotNull(Bitmap bitmap, String error) throws CacheException {
-        if (bitmap == null) {
-            throw new CacheException(error);
-        }
     }
 
     private void cache(String url, Bitmap bitmap) {

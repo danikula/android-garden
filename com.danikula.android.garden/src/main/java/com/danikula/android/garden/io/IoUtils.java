@@ -91,6 +91,7 @@ public class IoUtils {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         long count = 0;
         int n;
+        listener.onProgress(0);
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
@@ -108,7 +109,7 @@ public class IoUtils {
 
         private long publishEveryBytes;
 
-        long publishCount = 0;
+        private long publishCount = -1;
 
         public PeriodProgressListener(long publishEveryBytes) {
             this.publishEveryBytes = publishEveryBytes;

@@ -17,7 +17,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.danikula.android.garden.io.IoUtils;
 
-public abstract class RestoreBackupSQLiteOpenHelper extends SQLiteOpenHelper {
+public abstract class RestoreBinaryBackupSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private Context applicationContext;
 
@@ -25,7 +25,7 @@ public abstract class RestoreBackupSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private boolean isZipped;
 
-    public RestoreBackupSQLiteOpenHelper(Context context, String database, int version, boolean isZipped) {
+    public RestoreBinaryBackupSQLiteOpenHelper(Context context, String database, int version, boolean isZipped) {
         super(context, database, null, version);
         this.applicationContext = context.getApplicationContext();
         this.databaseName = checkNotNull(database, "Database must not be null!");

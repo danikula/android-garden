@@ -1,9 +1,11 @@
 package com.danikula.android.garden.utils;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.io.Serializable;
 
 import android.os.Bundle;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Contains useful utility methods to simplify work with {@link Bundle}.
@@ -66,6 +68,12 @@ public class Bundles {
         checkContains(bundle, argName);
 
         return bundle.getBoolean(argName);
+    }
+
+    public static <T> T getRequiredSerializableValue(Bundle bundle, String argName) {
+        checkContains(bundle, argName);
+        
+        return (T) bundle.getSerializable(argName);
     }
 
     public static void checkContains(Bundle bundle, String... argNames) {

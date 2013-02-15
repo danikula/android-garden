@@ -20,15 +20,25 @@ public class Intents {
     private static final String AUDIO_MIME = "audio/*";
 
     private static final String MIME_TYPE_TEXT_PLAIN = "text/plain";
-    
+
     private static final String MIME_IMAGE = "image/*";
-    
+
     private static final String TEL_PREFFIX = "tel:";
 
     private static final String TEL_SCHEME = TEL_PREFFIX + "//";
 
     private static final String YOUTUBE_PREFIX = "vnd.youtube:";
-    
+
+    /**
+     * Запускает приложение Android Market для просмотра информации о приложении, чей контекст используется в аргументе
+     * 
+     * @param activity Activity активити, служащая для запуска Маркета
+     * @throws ActivityNotFoundException если на девайсе отсутствует приложение Android Market
+     */
+    public static void openAndroidMarket(Context context) throws ActivityNotFoundException {
+        openAndroidMarket(context, context.getPackageName());
+    }
+
     /**
      * Запускает приложение Android Market для просмотра информации о приложении
      * 
@@ -51,26 +61,26 @@ public class Intents {
 
         context.startActivity(intent);
     }
-    
+
     /**
      * Starts youtube application to watch video
-     * @param context context to be used for launching youtube application 
+     * 
+     * @param context context to be used for launching youtube application
      * @param videoId youtube video id
-     * @throws ActivityNotFoundException if there is no installed app for watching video 
+     * @throws ActivityNotFoundException if there is no installed app for watching video
      */
     public static void watchYoutube(Context context, String videoId) throws ActivityNotFoundException {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_PREFIX + videoId));
         context.startActivity(intent);
     }
-    
+
     public static void streamAudio(Context context, String audioUrl) throws ActivityNotFoundException {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW); 
-        intent.setDataAndType(Uri.parse(audioUrl), AUDIO_MIME); 
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(audioUrl), AUDIO_MIME);
         context.startActivity(intent);
     }
 
-    public static void openEmailClient(Context context, String subject, String to, String body)
-        throws ActivityNotFoundException {
+    public static void openEmailClient(Context context, String subject, String to, String body) throws ActivityNotFoundException {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse("mailto:" + to));
         emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -78,11 +88,14 @@ public class Intents {
         emailIntent.putExtra(Intent.EXTRA_TEXT, body);
         context.startActivity(emailIntent);
     }
-    
+
     /**
      * Opens dialer and call to specified number.
      * 
-     * <p>Note this method requires permission <b>android.permission.CALL_PHONE</b></p>
+     * <p>
+     * Note this method requires permission <b>android.permission.CALL_PHONE</b>
+     * </p>
+     * 
      * @param context context used for starting dialer
      * @param phone phone to call
      * @throws ActivityNotFoundException if device has'n dialer
@@ -126,7 +139,7 @@ public class Intents {
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         context.startActivity(Intent.createChooser(shareIntent, shareDialogTile));
     }
-    
+
     public static void viewFile(Context context, File file) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
         String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
@@ -137,7 +150,7 @@ public class Intents {
         Intent chooser = Intent.createChooser(intent, null);
         context.startActivity(chooser);
     }
-    
+
     public static void choosePhotoFromGallery(Activity activity, int requestCode) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType(MIME_IMAGE);

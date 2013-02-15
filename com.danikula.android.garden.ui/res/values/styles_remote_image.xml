@@ -2,8 +2,6 @@
 <resources>
 
     <style name="Widget.RemoteImageView" parent="@android:style/Widget">
-        <item name="loadingImage">@drawable/remote_image_loading</item>
-        <item name="errorImage">@drawable/remote_image_error</item>
         <item name="density">mdpi</item>
     </style>
 

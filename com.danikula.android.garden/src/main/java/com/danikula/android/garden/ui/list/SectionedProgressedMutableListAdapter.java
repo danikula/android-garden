@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.content.Context;
+import android.view.View;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import android.content.Context;
-import android.view.View;
-
 public abstract class SectionedProgressedMutableListAdapter<G, T> extends ProgressedMutableListAdapter<T> {
-    
+
     private static final int ROW_TYPE_GROUP = 2;
 
     private static final int ROW_TYPES_COUNT = 3;
@@ -28,6 +28,8 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     private int[] groupSubviewIds;
 
     private int viewCount;
+    
+    private boolean groupingEnabled = true;
 
     public SectionedProgressedMutableListAdapter(Context context, int layoutId, int[] subviewIds, int loadingViewId,
             int groupLayoutId, int[] groupSubviewIds) {
@@ -35,12 +37,15 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
         this.groupSubviewIds = checkNotNull(groupSubviewIds, "Group subview ids must be not null!");
         this.groupLayoutId = groupLayoutId;
     }
+    
+    public void setGroupingEnabled(boolean groupingEnabled) {
+        this.groupingEnabled = groupingEnabled;
+    }
 
     @Override
     public void setObjects(List<T> plainList) {
         super.setObjects(plainList);
-        groups = group(plainList);
-        checkNotNull(groups, "Groups must be not null!");
+        groups = groupingEnabled ? group(plainList) : Maps.<G, List<T>>newHashMap();
         calculateGroupPositions();
         viewCount = plainList.size() + groups.size();
 
@@ -117,7 +122,7 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     public boolean isEnabled(int position) {
         return !isGroup(position) && super.isEnabled(position);
     }
-    
+
     @Override
     public int getViewTypeCount() {
         return ROW_TYPES_COUNT;
@@ -145,7 +150,7 @@ public abstract class SectionedProgressedMutableListAdapter<G, T> extends Progre
     }
 
     protected abstract void bindChild(ViewHolder viewHolder, T object, int position);
-    
+
     protected abstract G getGroupKey(T object);
 
     protected abstract void bindGroup(ViewHolder viewHolder, G groupObject);
