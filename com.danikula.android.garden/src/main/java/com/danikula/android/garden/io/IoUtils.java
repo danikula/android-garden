@@ -1,7 +1,14 @@
 package com.danikula.android.garden.io;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,6 +17,7 @@ import java.io.OutputStream;
 import android.util.Log;
 
 import com.danikula.android.garden.utils.ReflectUtils;
+import com.google.common.base.Preconditions;
 
 /**
  * Содержит ряд полезных методов для работы с потоками.
@@ -87,16 +95,67 @@ public class IoUtils {
         return copy(input, output, emptyListener);
     }
 
+    /**
+     * Saves data to file.
+     * 
+     * @param data byte data to be saved, must be not null.
+     * @param targetFile file to be used for saving data, must be not null.
+     * @throws IOException if an I/O error occurs
+     */
+    public static void saveToFile(byte[] data, File targetFile) throws IOException {
+        Preconditions.checkNotNull(data, "Data must be not null!");
+        Preconditions.checkNotNull(targetFile, "Target file must be not null!");
+
+        OutputStream outputStream = null;
+        try {
+            outputStream = new BufferedOutputStream(new FileOutputStream(targetFile));
+            outputStream.write(data);
+        }
+        finally {
+            closeSilently(outputStream);
+        }
+    }
+    
+    /**
+     * reads content of file.
+     * 
+     * @param sourceFile file to be used for reading data, must be not null.
+     * @return content of file.
+     * @throws IOException if an I/O error occurs
+     */
+    public static byte[] readFile(File sourceFile) throws IOException {
+        Preconditions.checkNotNull(sourceFile, "Target file must be not null!");
+
+        InputStream inputStream = null;
+        try {
+            inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+            byte[] data = new byte[(int)sourceFile.length()];
+            inputStream.read(data);
+            return data;
+        }
+        finally {
+            closeSilently(inputStream);
+        }
+    }
+
     public static long copy(InputStream input, OutputStream output, ProgressListener listener) throws IOException {
+        Preconditions.checkNotNull(input, "Input stream must be not null!");
+        Preconditions.checkNotNull(output, "Output stream must be not null!");
+        Preconditions.checkNotNull(listener, "Progress listener must be not null!");
+
+        InputStream bufferedInputStream = new BufferedInputStream(input);
+        OutputStream bufferedOutputStream = new BufferedOutputStream(output);
+
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         long count = 0;
         int n;
         listener.onProgress(0);
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
+        while (-1 != (n = bufferedInputStream.read(buffer))) {
+            bufferedOutputStream.write(buffer, 0, n);
             count += n;
             listener.onProgress(count);
         }
+        bufferedOutputStream.flush();
         return count;
     }
 

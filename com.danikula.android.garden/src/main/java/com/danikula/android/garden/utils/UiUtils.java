@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,7 +56,7 @@ public class UiUtils {
             view.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
-    
+
     /**
      * Скрывает TextView, если метод {@link TextView#getText()} возвращает <code>null</code> или пустую строку.
      * 
@@ -119,4 +122,28 @@ public class UiUtils {
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
     // @formatter:on
+
+    /**
+     * Returns width of screen in pixels.
+     * 
+     * @param activity activity to be used for retrieving info about display, must be not null.
+     * @return width in pixels.
+     */
+    public static int getScreenWidthInPixels(Activity activity) {
+        return getDisplayMetrics(activity).widthPixels;
+    }
+
+    /**
+     * Returns display info.
+     * 
+     * @param activity activity to be used for retrieving info about display, must be not null.
+     * @return display metrics.
+     */
+    public static DisplayMetrics getDisplayMetrics(Activity activity) {
+        WindowManager windowManager = activity.getWindowManager();
+        Display defaultDisplay = windowManager.getDefaultDisplay();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(displaymetrics);
+        return displaymetrics;
+    }
 }

@@ -45,7 +45,25 @@ public class Bundles {
         args.putBoolean(argName, value);
         return args;
     }
+    
+    public static Bundle newBundle(String argName0, int intValue0, String argName1, int intValue1) {
+        checkNotNull(argName0, "Argument's name must be not null!");
+        checkNotNull(argName1, "Argument's name must be not null!");
+        
+        Bundle bundle = newIntValueBundle(argName0, intValue0);
+        bundle.putInt(argName1, intValue1);
+        return bundle;
+    }
 
+    public static Bundle newBundle(String argName0, String stringValue0, String argName1, String stringValue1) {
+        checkNotNull(argName0, "Argument's name must be not null!");
+        checkNotNull(argName1, "Argument's name must be not null!");
+        
+        Bundle bundle = newStringValueBundle(argName0, stringValue0);
+        bundle.putString(argName1, stringValue1);
+        return bundle;
+    }
+    
     public static long getRequiredLongValue(Bundle bundle, String argName) {
         checkContains(bundle, argName);
 
