@@ -56,7 +56,19 @@ public class ViewHolder {
         View view = findViewAndCheckType(viewId, View.class);
         view.setOnClickListener(new PerformLongClickOnClickListener(parent));
     }
+    
+    public void resetTextViews(int...textViewIds) {
+        for (int textViewId : textViewIds) {
+            findTextView(textViewId).setText("");
+        }
+    }
 
+    public void resetImageViews(int...imageViewIds) {
+        for (int imageViewId : imageViewIds) {
+            findImageView(imageViewId).setImageBitmap(null);
+        }
+    }
+    
     private <V extends View> V findViewAndCheckType(int viewId, Class<? extends View> classView) {
         V view = findView(viewId);
 

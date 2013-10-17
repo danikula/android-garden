@@ -26,8 +26,6 @@ public class MainActivity extends ListActivity {
         Aibolit.setInjectedContentView(this, R.layout.simple_list);
 
         List<ActivityItem> items = new LinkedList<MainActivity.ActivityItem>();
-        items.add(new ActivityItem(RemoteImageSampleActivity.class, "RemoteImageView"));
-        items.add(new ActivityItem(RemoteImageListSampleActivity.class, "RemoteImageView List"));
         items.add(new ActivityItem(TaskDemoActivity.class, "Long running task"));
         items.add(new ActivityItem(SectionedAdapterActivity.class, "Sectioned adapter"));
 

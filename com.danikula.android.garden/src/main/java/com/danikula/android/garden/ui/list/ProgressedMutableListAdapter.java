@@ -7,6 +7,7 @@ import com.danikula.android.garden.utils.ReflectUtils;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 
 public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter<T> {
 
@@ -49,6 +50,12 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
         return totalCount;
     }
 
+    public void setObjects(List<T> objects, boolean isShowProgress) {
+        this.showProgress = isShowProgress;
+        this.totalCount = showProgress ? objects.size() + 1 : objects.size();
+        super.setObjects(objects);
+    }
+
     private void checkProgress() {
         boolean shown = totalCount > super.getCount();
         if (shown != showProgress) {
@@ -84,7 +91,7 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
         if (isLoadingView(position)) {
             boolean isLastPage = super.getCount() >= totalCount;
             boolean isOnlyProgressShown = super.getCount() == 0;
-            onProgressShownListener.onListViewProgressShown(isLastPage, isOnlyProgressShown);
+            onProgressShownListener.onListViewProgressShown(this, isLastPage, isOnlyProgressShown);
         }
         return super.getView(position, convertView, parent);
     }
@@ -141,7 +148,7 @@ public abstract class ProgressedMutableListAdapter<T> extends MutableListAdapter
 
     public interface OnProgressShownListener {
 
-        void onListViewProgressShown(boolean isLastPage, boolean isAdapterEmpty);
+        void onListViewProgressShown(ListAdapter adapter, boolean isLastPage, boolean isAdapterEmpty);
     }
 
 }

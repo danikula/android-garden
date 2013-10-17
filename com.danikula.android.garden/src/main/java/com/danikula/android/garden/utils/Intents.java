@@ -62,6 +62,18 @@ public class Intents {
         context.startActivity(intent);
     }
 
+    public static void openBrowser(Context context, String url, String dialogTitle) throws ActivityNotFoundException {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent chooserIntent = Intent.createChooser(intent, dialogTitle);
+        context.startActivity(chooserIntent);
+    }
+    
+    public static void openBrowser(Context context, String url, int dialogTitleId) throws ActivityNotFoundException {
+        openBrowser(context, url, context.getString(dialogTitleId));
+    }
+    
     /**
      * Starts youtube application to watch video
      * 
@@ -140,6 +152,10 @@ public class Intents {
         context.startActivity(Intent.createChooser(shareIntent, shareDialogTile));
     }
 
+    public static void shareText(Context context, String textToShare) {
+        shareText(context, null, textToShare, null);
+    }
+    
     public static void viewFile(Context context, File file) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
         String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);

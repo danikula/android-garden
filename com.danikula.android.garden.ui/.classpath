@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/google-http-client-android-1.11.0-beta.jar"/>
 	<classpathentry kind="lib" path="libs/google-http-client-android2-1.11.0-beta.jar"/>
 	<classpathentry kind="lib" path="/com.danikula.android.garden/libs/guava-11.0.2.jar"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

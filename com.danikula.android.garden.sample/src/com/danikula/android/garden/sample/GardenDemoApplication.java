@@ -1,6 +1,6 @@
 package com.danikula.android.garden.sample;
 
-import com.danikula.android.garden.sample.ui.task.DemoTaskServiceHelper;
+import com.danikula.android.garden.task.AsynkRequestExecutor;
 
 import android.app.Application;
 
@@ -8,17 +8,17 @@ public class GardenDemoApplication extends Application {
     
     public static final String PACKAGE = "com.danikula.android.garden.sample";
     
-    private DemoTaskServiceHelper serviceHelper;
+    private AsynkRequestExecutor invoker;
     
     @Override
     public void onCreate() {
         super.onCreate();
         
-        serviceHelper = new DemoTaskServiceHelper(this);
+        invoker = new AsynkRequestExecutor(this, true);
     }
 
-    public DemoTaskServiceHelper getServiceHelper() {
-        return serviceHelper;
+    public AsynkRequestExecutor getInvoker() {
+        return invoker;
     }
 
 }

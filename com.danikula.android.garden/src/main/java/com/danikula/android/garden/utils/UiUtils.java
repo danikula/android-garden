@@ -65,7 +65,7 @@ public class UiUtils {
     public static void hideIfEmpty(TextView... textViews) {
         for (TextView textView : textViews) {
             String textContent = textView.getText().toString();
-            setVisibility(!Strings.isNullOrEmpty(textContent), textView);
+            setVisibilityGone(!Strings.isNullOrEmpty(textContent), textView);
         }
     }
 

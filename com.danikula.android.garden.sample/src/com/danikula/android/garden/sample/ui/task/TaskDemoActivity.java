@@ -5,16 +5,20 @@ import com.danikula.aibolit.annotation.OnClick;
 import com.danikula.aibolit.annotation.ViewById;
 import com.danikula.android.garden.sample.GardenDemoApplication;
 import com.danikula.android.garden.sample.R;
-import com.danikula.android.garden.task.OnTaskResultListener;
+import com.danikula.android.garden.task.AsynkRequestExecutor;
+import com.danikula.android.garden.task.OnRequestListener;
+import com.danikula.android.garden.task.Request;
+import com.danikula.android.garden.task.RequestMode;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class TaskDemoActivity extends Activity implements OnTaskResultListener {
+public class TaskDemoActivity extends Activity implements OnRequestListener {
 
     private static final String LOG_TAG = TaskDemoActivity.class.getSimpleName();
     
@@ -24,7 +28,10 @@ public class TaskDemoActivity extends Activity implements OnTaskResultListener {
     @ViewById(R.id.editText2)
     private EditText text2;
 
-    private DemoTaskServiceHelper taskServiceHelper;
+    @ViewById(R.id.modeRadioGroup)
+    private RadioGroup modeRadioGroup;
+
+    private AsynkRequestExecutor invoker;
 
     private int taskId = -1;
 
@@ -33,49 +40,48 @@ public class TaskDemoActivity extends Activity implements OnTaskResultListener {
         super.onCreate(savedInstanceState);
 
         Aibolit.setInjectedContentView(this, R.layout.task);
-        taskServiceHelper = ((GardenDemoApplication) getApplication()).getServiceHelper();
+        invoker = ((GardenDemoApplication) getApplication()).getInvoker();
     }
 
     @OnClick(R.id.runRunTest)
     private void onStartTaskButtonClick(View view) {
-        taskId = taskServiceHelper.executeTestTask(text1.getText().toString(), text2.getText().toString());
+        int modeButtonId = modeRadioGroup.getCheckedRadioButtonId();
+        String modeName = findViewById(modeButtonId).getTag().toString();
+        RequestMode mode = RequestMode.valueOf(modeName);
+        Request request = new DemoRequest(text1.getText().toString(), text2.getText().toString());
+        taskId = invoker.submit(request, mode);
     }
     
     @OnClick(R.id.cancelTest)
     private void onCancelTaskButtonClick(View view) {
-        taskServiceHelper.cancel(taskId);
+        invoker.cancel(taskId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        taskServiceHelper.addListener(this);
+        invoker.addListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        taskServiceHelper.removeListener(this);
+        invoker.removeListener(this);
     }
 
     @Override
-    public void onTaskSuccess(int taskId, int action, Object result) {
+    public void onRequestSuccess(Request request, int requestId, Object result) {
         Toast.makeText(this, result + "", Toast.LENGTH_LONG).show();
-        
-        Log.d(LOG_TAG, String.format("onTaskSuccess. taskId: %s, result: %s", taskId, result));
     }
 
     @Override
-    public void onTaskError(int taskId, int action, Exception error) {
+    public void onRequestError(Request request, int requestId, Exception error) {
         Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
-        
-        Log.d(LOG_TAG, String.format("onTaskError. taskId: %s", taskId));
     }
 
     @Override
-    public void onTaskCancel(int taskId, int action) {
-        Log.d(LOG_TAG, String.format("onTaskCancel. taskId: %s", taskId));
+    public void onRequestCancel(Request request, int requestId) {
     }
 
 }
