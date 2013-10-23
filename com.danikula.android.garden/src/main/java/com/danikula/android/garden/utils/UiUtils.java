@@ -34,6 +34,19 @@ public class UiUtils {
     }
 
     /**
+     * Скрывает клавиатуру для view, наодящимся в фокусе.
+     * 
+     * @param activity активити, для которой нужно скрыть клавиатуру
+     */
+    public static void hideKeyboardForFocusedView(Activity activity) {
+        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
      * Sets visibility of views. {@link View#INVISIBLE} is used for hiding views.
      * 
      * @param visible boolean <code>true</code> if views should be visible.
