@@ -47,7 +47,7 @@ public class ViewHolder {
         return (ImageView) findView(imageViewId);
     }
 
-    public void setText(int textViewId, String text) {
+    public void setText(int textViewId, CharSequence text) {
         TextView textView = findViewAndCheckType(textViewId, TextView.class);
         textView.setText(text);
     }

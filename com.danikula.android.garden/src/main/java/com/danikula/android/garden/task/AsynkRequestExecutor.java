@@ -15,7 +15,6 @@ import com.google.common.collect.Lists;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -23,7 +22,7 @@ import android.util.Log;
 
 public class AsynkRequestExecutor {
 
-    private static final String LOG_TAG = AsynkRequestExecutor.class.getName();
+    private static final String LOG_TAG = AsynkRequestExecutor.class.getSimpleName();
 
     private static final long LIFE_TIME_SERVICE_MILLIS = TimeUnit.SECONDS.toMillis(5 * 60);
 
