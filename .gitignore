@@ -8,3 +8,5 @@
 
 /com.danikula.android.garden.test/bin
 
+.settings
+.classpath

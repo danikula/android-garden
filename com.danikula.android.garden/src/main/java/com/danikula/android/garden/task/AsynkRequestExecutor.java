@@ -3,6 +3,7 @@ package com.danikula.android.garden.task;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,10 +14,10 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
 import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.ResultReceiver;
 import android.util.Log;
 
@@ -26,11 +27,11 @@ public class AsynkRequestExecutor {
 
     private static final long LIFE_TIME_SERVICE_MILLIS = TimeUnit.SECONDS.toMillis(5 * 60);
 
-    private final List<OnRequestListener> listeners = Collections.synchronizedList(Lists.<OnRequestListener> newArrayList());
+    private final List<OnRequestListener> listeners = new CopyOnWriteArrayList<OnRequestListener>();
 
-    private final List<RequestInfo> submittedTasks = Collections.synchronizedList(Lists.<RequestInfo> newArrayList());
+    private final List<RequestInfo> submittedTasks = new CopyOnWriteArrayList<RequestInfo>();
 
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private final AtomicInteger idGenerator = new AtomicInteger();
 
@@ -100,6 +101,13 @@ public class AsynkRequestExecutor {
         return newTaskId;
     }
 
+    public void cancelAll() {
+    	List<RequestInfo> tasksCopy = Lists.newArrayList(submittedTasks);
+    	for (RequestInfo task : tasksCopy) {
+    		cancel(task);
+        }
+    }
+    
     public void cancel(int taskId) {
         Optional<RequestInfo> optionalTaskInfo = findTask(taskId);
         if (optionalTaskInfo.isPresent()) {
@@ -148,14 +156,14 @@ public class AsynkRequestExecutor {
         String description = String.format("requestId: '%s', request: '%s'", requestId, request);
         switch (resultStatus) {
             case SUCCESS:
-                Object payload = request.unpackPayload(result);
+                Object payload = Request.unpackPayload(result);
                 if (logRequests) {
                     Log.d(LOG_TAG, String.format("onRequestSuccess. %s, payload: '%s'", description, payload));
                 }
                 callback.onRequestSuccess(request, requestId, payload);
                 break;
             case FAIL:
-                Exception error = request.unpackError(result);
+                Exception error = Request.unpackError(result);
                 if (logRequests) {
                     Log.e(LOG_TAG, "onRequestError. " + description, error);
                 }

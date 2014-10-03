@@ -6,22 +6,16 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Environment;
 
 import com.danikula.android.garden.io.IoUtils;
 
 public class AndroidUtils {
-
-    private static final int BUILD_VERSION_CODE_FROYO = 8;
-    private static final int BUILD_VERSION_CODE_GINGERBREAD = 9;
-    private static final int BUILD_VERSION_CODE_HONEYCOMB = 11;
-    private static final int BUILD_VERSION_CODE_HONEYCOMB_MR1 = 12;
-    private static final int BUILD_VERSION_CODE_ICE_CREAM_SANDWICH = 14;
-    private static final int BUILD_VERSION_CODE_JELLY_BEAN = 16;
 
     private static final String APP_EXTERNAL_STORAGE_DIR_FORMAT = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/Android/data/%s/files/";
@@ -43,57 +37,43 @@ public class AndroidUtils {
             properties.load(inputStream);
 
             return properties;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new IllegalStateException(String.format("Can't load application properties"));
-        }
-        finally {
+        } finally {
             IoUtils.closeSilently(inputStream);
         }
     }
 
-    public static boolean hasFroyo() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_FROYO;
-    }
-
-    public static boolean hasGingerbread() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_GINGERBREAD;
-    }
-
-    public static boolean hasHoneycomb() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_HONEYCOMB;
-    }
-
-    public static boolean hasHoneycombMR1() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_HONEYCOMB_MR1;
-    }
-
-    public static boolean hasICS() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_ICE_CREAM_SANDWICH;
-    }
-
-    public static boolean hasJellyBean() {
-        return Build.VERSION.SDK_INT >= BUILD_VERSION_CODE_JELLY_BEAN;
-    }
-
-    public static boolean isTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
-
-    public static boolean isHoneycombTablet(Context context) {
-        return hasHoneycomb() && isTablet(context);
-    }
-    
     /**
-     * Checks is device has access to Internet at the moment. 
-     * <p>Permission "android.permission.ACCESS_NETWORK_STATE" is required</p>
+     * Checks is device has access to Internet at the moment.
+     * <p>
+     * Permission "android.permission.ACCESS_NETWORK_STATE" is required
+     * </p>
+     * 
      * @param context Context an android context
-     * @return <code>true</code> if device has access to Internet at the moment 
+     * @return <code>true</code> if device has access to Internet at the moment
      */
     public static boolean isOnline(Context context) {
-        ConnectivityManager connectivityManager =  (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static String getApplicationVersionName(Context context) {
+        return getPackageInfo(context).versionName;
+    }
+
+    public static int getApplicationVersionCode(Context context) {
+        return getPackageInfo(context).versionCode;
+    }
+
+    private static PackageInfo getPackageInfo(Context context) {
+        try {
+            String packageName = context.getPackageName();
+            return context.getPackageManager().getPackageInfo(packageName, 0);
+        } catch (NameNotFoundException e) {
+            throw new IllegalStateException("Error retrieving package info", e);
+        }
     }
 
 }

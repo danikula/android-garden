@@ -3,7 +3,10 @@ package com.danikula.android.garden.io;
 import java.io.File;
 import java.io.IOException;
 
+import android.text.TextUtils;
+
 import com.google.common.base.Preconditions;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -72,6 +75,10 @@ public class Files {
                 delete(contentFile);
             }
         }
+    }
+    
+    public static boolean isFileExist(final String path) {
+        return !TextUtils.isEmpty(path) && new File(path).exists();
     }
 
     private static void deleteOrThrow(File file) throws IOException {

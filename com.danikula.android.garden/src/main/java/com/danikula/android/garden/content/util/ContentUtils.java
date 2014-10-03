@@ -128,6 +128,11 @@ public class ContentUtils {
         int value = getInt(cursor, columnName);
         return value != 0;
     }
+    
+    public static long getlong(Cursor cursor, String columnName) {
+        int columnIndex = cursor.getColumnIndexOrThrow(columnName);
+        return cursor.getLong(columnIndex);
+    }  
 
     public static ContentProviderOperation newInsert(Uri uri, ContentValues contentValues) {
         return ContentProviderOperation.newInsert(uri).withValues(contentValues).build();
