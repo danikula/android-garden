@@ -214,16 +214,19 @@ public class IoUtils {
 
         private long publishEveryBytes;
 
+        private long totalBytes;
+
         private long publishCount = -1;
 
-        public PeriodProgressListener(long publishEveryBytes) {
+        public PeriodProgressListener(long publishEveryBytes, long totalBytes) {
             this.publishEveryBytes = publishEveryBytes;
+            this.totalBytes = totalBytes;
         }
 
         @Override
         public void onProgress(long bytesCopied) {
             long progress = bytesCopied / publishEveryBytes;
-            if (progress > publishCount) {
+            if (progress > publishCount || bytesCopied == totalBytes) {
                 publishCount = progress;
                 onPeriodProgress(bytesCopied);
             }
