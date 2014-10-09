@@ -115,9 +115,15 @@ public class AsynkRequestExecutor {
         }
     }
 
-    private void cancel(RequestInfo taskInfo) {
+    private void cancel(final RequestInfo taskInfo) {
         // do not really cancel task, just don't deliver result to listeners
-        handleTaskResult(taskInfo, ResultStatus.CANCEL, new Bundle());
+    	handler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				handleTaskResult(taskInfo, ResultStatus.CANCEL, new Bundle());				
+			}
+		});
     }
 
     private Optional<RequestInfo> findTask(int taskId) {
