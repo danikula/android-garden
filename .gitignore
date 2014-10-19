@@ -10,3 +10,7 @@
 
 .settings
 .classpath
+*.iml
+
+/com.danikula.android.garden/target
+/com.danikula.android.garden/.idea
