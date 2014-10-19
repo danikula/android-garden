@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Widget.RemoteImageView" parent="@android:style/Widget">
-        <item name="density">mdpi</item>
-    </style>
-
-</resources>

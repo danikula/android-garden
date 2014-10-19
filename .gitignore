@@ -1,16 +1,10 @@
-/com.danikula.android.garden/bin
-
-/com.danikula.android.garden.ui/bin
-/com.danikula.android.garden.ui/gen
-
-/com.danikula.android.garden.sample/bin
-/com.danikula.android.garden.sample/gen
-
-/com.danikula.android.garden.test/bin
-
-.settings
-.classpath
 *.iml
 
-/com.danikula.android.garden/target
-/com.danikula.android.garden/.idea
+/local.properties
+/.gradle
+/build
+
+/library/build
+/library/target
+
+/sample/build

@@ -1,0 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+
+dependencies {
+    compile 'com.google.guava:guava-jdk5:17.0'
+    compile 'com.google.android:android:2.2.1'
+    compile 'com.google.android:support-v4:r7'
+}
