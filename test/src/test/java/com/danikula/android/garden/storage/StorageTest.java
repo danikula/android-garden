@@ -18,6 +18,11 @@ import com.danikula.android.garden.utils.AndroidUtils;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+
+@RunWith(RobolectricTestRunner.class)
 public class StorageTest {
 
     @Test

@@ -2,9 +2,12 @@
 
 /local.properties
 /.gradle
+/.idea
 /build
 
 /library/build
 /library/target
+
+/test/build
 
 /sample/build

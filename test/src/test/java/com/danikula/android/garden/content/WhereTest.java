@@ -8,7 +8,12 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-//@RunWith(RobolectricTestRunner.class)
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+
+
+@RunWith(RobolectricTestRunner.class)
 public class WhereTest {
 
     @Test
