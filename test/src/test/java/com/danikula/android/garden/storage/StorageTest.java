@@ -1,26 +1,17 @@
 package com.danikula.android.garden.storage;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
+import android.os.Environment;
+import com.danikula.android.garden.cache.Cache;
+import com.danikula.android.garden.cache.CacheMemoryStorage;
+import com.danikula.android.garden.cache.DiscCache;
+import com.danikula.android.garden.cache.SoftMemoryCache;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import java.io.File;
 
-import org.junit.Test;
-
-import com.danikula.android.garden.cache.DiscCache;
-import com.danikula.android.garden.cache.LimitedMemoryAndDiscBitmapCache;
-import com.danikula.android.garden.cache.SoftMemoryCache;
-import com.danikula.android.garden.cache.Cache;
-import com.danikula.android.garden.cache.CacheMemoryStorage;
-import com.danikula.android.garden.utils.AndroidUtils;
-
-import android.graphics.Bitmap;
-import android.os.Environment;
-
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class StorageTest {
