@@ -1,22 +1,22 @@
 package com.danikula.android.garden.content.util;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Some useful methods for operating with content provider.
@@ -89,6 +89,12 @@ public class ContentUtils {
         Set<Integer> ids = Sets.newLinkedHashSet();
         iterateAndClose(cursor, new IntValuesCollector(columnName, ids));
         return ids;
+    }
+
+    public static Set<String> collectStringValues(Cursor cursor, String columnName) {
+        Set<String> values = Sets.newLinkedHashSet();
+        iterateAndClose(cursor, new StringValuesCollector(columnName, values));
+        return values;
     }
 
     private static void iterateAndClose(Cursor cursor, IterateCursorHandler handler) {
@@ -197,6 +203,34 @@ public class ContentUtils {
         @Override
         public void onRow(Cursor cursor) {
             Integer value = converter.toEntity(cursor);
+            values.add(value);
+        }
+    }
+
+    private static final class StringValuesCollector implements IterateCursorHandler {
+
+        private Set<String> values;
+        private EntityMapper<String> converter;
+
+        private StringValuesCollector(final String columnName, Set<String> values) {
+            this.values = values;
+            this.converter = new EntityMapper<String>() {
+
+                @Override
+                public String toEntity(Cursor cursor) {
+                    return getString(cursor, columnName);
+                }
+
+                @Override
+                public ContentValues toContentValues(String entity) {
+                    throw new UnsupportedOperationException("Should not be used!");
+                }
+            };
+        }
+
+        @Override
+        public void onRow(Cursor cursor) {
+            String value = converter.toEntity(cursor);
             values.add(value);
         }
     }
