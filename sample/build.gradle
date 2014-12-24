@@ -1,17 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-    }	
-}
-
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 20
-    buildToolsVersion '20.0.0'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId 'com.danikula.android.garden.sample'
