@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.danikula</groupId>
+  <artifactId>android-garden</artifactId>
+  <version>2.0.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20141224.174009</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20141224174009</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>2.0.2-20141224.174009-1</value>
+        <updated>20141224174009</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>2.0.2-20141224.174009-1</value>
+        <updated>20141224174009</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
