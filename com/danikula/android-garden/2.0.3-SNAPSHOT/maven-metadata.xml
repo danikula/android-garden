@@ -2,23 +2,23 @@
 <metadata modelVersion="1.1.0">
   <groupId>com.danikula</groupId>
   <artifactId>android-garden</artifactId>
-  <version>2.0.2-SNAPSHOT</version>
+  <version>2.0.3-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20141224.190613</timestamp>
-      <buildNumber>2</buildNumber>
+      <timestamp>20141224.190710</timestamp>
+      <buildNumber>1</buildNumber>
     </snapshot>
-    <lastUpdated>20141224190613</lastUpdated>
+    <lastUpdated>20141224190710</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>2.0.2-20141224.190613-2</value>
-        <updated>20141224190613</updated>
+        <value>2.0.3-20141224.190710-1</value>
+        <updated>20141224190710</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>2.0.2-20141224.190613-2</value>
-        <updated>20141224190613</updated>
+        <value>2.0.3-20141224.190710-1</value>
+        <updated>20141224190710</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
