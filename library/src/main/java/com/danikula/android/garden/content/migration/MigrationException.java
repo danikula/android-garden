@@ -7,18 +7,28 @@ package com.danikula.android.garden.content.migration;
  */
 public class MigrationException extends Exception {
 
+    public final int fromVersion;
+    public final int toVersion;
+
     public MigrationException() {
+        this("");
     }
 
     public MigrationException(String detailMessage) {
-        super(detailMessage);
-    }
-
-    public MigrationException(String detailMessage, Throwable throwable) {
-        super(detailMessage, throwable);
+        this(detailMessage, null);
     }
 
     public MigrationException(Throwable throwable) {
-        super(throwable);
+        this(null, throwable);
+    }
+
+    public MigrationException(String detailMessage, Throwable throwable) {
+        this(detailMessage, throwable, 0, 0);
+    }
+
+    public MigrationException(String detailMessage, Throwable throwable, int from, int to) {
+        super(detailMessage, throwable);
+        this.fromVersion = from;
+        this.toVersion = to;
     }
 }

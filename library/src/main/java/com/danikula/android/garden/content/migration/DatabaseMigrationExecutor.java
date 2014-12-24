@@ -1,5 +1,6 @@
 package com.danikula.android.garden.content.migration;
 
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -17,11 +18,9 @@ public class DatabaseMigrationExecutor implements MigrationExecutor {
     private static final String LOG_TAG = "DatabaseMigrationExecutor";
 
     private final SQLiteDatabase database;
-    private final boolean useTransaction;
     private final boolean logStatements;
 
-    public DatabaseMigrationExecutor(SQLiteDatabase database, boolean useTransaction, boolean logStatements) throws MigrationException {
-        this.useTransaction = useTransaction;
+    public DatabaseMigrationExecutor(SQLiteDatabase database, boolean logStatements) throws MigrationException {
         this.logStatements = logStatements;
         this.database = checkNotNull(database);
         if (database.isReadOnly()) {
@@ -31,29 +30,19 @@ public class DatabaseMigrationExecutor implements MigrationExecutor {
 
     @Override
     public void execute(List<String> statements) throws MigrationException {
-        if (useTransaction) {
-            executeInTransaction(statements);
-        } else {
-            executeWithoutTransaction(statements);
-        }
-    }
-
-    private void executeInTransaction(List<String> statements) {
-        try {
-            database.beginTransaction();
-            executeWithoutTransaction(statements);
-            database.setTransactionSuccessful();
-        } finally {
-            database.endTransaction();
-        }
-    }
-
-    private void executeWithoutTransaction(List<String> statements) {
         for (String statement : statements) {
             if (logStatements) {
                 Log.i(LOG_TAG, "Execute migration statement: " + statement);
             }
+            execute(statement);
+        }
+    }
+
+    private void execute(String statement) throws MigrationException {
+        try {
             database.execSQL(statement);
+        } catch (SQLException e) {
+            throw new MigrationException("Error execute sql statement: " + statement, e);
         }
     }
 }
