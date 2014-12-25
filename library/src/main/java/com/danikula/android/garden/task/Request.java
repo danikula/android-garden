@@ -1,13 +1,13 @@
 package com.danikula.android.garden.task;
 
-import java.io.Serializable;
-
-import com.danikula.android.garden.utils.Bundles;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+
+import com.danikula.android.garden.utils.Bundles;
+
+import java.io.Serializable;
 
 public abstract class Request implements Serializable {
 
@@ -53,6 +53,10 @@ public abstract class Request implements Serializable {
         Bundle result = new Bundle();
         result.putSerializable(RESULT_ARG_ERROR, error);
         callback.send(ResultStatus.FAIL.ordinal(), result);
+    }
+
+    public boolean isSame(Class<? extends Request> requestClass) {
+        return getClass().equals(requestClass);
     }
 
     public boolean isSame(Class<? extends Request>... requestClasses) {
