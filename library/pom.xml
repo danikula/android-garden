@@ -5,7 +5,7 @@
     <groupId>com.danikula</groupId>
     <artifactId>android-garden</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.5-SNAPSHOT</version>
+    <version>2.0.8-SNAPSHOT</version>
     <name>android-garden</name>
     <description>garden for android code</description>
 
