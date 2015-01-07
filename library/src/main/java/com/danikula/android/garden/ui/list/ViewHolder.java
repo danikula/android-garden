@@ -65,6 +65,16 @@ public class ViewHolder {
         textView.setText(textId);
     }
 
+    public void setTextAndHideIfEmpty(int textViewId, int textId) {
+        setText(textViewId, textId);
+        hideIfEmpty(textViewId);
+    }
+
+    public void setTextAndHideIfEmpty(int textViewId, CharSequence text) {
+        setText(textViewId, text);
+        hideIfEmpty(textViewId);
+    }
+
     public void setShowParentContextMenuOnClickListener(int viewId) {
         View view = findViewAndCheckType(viewId, View.class);
         view.setOnClickListener(new PerformLongClickOnClickListener(parent));
