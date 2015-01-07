@@ -82,6 +82,11 @@ public class ViewHolder {
         UiUtils.setVisibility(visible, view);
     }
 
+    public void setVisibilityGone(boolean visible, int viewId) {
+        View view = findView(viewId);
+        UiUtils.setVisibilityGone(visible, view);
+    }
+
     public void hideIfEmpty(int... textViewIds) {
         for (int textViewId : textViewIds) {
             TextView view = findTextView(textViewId);
