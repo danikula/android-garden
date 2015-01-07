@@ -60,6 +60,11 @@ public class ViewHolder {
         textView.setText(text);
     }
 
+    public void setText(int textViewId, int textId) {
+        TextView textView = findViewAndCheckType(textViewId, TextView.class);
+        textView.setText(textId);
+    }
+
     public void setShowParentContextMenuOnClickListener(int viewId) {
         View view = findViewAndCheckType(viewId, View.class);
         view.setOnClickListener(new PerformLongClickOnClickListener(parent));
