@@ -2,21 +2,18 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.0.2'
-    }
 }
 
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         applicationId 'com.danikula.android.garden.test'
         minSdkVersion 8
-        targetSdkVersion 18 // Robolectric doesn't support API 19-20
+        targetSdkVersion 22
         versionCode 1
         versionName '2.0'
     }
@@ -26,15 +23,10 @@ android {
     }
 }
 
-apply plugin: 'android-unit-test'
-
-// to fix AS 0.8.9+ issue (https://github.com/evant/android-studio-unit-test-plugin Troubleshooting)
-tasks.findByName("assembleDebug").dependsOn("testDebugClasses")
-
 dependencies {
     compile project (':library')
 
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.3'
-    testCompile 'com.squareup:fest-android:1.0.+'
+    testCompile 'com.squareup:fest-android:1.0.0'
 }
