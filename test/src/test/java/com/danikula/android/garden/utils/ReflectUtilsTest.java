@@ -1,6 +1,11 @@
 package com.danikula.android.garden.utils;
 
+import com.danikula.android.garden.test.BuildConfig;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,6 +13,8 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = BuildConfig.MIN_SDK_VERSION)
 public class ReflectUtilsTest {
 
     @Test

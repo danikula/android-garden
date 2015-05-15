@@ -1,12 +1,20 @@
 package com.danikula.android.garden.content;
 
-import com.danikula.android.garden.content.migration.*;
+import com.danikula.android.garden.content.migration.AssetsMigrationSource;
+import com.danikula.android.garden.content.migration.Migration;
+import com.danikula.android.garden.content.migration.MigrationException;
+import com.danikula.android.garden.content.migration.MigrationSource;
+import com.danikula.android.garden.content.migration.SimpleMigrationExecutor;
+import com.danikula.android.garden.content.migration.StringMigrationSource;
+import com.danikula.android.garden.test.BuildConfig;
 import com.google.common.collect.Lists;
+
 import junit.framework.Assert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.List;
@@ -18,8 +26,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
  *
  * @author Alexey Danilov (danikula@gmail.com).
  */
-@Config(manifest = "test/src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = BuildConfig.MIN_SDK_VERSION)
 public class MigrationTest {
 
     @Test
@@ -44,7 +52,7 @@ public class MigrationTest {
 
     @Test
     public void testAssetsMigrationsSource() throws Exception {
-        MigrationSource source = new AssetsMigrationSource(Robolectric.application.getResources(), 0, 1);
+        MigrationSource source = new AssetsMigrationSource(RuntimeEnvironment.application.getResources(), 0, 1);
         SimpleMigrationExecutor executor = new SimpleMigrationExecutor();
         new Migration(source, executor).execute();
         List<String> expected = Lists.newArrayList("execute me, baby!;", "one more time...;", "wow!;");
@@ -53,7 +61,7 @@ public class MigrationTest {
 
     @Test(expected = MigrationException.class)
     public void testNotExistedAssetsMigrationsSource() throws Exception {
-        MigrationSource source = new AssetsMigrationSource(Robolectric.application.getResources(), -1, 0);
+        MigrationSource source = new AssetsMigrationSource(RuntimeEnvironment.application.getResources(), -1, 0);
         new Migration(source, new SimpleMigrationExecutor()).execute();
         Assert.fail("not existed assets!");
     }

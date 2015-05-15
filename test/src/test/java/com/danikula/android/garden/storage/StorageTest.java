@@ -1,19 +1,26 @@
 package com.danikula.android.garden.storage;
 
 import android.os.Environment;
+
 import com.danikula.android.garden.cache.Cache;
 import com.danikula.android.garden.cache.CacheMemoryStorage;
 import com.danikula.android.garden.cache.DiscCache;
 import com.danikula.android.garden.cache.SoftMemoryCache;
+import com.danikula.android.garden.test.BuildConfig;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = BuildConfig.MIN_SDK_VERSION)
 public class StorageTest {
 
     @Test
