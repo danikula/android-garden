@@ -1,19 +1,21 @@
 package com.danikula.android.garden.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.BatteryManager;
+import android.os.Environment;
+
+import com.danikula.android.garden.io.IoUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
-
-import com.danikula.android.garden.io.IoUtils;
 
 public class AndroidUtils {
 
@@ -74,6 +76,34 @@ public class AndroidUtils {
         } catch (NameNotFoundException e) {
             throw new IllegalStateException("Error retrieving package info", e);
         }
+    }
+
+    public static boolean isInMobileRoaming(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null &&
+                activeNetworkInfo.isConnected() &&
+                activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE &&
+                activeNetworkInfo.isRoaming();
+    }
+
+    public static float getBatteryLevel(Context context) {
+        Intent batteryInfo = getBatteryInfo(context);
+        int level = batteryInfo.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = batteryInfo.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+        return level / (float) scale;
+    }
+
+    public static boolean isCharging(Context context) {
+        Intent batteryInfo = getBatteryInfo(context);
+        int status = batteryInfo.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        return status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                status == BatteryManager.BATTERY_STATUS_FULL;
+    }
+
+    private static Intent getBatteryInfo(Context context) {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        return context.registerReceiver(null, filter);
     }
 
 }

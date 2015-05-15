@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -17,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.common.base.Strings;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class UiUtils {
 
@@ -159,4 +162,43 @@ public class UiUtils {
         defaultDisplay.getMetrics(displaymetrics);
         return displaymetrics;
     }
+
+    public static <T extends View> T findViewWithType(View view, Class<T> type) {
+        checkNotNull(view);
+        checkNotNull(type);
+
+        Class<? extends View> viewClass = view.getClass();
+        if (type.isAssignableFrom(viewClass)) {
+            return (T) view;
+        }
+
+        if (ViewGroup.class.isAssignableFrom(viewClass)) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                T viewWithType = findViewWithType(child, type);
+                if (viewWithType != null) {
+                    return viewWithType;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void openKeyboard(Context context, EditText inputKeyboardOpenFor) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(inputKeyboardOpenFor, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void hideKeyboard(Context context, IBinder windowToken) {
+        InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(windowToken, 0);
+    }
+
+    public static void setEnabled(boolean enabled, View... views) {
+        for (View view : views) {
+            view.setEnabled(enabled);
+        }
+    }
+
 }

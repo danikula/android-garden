@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.webkit.MimeTypeMap;
 
 /**
@@ -171,5 +172,21 @@ public class Intents {
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType(MIME_IMAGE);
         activity.startActivityForResult(photoPickerIntent, requestCode);
+    }
+
+    public static void openApplicationSettings(Context context, String appPackage) throws ActivityNotFoundException {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + appPackage));
+        context.startActivity(intent);
+    }
+
+    public static void openSystemNetworkSettings(Context context) throws ActivityNotFoundException {
+        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        context.startActivity(intent);
+    }
+
+    public static void openSystemWifiSettings(Context context) throws ActivityNotFoundException {
+        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        context.startActivity(intent);
     }
 }

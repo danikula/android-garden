@@ -1,5 +1,12 @@
 package com.danikula.android.garden.io;
 
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+
+import com.danikula.android.garden.utils.ReflectUtils;
+import com.google.common.base.Preconditions;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -12,18 +19,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import com.danikula.android.garden.utils.ReflectUtils;
-import com.google.common.base.Preconditions;
-
-import android.util.Log;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Содержит ряд полезных методов для работы с потоками.
- * 
+ *
  * @author danik
  */
 public class IoUtils {
-    
+
     private static final String STREAM_ENCODING = "UTF-8";
 
     private static final int DEFAULT_BUFFER_SIZE = 8 * 1024;
@@ -31,7 +35,7 @@ public class IoUtils {
     private static final String LOG_TAG = IoUtils.class.getName();
 
     public static final ProgressListener EMPTY_PROGRESS_LISTENER = ReflectUtils.newInstance(ProgressListener.class);
-    
+
     public static final CancelCondition NO_CANCELATION = new CancelCondition() {
 
         @Override
@@ -42,7 +46,7 @@ public class IoUtils {
 
     /**
      * @param inputStream читает поток символов из входящего потока, используя кодировку UTF и формирует из него строку. Входящий
-     *            поток не закрывается.
+     *                    поток не закрывается.
      * @return String содержимое входящего потока как строку
      * @throws IOException если возникла проблема чтения потока
      */
@@ -68,7 +72,7 @@ public class IoUtils {
      * <p>
      * Hide {@link IOException} if it occurs during closing resource
      * </p>
-     * 
+     *
      * @param closeableSource Closeable source to be needed to close
      */
     public static void closeSilently(Closeable closeableSource) {
@@ -88,11 +92,11 @@ public class IoUtils {
      * This method buffers the input internally, so there is no need to use a {@code BufferedInputStream}. Method doesn't close
      * streams after copying.
      * </p>
-     * 
-     * @param input the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
+     *
+     * @param input  the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
      * @param output the {@code OutputStream} to write to, if {@code null} {@link IOException} will be thrown.
      * @return the number of bytes copied
-     * @throws IOException if an I/O error occurs or if the input or output is {@code null}
+     * @throws IOException         if an I/O error occurs or if the input or output is {@code null}
      * @throws ArithmeticException if the byte count is too large
      */
     public static long copy(InputStream input, OutputStream output) throws IOException {
@@ -105,12 +109,12 @@ public class IoUtils {
      * This method buffers the input internally, so there is no need to use a {@code BufferedInputStream}. Method doesn't close
      * streams after copying.
      * </p>
-     * 
-     * @param input the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
-     * @param output the {@code OutputStream} to write to, if {@code null} {@link IOException} will be thrown.
+     *
+     * @param input    the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
+     * @param output   the {@code OutputStream} to write to, if {@code null} {@link IOException} will be thrown.
      * @param listener listener of copying progress, must be not {@code null}.
      * @return the number of bytes copied
-     * @throws IOException if an I/O error occurs or if the input or output is {@code null}
+     * @throws IOException         if an I/O error occurs or if the input or output is {@code null}
      * @throws ArithmeticException if the byte count is too large
      */
     public static long copy(InputStream input, OutputStream output, ProgressListener listener) throws IOException {
@@ -123,17 +127,17 @@ public class IoUtils {
      * This method buffers the input internally, so there is no need to use a {@code BufferedInputStream}. Method doesn't close
      * streams after copying.
      * </p>
-     * 
-     * @param input the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
-     * @param output the {@code OutputStream} to write to, if {@code null} {@link IOException} will be thrown.
+     *
+     * @param input    the {@code InputStream} to read from, if {@code null} {@link IOException} will be thrown.
+     * @param output   the {@code OutputStream} to write to, if {@code null} {@link IOException} will be thrown.
      * @param listener listener of copying progress, must be not {@code null}.
      * @param canceler an controller to be used for canceling copying, must be not {@code null}.
      * @return the number of bytes copied
-     * @throws IOException if an I/O error occurs or if the input or output is {@code null}
+     * @throws IOException         if an I/O error occurs or if the input or output is {@code null}
      * @throws ArithmeticException if the byte count is too large
      */
     public static long copy(InputStream input, OutputStream output, ProgressListener listener, CancelCondition canceler)
-        throws IOException {
+            throws IOException {
         Preconditions.checkNotNull(listener, "Progress listener must be not null!");
         Preconditions.checkNotNull(canceler, "Canceler must be not null!");
 
@@ -163,10 +167,31 @@ public class IoUtils {
         return count;
     }
 
+    public static void copy(Context context, Uri sourceUri, File targetFile) throws IOException {
+        checkNotNull(context);
+        checkNotNull(sourceUri);
+        checkNotNull(targetFile);
+
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = context.getContentResolver().openInputStream(sourceUri);
+            Files.createDirectory(targetFile.getParentFile());
+            out = new BufferedOutputStream(new FileOutputStream(targetFile), DEFAULT_BUFFER_SIZE);
+            copy(in, out);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, String.format("Error saving content from %s to %s", sourceUri, targetFile), e);
+            Files.delete(targetFile);
+        } finally {
+            IoUtils.closeSilently(in);
+            IoUtils.closeSilently(out);
+        }
+    }
+
     /**
      * Saves data to file and creates parent directories if needed.
-     * 
-     * @param data byte data to be saved, must be not null.
+     *
+     * @param data       byte data to be saved, must be not null.
      * @param targetFile file to be used for saving data, must be not null.
      * @throws IOException if an I/O error occurs
      */
@@ -186,7 +211,7 @@ public class IoUtils {
 
     /**
      * reads content of file.
-     * 
+     *
      * @param sourceFile file to be used for reading data, must be not null.
      * @return content of file.
      * @throws IOException if an I/O error occurs
