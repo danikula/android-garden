@@ -8,11 +8,13 @@ repositories {
     maven { url 'https://dl.bintray.com/alexeydanilov/maven' }
 }
 dependencies {
-    compile 'com.danikula:android-garden:2.0.12'
-    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.danikula:android-garden:2.0.13'
     compile 'com.google.guava:guava-jdk5:17.0'
 }
 ```
+
+Minimal supported version is 14.
+
 See `sample` app for details.
 
 ## Where published?
