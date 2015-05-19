@@ -65,6 +65,12 @@ public class ViewHolder {
         textView.setText(textId);
     }
 
+    public void setText(int textViewId, int textId, Object...args) {
+        TextView textView = findViewAndCheckType(textViewId, TextView.class);
+        String text = getContext().getString(textId, args);
+        textView.setText(text);
+    }
+
     public void setTextAndHideIfEmpty(int textViewId, int textId) {
         setText(textViewId, textId);
         hideIfEmpty(textViewId);

@@ -8,7 +8,7 @@ repositories {
     maven { url 'https://dl.bintray.com/alexeydanilov/maven' }
 }
 dependencies {
-    compile 'com.danikula:android-garden:2.1.0'
+    compile 'com.danikula:android-garden:2.1.2'
     compile 'com.google.guava:guava-jdk5:17.0'
 }
 ```
