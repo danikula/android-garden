@@ -91,6 +91,11 @@ public class ViewHolder {
         view.setOnClickListener(onClickListener);
     }
 
+    public void setTag(int viewId, Object tag) {
+        View view = findViewAndCheckType(viewId, View.class);
+        view.setTag(tag);
+    }
+
     public void resetTextViews(int... textViewIds) {
         for (int textViewId : textViewIds) {
             findTextView(textViewId).setText("");
