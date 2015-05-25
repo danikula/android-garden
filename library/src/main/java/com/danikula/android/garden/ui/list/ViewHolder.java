@@ -86,6 +86,11 @@ public class ViewHolder {
         view.setOnClickListener(new PerformLongClickOnClickListener(parent));
     }
 
+    public void setOnClickListener(int viewId, View.OnClickListener onClickListener) {
+        View view = findViewAndCheckType(viewId, View.class);
+        view.setOnClickListener(onClickListener);
+    }
+
     public void resetTextViews(int... textViewIds) {
         for (int textViewId : textViewIds) {
             findTextView(textViewId).setText("");
