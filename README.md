@@ -20,6 +20,9 @@ See `sample` app for details.
 ## Where published?
 [Here](https://bintray.com/alexeydanilov/maven/android-garden)
 
+## Thanks
+Thanks for [bintray-release](https://github.com/novoda/bintray-release) for easy publishing.
+
 ## License
 
     Copyright 2010-2015 Alexey Danilov
