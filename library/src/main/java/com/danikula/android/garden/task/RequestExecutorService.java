@@ -41,6 +41,11 @@ public class RequestExecutorService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        if (intent == null) {
+            Log.e(LOG_TAG, "Intent is null! Skip command...");
+            return START_NOT_STICKY;
+        }
+
         if (!intent.hasExtra(EXTRA_REQUEST)) {
             Log.e(LOG_TAG, "There is no command in extras");
             return START_NOT_STICKY;
