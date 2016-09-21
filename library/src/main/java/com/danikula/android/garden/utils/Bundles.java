@@ -1,7 +1,5 @@
 package com.danikula.android.garden.utils;
 
-import java.io.Serializable;
-
 import android.os.Bundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -9,7 +7,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Contains useful utility methods to simplify work with {@link Bundle}.
- * 
+ *
  * @author Alexey Danilov <danikula@gmail.com>
  */
 public class Bundles {
@@ -40,16 +38,16 @@ public class Bundles {
 
     public static Bundle newBooleanValueBundle(String argName, boolean value) {
         checkNotNull(argName, "Argument's name must be not null!");
-        
+
         Bundle args = new Bundle();
         args.putBoolean(argName, value);
         return args;
     }
-    
+
     public static Bundle newBundle(String argName0, int intValue0, String argName1, int intValue1) {
         checkNotNull(argName0, "Argument's name must be not null!");
         checkNotNull(argName1, "Argument's name must be not null!");
-        
+
         Bundle bundle = newIntValueBundle(argName0, intValue0);
         bundle.putInt(argName1, intValue1);
         return bundle;
@@ -58,12 +56,12 @@ public class Bundles {
     public static Bundle newBundle(String argName0, String stringValue0, String argName1, String stringValue1) {
         checkNotNull(argName0, "Argument's name must be not null!");
         checkNotNull(argName1, "Argument's name must be not null!");
-        
+
         Bundle bundle = newStringValueBundle(argName0, stringValue0);
         bundle.putString(argName1, stringValue1);
         return bundle;
     }
-    
+
     public static long getRequiredLongValue(Bundle bundle, String argName) {
         checkContains(bundle, argName);
 
@@ -90,7 +88,7 @@ public class Bundles {
 
     public static <T> T getRequiredSerializableValue(Bundle bundle, String argName) {
         checkContains(bundle, argName);
-        
+
         return (T) bundle.getSerializable(argName);
     }
 
@@ -99,5 +97,23 @@ public class Bundles {
         for (String argName : argNames) {
             checkArgument(bundle.containsKey(argName), "Bundle doesn't contain required argument '%s'", argName);
         }
+    }
+
+    public static String dump(Bundle bundle) {
+        if (bundle == null) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder("");
+        for (String key : bundle.keySet()) {
+            if (result.length() != 0) {
+                result.append(", ");
+            }
+            Object value = bundle.get(key);
+            String valueType = value == null ? "unknown type" : value.getClass().getName();
+            value = Bundle.class.getName().equals(valueType) ? dump((Bundle) value) : value;
+            result.append(String.format("%s=%s (%s)", key, value, valueType));
+        }
+        result.insert(0, "Bundle[").append("]");
+        return result.toString();
     }
 }
