@@ -3,12 +3,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.2.10'
+        classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'bintray-release'
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
 
 dependencies {
     compile 'com.google.guava:guava-jdk5:17.0'
@@ -19,7 +22,7 @@ publish {
     userOrg = 'alexeydanilov'
     groupId = 'com.danikula'
     artifactId = 'android-garden'
-    publishVersion = '2.1.6'
+    publishVersion = '2.1.8'
     description = 'Garden for android ideas'
     website = 'https://github.com/danikula/android-garden'
 }
